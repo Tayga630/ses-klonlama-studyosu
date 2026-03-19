@@ -3,51 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ses Klonlama Stüdyosu</title>
+<title>Ses Klonlama Stüdyosu — XTTS v2</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#07080c;--s1:#0f1118;--s2:#151a24;--s3:#1a2030;
-  --brd:#222840;--acc:#f0a500;--blue:#5b9fff;--teal:#00c9a7;
+  --brd:#222840;--acc:#f0a500;--purple:#a78bfa;--blue:#5b9fff;
   --txt:#e0e4f5;--muted:#45506e;--good:#36d67e;--bad:#ff4d4d;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--txt);font-family:'DM Mono',monospace;min-height:100vh;}
 body::before{content:'';position:fixed;inset:0;
-  background:radial-gradient(ellipse 70% 50% at 10% 10%,rgba(0,201,167,.03) 0%,transparent 55%),
-             radial-gradient(ellipse 50% 40% at 90% 85%,rgba(91,159,255,.025) 0%,transparent 55%);
+  background:radial-gradient(ellipse 60% 40% at 15% 15%,rgba(167,139,250,.035) 0%,transparent 55%),
+             radial-gradient(ellipse 50% 40% at 85% 85%,rgba(91,159,255,.025) 0%,transparent 55%);
   pointer-events:none;z-index:0;}
 .wrap{max-width:1080px;margin:0 auto;padding:30px 20px;position:relative;z-index:1;}
 
 /* HEADER */
-header{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
-.logo{width:44px;height:44px;background:var(--teal);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:hex 3s ease-in-out infinite;}
-@keyframes hex{0%,100%{filter:brightness(1);}50%{filter:brightness(1.4) drop-shadow(0 0 14px var(--teal));}}
+header{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
+.logo{width:44px;height:44px;background:var(--purple);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:hex 3s ease-in-out infinite;}
+@keyframes hex{0%,100%{filter:brightness(1);}50%{filter:brightness(1.4) drop-shadow(0 0 14px var(--purple));}}
 .logo svg{width:20px;height:20px;}
 .hinfo h1{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.5px;}
 .hinfo p{font-size:9.5px;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-top:1px;}
 .hbadges{margin-left:auto;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
 .hb{font-size:9.5px;padding:4px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;}
-.hb-teal{background:rgba(0,201,167,.12);border:1px solid rgba(0,201,167,.3);color:var(--teal);}
-.hb-blue{background:rgba(91,159,255,.1);border:1px solid rgba(91,159,255,.3);color:var(--blue);}
+.hb-free{background:rgba(54,214,126,.12);border:1px solid rgba(54,214,126,.3);color:var(--good);}
+.hb-purple{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.3);color:var(--purple);}
 .hb-key{background:var(--s3);border:1px solid var(--brd);color:var(--muted);}
 
-/* API BANNER */
-.api-banner{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
-.api-icon{font-size:22px;flex-shrink:0;}
-.api-text{flex:1;min-width:180px;}
-.api-text strong{color:var(--teal);font-size:12.5px;display:block;margin-bottom:2px;}
-.api-text span{font-size:10.5px;color:var(--muted);line-height:1.6;}
-.api-text a{color:var(--blue);text-decoration:none;}
-.api-text a:hover{text-decoration:underline;}
-.api-input-row{display:flex;gap:8px;align-items:center;flex:2;min-width:240px;}
-.api-input{flex:1;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:12px;padding:9px 12px;outline:none;transition:border-color .2s;}
-.api-input:focus{border-color:var(--teal);}
-.api-input::placeholder{color:var(--muted);}
-.api-badge{font-size:10px;padding:4px 9px;border-radius:6px;white-space:nowrap;transition:all .3s;}
-.api-badge.idle{background:var(--s3);border:1px solid var(--brd);color:var(--muted);}
-.api-badge.ok{background:rgba(54,214,126,.1);border:1px solid rgba(54,214,126,.3);color:var(--good);}
-.api-badge.err{background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.3);color:var(--bad);}
+/* CONNECTION BANNER */
+.conn-banner{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:18px 20px;margin-bottom:20px;}
+.conn-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
+.conn-icon{font-size:22px;}
+.conn-text strong{color:var(--purple);font-size:13px;display:block;margin-bottom:2px;}
+.conn-text span{font-size:10.5px;color:var(--muted);line-height:1.6;}
+.conn-row{display:flex;gap:8px;align-items:center;}
+.conn-input{flex:1;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:12px;padding:9px 12px;outline:none;transition:border-color .2s;}
+.conn-input:focus{border-color:var(--purple);}
+.conn-input::placeholder{color:var(--muted);}
+.conn-btn{padding:9px 16px;background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.35);color:var(--purple);font-family:'Syne',sans-serif;font-weight:700;font-size:12px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.conn-btn:hover{background:rgba(167,139,250,.25);}
+.conn-status{display:flex;align-items:center;gap:8px;margin-top:10px;padding:9px 12px;background:var(--s2);border-radius:7px;font-size:11px;color:var(--muted);}
+.cdot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s;}
+.cdot.ok{background:var(--good);box-shadow:0 0 7px var(--good);}
+.cdot.err{background:var(--bad);}
+.cdot.checking{background:var(--blue);animation:blink .7s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+/* STEPS GUIDE */
+.steps-guide{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:20px;}
+.step-card{background:var(--s1);border:1px solid var(--brd);border-radius:10px;padding:12px 14px;}
+.step-num{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:5px;}
+.step-title{font-size:12px;color:var(--txt);margin-bottom:3px;font-family:'Syne',sans-serif;font-weight:700;}
+.step-desc{font-size:10px;color:var(--muted);line-height:1.6;}
+.step-card.done{border-color:rgba(54,214,126,.3);background:rgba(54,214,126,.04);}
+.step-card.done .step-num{color:var(--good);}
 
 /* MAIN GRID */
 .main-grid{display:grid;grid-template-columns:1fr 290px;gap:18px;margin-bottom:18px;}
@@ -58,17 +69,17 @@ header{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
 
 /* DROP ZONE */
 .drop-zone{background:var(--s2);border:2px dashed var(--brd);border-radius:10px;padding:26px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
-.drop-zone:hover,.drop-zone.drag{border-color:var(--teal);background:rgba(0,201,167,.04);}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--purple);background:rgba(167,139,250,.04);}
 .drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;}
 .dz-icon{font-size:28px;margin-bottom:8px;}
 .dz-title{font-size:13px;color:var(--txt);margin-bottom:4px;}
 .dz-sub{font-size:10.5px;color:var(--muted);}
 
 /* VOICE LOADED */
-.voice-loaded{display:none;margin-top:12px;background:var(--s3);border:1px solid rgba(0,201,167,.2);border-radius:9px;padding:12px 15px;align-items:center;gap:12px;}
+.voice-loaded{display:none;margin-top:12px;background:var(--s3);border:1px solid rgba(167,139,250,.2);border-radius:9px;padding:12px 15px;align-items:center;gap:12px;}
 .voice-loaded.show{display:flex;}
 .vl-info{flex:1;}
-.vl-name{font-size:12px;color:var(--teal);}
+.vl-name{font-size:12px;color:var(--purple);}
 .vl-meta{font-size:10px;color:var(--muted);margin-top:2px;}
 .vl-status{font-size:10px;padding:3px 8px;border-radius:5px;white-space:nowrap;}
 .vl-status.pending{background:rgba(240,165,0,.12);color:var(--acc);}
@@ -77,44 +88,42 @@ header{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
 .vl-status.err{background:rgba(255,77,77,.1);color:var(--bad);}
 .vl-remove{background:transparent;border:1px solid var(--brd);color:var(--muted);font-size:10px;padding:4px 8px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;}
 .vl-remove:hover{border-color:var(--bad);color:var(--bad);}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.5;}}
 
 /* CLONE BTN */
-.clone-btn{width:100%;padding:11px;background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.3);color:var(--teal);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;border-radius:9px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;}
-.clone-btn:hover:not(:disabled){background:rgba(0,201,167,.18);border-color:var(--teal);}
+.clone-btn{width:100%;padding:11px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);color:var(--purple);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;border-radius:9px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;}
+.clone-btn:hover:not(:disabled){background:rgba(167,139,250,.2);border-color:var(--purple);}
 .clone-btn:disabled{opacity:.35;cursor:not-allowed;}
 
-/* CLONED VOICES */
+/* CLONED VOICES LIST */
 .cv-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--s2);border-radius:7px;margin-bottom:6px;cursor:pointer;border:1px solid var(--brd);transition:border-color .2s;}
 .cv-item:hover{border-color:var(--muted);}
-.cv-item.active{border-color:var(--teal);}
-.cv-item-icon{font-size:16px;}
+.cv-item.active{border-color:var(--purple);}
 .cv-item-info{flex:1;min-width:0;}
 .cv-item-name{font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.cv-item-id{font-size:9.5px;color:var(--muted);}
-.cv-item-active{font-size:9px;color:var(--teal);background:rgba(0,201,167,.12);padding:2px 6px;border-radius:4px;}
-.cv-item-del{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 5px;border-radius:4px;transition:color .15s;}
+.cv-item-del{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 5px;border-radius:4px;}
 .cv-item-del:hover{color:var(--bad);}
+
+/* LANGUAGE SELECT */
+select{width:100%;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:11.5px;padding:9px 11px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2345506e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+select:focus{border-color:var(--purple);outline:none;}
 
 /* TEXTAREA */
 textarea{width:100%;min-height:200px;background:var(--s2);border:1px solid var(--brd);border-radius:10px;color:var(--txt);font-family:'DM Mono',monospace;font-size:13.5px;line-height:1.78;padding:14px;resize:vertical;outline:none;transition:border-color .2s;}
-textarea:focus{border-color:var(--teal);}
+textarea:focus{border-color:var(--purple);}
 textarea::placeholder{color:var(--muted);}
 .char-row{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--muted);}
 
 /* SLIDERS */
-.voice-sliders{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+.sldr-row{margin-bottom:12px;}
 .sldr-row label{display:flex;justify-content:space-between;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 .sldr-row label span{color:var(--acc);}
 input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--s3);border-radius:3px;outline:none;cursor:pointer;}
 input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--acc);border-radius:50%;cursor:pointer;transition:transform .15s,box-shadow .15s;}
 input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 0 0 4px rgba(240,165,0,.18);}
-select{width:100%;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:11.5px;padding:9px 11px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2345506e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
-select:focus{border-color:var(--teal);outline:none;}
 
 /* VIZ */
-.viz{height:50px;background:var(--s2);border-radius:8px;display:flex;align-items:center;gap:2px;padding:8px 14px;overflow:hidden;}
-.vbar{flex:1;max-width:4px;background:var(--teal);border-radius:2px;height:5px;opacity:.3;transition:height .08s ease,opacity .08s;}
+.viz{height:50px;background:var(--s2);border-radius:8px;display:flex;align-items:center;gap:2px;padding:8px 14px;overflow:hidden;margin-top:14px;}
+.vbar{flex:1;max-width:4px;background:var(--purple);border-radius:2px;height:5px;opacity:.3;transition:height .08s ease,opacity .08s;}
 .vbar.on{opacity:1;}
 
 /* TRANSPORT */
@@ -122,9 +131,9 @@ select:focus{border-color:var(--teal);outline:none;}
 .trow{display:flex;gap:8px;}
 .trow2{display:flex;gap:8px;margin-top:8px;}
 .btn{padding:11px 12px;border:none;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:12.5px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:.3px;position:relative;}
-.btn-gen{background:var(--teal);color:#07080c;flex:2;}
+.btn-gen{background:var(--purple);color:#07080c;flex:2;}
 .btn-gen::after{content:'Ctrl+Q';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:8px;font-family:'DM Mono',monospace;background:rgba(0,0,0,.2);padding:2px 5px;border-radius:3px;}
-.btn-gen:hover:not(:disabled){background:#00ddb8;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,201,167,.3);}
+.btn-gen:hover:not(:disabled){background:#c4b5fd;transform:translateY(-1px);box-shadow:0 6px 20px rgba(167,139,250,.3);}
 .btn-gen:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none;}
 .btn-ghost{background:var(--s2);color:var(--txt);border:1px solid var(--brd);flex:1;}
 .btn-ghost:hover{border-color:var(--muted);}
@@ -137,7 +146,7 @@ select:focus{border-color:var(--teal);outline:none;}
 .btn-dl:disabled{opacity:.3;cursor:not-allowed;color:var(--muted);border-color:var(--brd);}
 .status-row{margin-top:10px;background:var(--s2);border-radius:7px;padding:9px 12px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px;min-height:34px;}
 .sdot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s;}
-.sdot.play{background:var(--teal);box-shadow:0 0 8px var(--teal);}
+.sdot.play{background:var(--purple);box-shadow:0 0 8px var(--purple);}
 .sdot.rec{background:var(--bad);box-shadow:0 0 8px var(--bad);animation:blink 1.2s infinite;}
 .sdot.ok{background:var(--good);}
 .sdot.loading{background:var(--blue);animation:blink .7s infinite;}
@@ -145,7 +154,7 @@ select:focus{border-color:var(--teal);outline:none;}
 /* PROGRESS */
 .gen-prog{margin-top:10px;height:3px;background:var(--s3);border-radius:3px;overflow:hidden;display:none;}
 .gen-prog.show{display:block;}
-.gen-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--blue));width:0%;transition:width .35s ease;border-radius:3px;}
+.gen-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--blue));width:0%;transition:width .35s ease;border-radius:3px;}
 
 /* RIGHT COL */
 .right-col{display:flex;flex-direction:column;gap:14px;}
@@ -161,21 +170,21 @@ select:focus{border-color:var(--teal);outline:none;}
 .eff-clear:hover{border-color:var(--bad);color:var(--bad);}
 .search-bar{position:relative;margin-bottom:11px;}
 .search-bar input{width:100%;background:var(--s2);border:1px solid var(--brd);border-radius:9px;color:var(--txt);font-family:'DM Mono',monospace;font-size:13px;padding:10px 14px 10px 38px;outline:none;transition:border-color .2s;}
-.search-bar input:focus{border-color:var(--teal);}
+.search-bar input:focus{border-color:var(--purple);}
 .search-bar input::placeholder{color:var(--muted);}
 .si{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none;}
 .cat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px;}
 .cpill{background:var(--s2);border:1px solid var(--brd);color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:5px 11px;border-radius:20px;cursor:pointer;transition:all .15s;white-space:nowrap;}
-.cpill:hover,.cpill.on{border-color:var(--teal);color:var(--teal);background:rgba(0,201,167,.07);}
+.cpill:hover,.cpill.on{border-color:var(--purple);color:var(--purple);background:rgba(167,139,250,.07);}
 .eff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:7px;max-height:400px;overflow-y:auto;padding-right:3px;}
 .eff-grid::-webkit-scrollbar{width:4px;}
 .eff-grid::-webkit-scrollbar-thumb{background:var(--brd);border-radius:3px;}
 .eff-card{background:var(--s2);border:1px solid var(--brd);border-radius:9px;padding:10px 8px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .15s;user-select:none;position:relative;}
 .eff-card:hover{border-color:var(--muted);transform:translateY(-1px);}
-.eff-card.on{border-color:var(--teal);background:rgba(0,201,167,.07);}
+.eff-card.on{border-color:var(--purple);background:rgba(167,139,250,.07);}
 .eff-cb{position:absolute;top:7px;right:7px;width:15px;height:15px;border:1.5px solid var(--brd);border-radius:3px;background:var(--s3);transition:all .15s;display:flex;align-items:center;justify-content:center;pointer-events:none;}
 .eff-card:hover .eff-cb{border-color:var(--muted);}
-.eff-card.on .eff-cb{background:var(--teal);border-color:var(--teal);}
+.eff-card.on .eff-cb{background:var(--purple);border-color:var(--purple);}
 .eff-card.on .eff-cb::after{content:'✓';font-size:9px;font-weight:800;color:#07080c;line-height:1;}
 .eff-emoji{font-size:19px;line-height:1;margin-top:2px;}
 .eff-name{font-size:10px;text-align:center;line-height:1.3;color:var(--txt);}
@@ -185,16 +194,15 @@ select:focus{border-color:var(--teal);outline:none;}
 /* INFO */
 .info-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 @media(max-width:600px){.info-row{grid-template-columns:1fr;}}
-.info-box{background:rgba(0,201,167,.04);border:1px solid rgba(0,201,167,.13);border-radius:10px;padding:13px;font-size:11px;line-height:1.75;color:#60a89a;}
-.info-box strong{color:var(--teal);display:block;margin-bottom:4px;}
-.info-box.blue{background:rgba(91,159,255,.04);border-color:rgba(91,159,255,.13);color:#6090c0;}
-.info-box.blue strong{color:var(--blue);}
+.info-box{background:rgba(167,139,250,.04);border:1px solid rgba(167,139,250,.13);border-radius:10px;padding:13px;font-size:11px;line-height:1.75;color:#9080c0;}
+.info-box strong{color:var(--purple);display:block;margin-bottom:4px;}
+.info-box.green{background:rgba(54,214,126,.04);border-color:rgba(54,214,126,.13);color:#60a880;}
+.info-box.green strong{color:var(--good);}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<!-- HEADER -->
 <header>
   <div class="logo">
     <svg viewBox="0 0 24 24" fill="none" stroke="#07080c" stroke-width="2.5" stroke-linecap="round">
@@ -205,25 +213,57 @@ select:focus{border-color:var(--teal);outline:none;}
   </div>
   <div class="hinfo">
     <h1>SES KLONLAMA STÜDYOSU</h1>
-    <p>Fish Audio AI · Gerçek Zamanlı Ses Klonu</p>
+    <p>XTTS v2 · Google Colab · Tamamen Ücretsiz</p>
   </div>
   <div class="hbadges">
-    <span class="hb hb-teal">Fish Audio</span>
-    <span class="hb hb-blue">64+ Efekt</span>
+    <span class="hb hb-free">Ücretsiz</span>
+    <span class="hb hb-purple">XTTS v2</span>
     <span class="hb hb-key">Ctrl+Q = Oynat</span>
   </div>
 </header>
 
-<!-- API BANNER -->
-<div class="api-banner">
-  <div class="api-icon">🔑</div>
-  <div class="api-text">
-    <strong>Fish Audio API Anahtarı</strong>
-    <span>Ücretsiz hesap: <a href="https://fish.audio" target="_blank">fish.audio</a> → Account → API Keys → Create · Aylık 10 kredi ücretsiz</span>
+<!-- STEPS -->
+<div class="steps-guide">
+  <div class="step-card" id="step1">
+    <div class="step-num">Adım 1</div>
+    <div class="step-title">Colab Notebook'u Aç</div>
+    <div class="step-desc">İndirilen .ipynb dosyasını Google Colab'a yükle. T4 GPU seç.</div>
   </div>
-  <div class="api-input-row">
-    <input type="password" class="api-input" id="api-key" placeholder="API anahtarınızı buraya yapıştırın…" oninput="onApiKey()">
-    <span class="api-badge idle" id="api-badge">Bekleniyor</span>
+  <div class="step-card" id="step2">
+    <div class="step-num">Adım 2</div>
+    <div class="step-title">Hücreleri Çalıştır</div>
+    <div class="step-desc">4 hücreyi sırayla çalıştır. Son hücrede ngrok URL çıkacak.</div>
+  </div>
+  <div class="step-card" id="step3">
+    <div class="step-num">Adım 3</div>
+    <div class="step-title">URL'yi Buraya Gir</div>
+    <div class="step-desc">Aşağıdaki alana ngrok URL'sini yapıştır ve Bağlan'a bas.</div>
+  </div>
+  <div class="step-card" id="step4">
+    <div class="step-num">Adım 4</div>
+    <div class="step-title">Ses Yükle ve Klonla</div>
+    <div class="step-desc">Referans sesini yükle → metni yaz → Ctrl+Q ile oluştur.</div>
+  </div>
+</div>
+
+<!-- CONNECTION BANNER -->
+<div class="conn-banner">
+  <div class="conn-top">
+    <span class="conn-icon">🔗</span>
+    <div class="conn-text">
+      <strong>XTTS Sunucu Bağlantısı</strong>
+      <span>Google Colab'da notebook'un son hücresindeki ngrok URL'sini buraya yapıştırın</span>
+    </div>
+  </div>
+  <div class="conn-row">
+    <input type="text" class="conn-input" id="server-url"
+      placeholder="https://xxxx-xx-xx-xx-xx.ngrok-free.app"
+      oninput="onUrlInput()">
+    <button class="conn-btn" onclick="testConnection()">🔌 Bağlan</button>
+  </div>
+  <div class="conn-status">
+    <div class="cdot" id="cdot"></div>
+    <span id="cstatus">Bağlantı yok — ngrok URL'sini girin</span>
   </div>
 </div>
 
@@ -231,9 +271,9 @@ select:focus{border-color:var(--teal);outline:none;}
 <div class="main-grid">
   <div class="left-col">
 
-    <!-- STEP 1: UPLOAD -->
+    <!-- VOICE UPLOAD -->
     <div class="card">
-      <div class="clabel">Adım 1 — Referans Ses Dosyası Yükle &amp; Klonla</div>
+      <div class="clabel">Adım 1 — Referans Ses Yükle (Klonlanacak Ses)</div>
       <div class="drop-zone" id="dz"
         ondragover="event.preventDefault();this.classList.add('drag')"
         ondragleave="this.classList.remove('drag')"
@@ -241,7 +281,7 @@ select:focus{border-color:var(--teal);outline:none;}
         <input type="file" accept="audio/*" onchange="onFileChosen(this.files[0])">
         <div class="dz-icon">🎙️</div>
         <div class="dz-title">Klonlanacak sesi buraya sürükleyin veya seçin</div>
-        <div class="dz-sub">MP3 · WAV · M4A · FLAC · OGG &nbsp;|&nbsp; Min. 10 sn, max 90 MB</div>
+        <div class="dz-sub">MP3 · WAV · M4A · FLAC · OGG &nbsp;|&nbsp; En az 6 saniye, tercihen 30sn+</div>
       </div>
       <div class="voice-loaded" id="vl">
         <span style="font-size:22px">🎙️</span>
@@ -252,39 +292,36 @@ select:focus{border-color:var(--teal);outline:none;}
         <span class="vl-status pending" id="vl-st">Yüklenmedi</span>
         <button class="vl-remove" onclick="removeFile()">✕</button>
       </div>
-      <button class="clone-btn" id="clone-btn" onclick="cloneVoice()" disabled>
-        🔬 Sesi Klonla — Fish Audio'ya Yükle
+      <button class="clone-btn" id="clone-btn" onclick="uploadVoice()" disabled>
+        🔬 Sesi Sunucuya Yükle
       </button>
     </div>
 
-    <!-- STEP 2: TEXT -->
+    <!-- TEXT INPUT -->
     <div class="card">
       <div class="clabel">Adım 2 — Okunacak Metni Yaz</div>
-      <textarea id="txt" placeholder="Klonlanan ses bu metni okuyacak. Ne kadar uzun olursa o kadar iyi…" oninput="onTextInput()"></textarea>
+      <textarea id="txt"
+        placeholder="Klonlanan ses bu metni okuyacak. Türkçe yazabilirsiniz — XTTS v2 Türkçeyi destekler…"
+        oninput="onTextInput()"></textarea>
       <div class="char-row">
         <span id="char-ct">0 karakter</span>
-        <span>Türkçe dahil çok dil desteklenir</span>
+        <span>Türkçe dahil 17 dil desteklenir</span>
       </div>
       <div class="div"></div>
-      <div class="clabel">Ses Parametreleri</div>
-      <div class="voice-sliders">
-        <div class="sldr-row">
-          <label>Konuşma Hızı <span id="speed-v">1.0×</span></label>
-          <input type="range" id="speed" min="0.5" max="2.0" step="0.05" value="1.0"
-            oninput="document.getElementById('speed-v').textContent=parseFloat(this.value).toFixed(2)+'×'">
-        </div>
-        <div class="sldr-row">
-          <label>Ses Seviyesi <span id="vol-v">100%</span></label>
-          <input type="range" id="vol" min="0" max="2" step="0.05" value="1"
-            oninput="document.getElementById('vol-v').textContent=Math.round(this.value*100)+'%'">
-        </div>
-      </div>
-      <div class="div"></div>
-      <div class="clabel">Çıktı Formatı</div>
-      <select id="fmt">
-        <option value="mp3" selected>MP3 — Küçük boyut, yüksek uyumluluk</option>
-        <option value="wav">WAV — Kayıpsız, stüdyo kalitesi</option>
-        <option value="opus">OPUS — En küçük boyut</option>
+      <div class="clabel">Dil Seçimi</div>
+      <select id="lang-sel" style="margin-bottom:12px;">
+        <option value="tr" selected>🇹🇷 Türkçe</option>
+        <option value="en">🇬🇧 İngilizce</option>
+        <option value="de">🇩🇪 Almanca</option>
+        <option value="fr">🇫🇷 Fransızca</option>
+        <option value="es">🇪🇸 İspanyolca</option>
+        <option value="it">🇮🇹 İtalyanca</option>
+        <option value="pt">🇵🇹 Portekizce</option>
+        <option value="ru">🇷🇺 Rusça</option>
+        <option value="ar">🇸🇦 Arapça</option>
+        <option value="zh-cn">🇨🇳 Çince</option>
+        <option value="ja">🇯🇵 Japonca</option>
+        <option value="ko">🇰🇷 Korece</option>
       </select>
     </div>
 
@@ -294,14 +331,14 @@ select:focus{border-color:var(--teal);outline:none;}
   <!-- RIGHT -->
   <div class="right-col">
 
-    <!-- CLONED VOICES -->
+    <!-- VOICES LIST -->
     <div class="card">
-      <div class="clabel">Klonlanan Sesler</div>
+      <div class="clabel">Yüklenen Sesler</div>
       <div id="cv-list" style="font-size:11px;color:var(--muted)">
-        Henüz klonlanan ses yok.
+        Henüz ses yüklenmedi.
       </div>
       <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.7;background:var(--s2);border-radius:7px;padding:8px 10px;">
-        💡 Birden fazla ses klonlayıp aralarında geçiş yapabilirsiniz.
+        💡 XTTS v2 sadece <b style="color:var(--txt)">6 saniye</b> sesle bile iyi klonlama yapar. Daha uzun = daha iyi.
       </div>
     </div>
 
@@ -316,22 +353,23 @@ select:focus{border-color:var(--teal);outline:none;}
       </div>
       <div class="trow2">
         <button class="btn btn-rec" id="btn-rec" onclick="toggleRec()">⏺ Kayıt</button>
-        <button class="btn btn-dl" id="btn-dl" onclick="download()" disabled>↓ İndir</button>
+        <button class="btn btn-dl" id="btn-dl" onclick="dlAudio()" disabled>↓ İndir</button>
       </div>
       <div class="status-row">
         <div class="sdot" id="sdot"></div>
-        <span id="stxt">API anahtarı girin, sesi klonlayın</span>
+        <span id="stxt">Sunucuya bağlanın ve ses yükleyin</span>
       </div>
     </div>
 
-    <!-- INFO QUICK -->
-    <div class="card" style="font-size:11px;color:var(--muted);line-height:1.8;">
-      <div class="clabel">Hızlı Rehber</div>
-      <b style="color:var(--txt)">1.</b> API anahtarı gir<br>
-      <b style="color:var(--txt)">2.</b> Ses dosyası yükle → Klonla<br>
-      <b style="color:var(--txt)">3.</b> Metin yaz + efekt seç<br>
-      <b style="color:var(--txt)">4.</b> <b style="color:var(--teal)">Ctrl+Q</b> → Oluştur &amp; Oynat<br>
-      <b style="color:var(--txt)">5.</b> İndir (.mp3/.wav)
+    <!-- QUICK GUIDE -->
+    <div class="card" style="font-size:10.5px;color:var(--muted);line-height:1.9;">
+      <div class="clabel">XTTS v2 Hakkında</div>
+      <span style="color:var(--good)">✓</span> Gerçek ses klonlama<br>
+      <span style="color:var(--good)">✓</span> 6sn referans yeterli<br>
+      <span style="color:var(--good)">✓</span> Türkçe desteği<br>
+      <span style="color:var(--good)">✓</span> Tamamen ücretsiz<br>
+      <span style="color:var(--good)">✓</span> GPU hızlandırmalı<br>
+      <span style="color:var(--good)">✓</span> 64+ ses efekti
     </div>
 
   </div>
@@ -347,7 +385,7 @@ select:focus{border-color:var(--teal);outline:none;}
   </div>
   <div class="search-bar">
     <span class="si">🔍</span>
-    <input type="text" id="eff-search" placeholder="Efekt ara: 'kilise', 'robot', 'epik', 'bariton', 'podcast'…" oninput="renderFx()">
+    <input type="text" id="eff-search" placeholder="Efekt ara: 'kilise', 'robot', 'epik', 'podcast'…" oninput="renderFx()">
   </div>
   <div class="cat-pills" id="cat-pills"></div>
   <div class="eff-grid" id="eff-grid"></div>
@@ -356,12 +394,12 @@ select:focus{border-color:var(--teal);outline:none;}
 <!-- INFO -->
 <div class="info-row">
   <div class="info-box">
-    <strong>🎬 Hollywood Kalitesinde Klonlama</strong>
-    Fish Audio, referans sesi analiz edip ton, vurgu ve ritmi birebir kopyalar. Ne kadar uzun ve temiz ses yüklerseniz (arka plan gürültüsüz, tek konuşmacı) klonlama o kadar başarılı olur.
+    <strong>🚀 Nasıl Çalışır?</strong>
+    Colab'daki XTTS v2 modeliniz metni sesinizle üretir. Ses dosyası tarayıcıya gelir, Web Audio API efektlerden geçirir ve hoparlörden çıkar. Colab kapatılırsa sunucu durur.
   </div>
-  <div class="info-box blue">
-    <strong>🎛️ Efektler Gerçek Zamanlı Çalışır</strong>
-    Fish Audio ham ses verisi döndürdüğü için efektler Web Audio API zincirinden geçer — Bass Boost, Kilise, Robot, Epik gibi tüm efektler gerçekten uygulanır. Efekt değiştirince anında tekrar oynatılır.
+  <div class="info-box green">
+    <strong>🎬 En İyi Sonuç İçin</strong>
+    Referans sesi arka gürültüsüz, net ve 30sn+ olsun. Tek konuşmacı. Daha uzun referans = daha iyi ton ve vurgu kopyalaması. Hazırladığımız işlenmiş sesi de kullanabilirsiniz.
   </div>
 </div>
 
@@ -381,10 +419,10 @@ const mkComp=(c,thr=-24,rat=4,kn=3,att=.003,rel=.25)=>{const n=c.createDynamicsC
 const mkGn=(c,v)=>{const g=c.createGain();g.gain.value=v;return g;};
 const mkWS=(c,amt)=>{const ws=c.createWaveShaper(),n=256,cv=new Float32Array(n);for(let i=0;i<n;i++){const x=(i*2)/n-1;cv[i]=((3+amt)*x*20*Math.PI/180)/(Math.PI+amt*Math.abs(x));}ws.curve=cv;ws.oversample='4x';return ws;};
 const mkIR=(c,dur=2,dec=2)=>{const sr=c.sampleRate,len=Math.floor(sr*dur),buf=c.createBuffer(2,len,sr);for(let ch=0;ch<2;ch++){const d=buf.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,dec);}const cv=c.createConvolver();cv.buffer=buf;return cv;};
-const wd=(c,wet,fx)=>{const o=mkGn(c,1),dG=mkGn(c,1-wet),wG=mkGn(c,wet),i=mkGn(c,1);i.connect(dG);dG.connect(o);i.connect(fx);fx.connect(wG);wG.connect(o);return{input:i,output:o};};
+const wdry=(c,wet,fx)=>{const o=mkGn(c,1),dG=mkGn(c,1-wet),wG=mkGn(c,wet),i=mkGn(c,1);i.connect(dG);dG.connect(o);i.connect(fx);fx.connect(wG);wG.connect(o);return{input:i,output:o};};
 
 // ═══════════════════════════════════
-// EFFECTS — 64 efekt
+// EFFECTS
 // ═══════════════════════════════════
 const EFFECTS=[
 {id:'bass_boost',name:'Bass Boost',cat:'Frekans',emoji:'🔉',create(c){const n=mkLS(c,200,9);return{input:n,output:n};}},
@@ -397,34 +435,28 @@ const EFFECTS=[
 {id:'treble_cut',name:'Tiz Kesim',cat:'Frekans',emoji:'⬆️',create(c){const n=mkLP(c,4000,.7);return{input:n,output:n};}},
 {id:'hi_pass',name:'High-Pass 80Hz',cat:'Frekans',emoji:'🎚️',create(c){const n=mkHP(c,80,.5);return{input:n,output:n};}},
 {id:'lo_pass',name:'Low-Pass 5kHz',cat:'Frekans',emoji:'🎛️',create(c){const n=mkLP(c,5000,.8);return{input:n,output:n};}},
-{id:'banyo',name:'Banyo',cat:'Mekan',emoji:'🚿',create(c){return wd(c,.4,mkIR(c,.4,4));}},
-{id:'studyo',name:'Stüdyo Odası',cat:'Mekan',emoji:'🎙️',create(c){return wd(c,.3,mkIR(c,.9,2.5));}},
-{id:'konser',name:'Konser Salonu',cat:'Mekan',emoji:'🎼',create(c){return wd(c,.55,mkIR(c,2.5,1.5));}},
-{id:'kilise',name:'Kilise',cat:'Mekan',emoji:'⛪',create(c){return wd(c,.65,mkIR(c,4,1.2));}},
+{id:'banyo',name:'Banyo',cat:'Mekan',emoji:'🚿',create(c){return wdry(c,.4,mkIR(c,.4,4));}},
+{id:'studyo',name:'Stüdyo Odası',cat:'Mekan',emoji:'🎙️',create(c){return wdry(c,.3,mkIR(c,.9,2.5));}},
+{id:'konser',name:'Konser Salonu',cat:'Mekan',emoji:'🎼',create(c){return wdry(c,.55,mkIR(c,2.5,1.5));}},
+{id:'kilise',name:'Kilise',cat:'Mekan',emoji:'⛪',create(c){return wdry(c,.65,mkIR(c,4,1.2));}},
 {id:'magara',name:'Mağara',cat:'Mekan',emoji:'🦇',create(c){const i=mkGn(c,1),o=mkGn(c,1),rev=mkIR(c,5,.8),del=c.createDelay(2);del.delayTime.value=.38;const fb=mkGn(c,.5);del.connect(fb);fb.connect(del);i.connect(mkGn(c,.4)).connect(o);i.connect(rev);rev.connect(mkGn(c,.55)).connect(o);i.connect(del);del.connect(mkGn(c,.32)).connect(o);return{input:i,output:o};}},
-{id:'stadyum',name:'Stadyum',cat:'Mekan',emoji:'🏟️',create(c){return wd(c,.72,mkIR(c,5.5,.55));}},
-{id:'uzay',name:'Uzay',cat:'Mekan',emoji:'🚀',create(c){return wd(c,.88,mkIR(c,9,.25));}},
-{id:'amfi',name:'Amfi Tiyatro',cat:'Mekan',emoji:'🏛️',create(c){const i=mkGn(c,1),o=mkGn(c,1),rev=mkIR(c,3,1.3),del=c.createDelay(1);del.delayTime.value=.2;i.connect(mkGn(c,.45)).connect(o);i.connect(rev);rev.connect(mkGn(c,.5)).connect(o);i.connect(del);del.connect(mkGn(c,.25)).connect(o);return{input:i,output:o};}},
+{id:'stadyum',name:'Stadyum',cat:'Mekan',emoji:'🏟️',create(c){return wdry(c,.72,mkIR(c,5.5,.55));}},
+{id:'uzay',name:'Uzay',cat:'Mekan',emoji:'🚀',create(c){return wdry(c,.88,mkIR(c,9,.25));}},
 {id:'tunel',name:'Tünel',cat:'Mekan',emoji:'🚇',create(c){const i=mkGn(c,1),o=mkGn(c,1),rev=mkIR(c,2,1.5),del=c.createDelay(1);del.delayTime.value=.18;const fb=mkGn(c,.42);del.connect(fb);fb.connect(del);i.connect(mkGn(c,.5)).connect(o);i.connect(rev);rev.connect(mkGn(c,.4)).connect(o);i.connect(del);del.connect(mkGn(c,.3)).connect(o);return{input:i,output:o};}},
-{id:'gece_kulubu',name:'Gece Kulübü',cat:'Mekan',emoji:'🌃',create(c){const i=mkGn(c,1),o=mkGn(c,1),bs=mkLS(c,200,8),comp=mkComp(c,-18,4),rev=mkIR(c,1.5,2);i.connect(bs);bs.connect(comp);comp.connect(mkGn(c,.65)).connect(o);comp.connect(rev);rev.connect(mkGn(c,.4)).connect(o);return{input:i,output:o};}},
 {id:'su_alti',name:'Su Altı',cat:'Mekan',emoji:'🌊',create(c){const n=mkLP(c,400,2.5);return{input:n,output:n};}},
-{id:'orman',name:'Orman',cat:'Mekan',emoji:'🌲',create(c){return wd(c,.22,mkIR(c,.7,3));}},
 {id:'telefon',name:'Telefon',cat:'Elektronik',emoji:'📞',create(c){const hp=mkHP(c,300),lp=mkLP(c,3400);hp.connect(lp);return{input:hp,output:lp};}},
 {id:'radyo',name:'Radyo',cat:'Elektronik',emoji:'📻',create(c){const hp=mkHP(c,500),lp=mkLP(c,3000),ws=mkWS(c,10);hp.connect(lp);lp.connect(ws);return{input:hp,output:ws};}},
 {id:'walkie',name:'Walkie-Talkie',cat:'Elektronik',emoji:'📡',create(c){const hp=mkHP(c,600),lp=mkLP(c,2500),ws=mkWS(c,35);hp.connect(lp);lp.connect(ws);return{input:hp,output:ws};}},
 {id:'megafon',name:'Megafon',cat:'Elektronik',emoji:'📢',create(c){const hp=mkHP(c,400),lp=mkLP(c,3500),ws=mkWS(c,45),g=mkGn(c,1.8);hp.connect(lp);lp.connect(ws);ws.connect(g);return{input:hp,output:g};}},
 {id:'lofi',name:'Lo-Fi',cat:'Elektronik',emoji:'📼',create(c){const lp=mkLP(c,3000),ws=mkWS(c,15),hp=mkHP(c,80);lp.connect(ws);ws.connect(hp);return{input:lp,output:hp};}},
-{id:'kaset',name:'Kaset (Tape)',cat:'Elektronik',emoji:'🎞️',create(c){const lp=mkLP(c,8000),ws=mkWS(c,5),wm=mkPK(c,300,3);lp.connect(ws);ws.connect(wm);return{input:lp,output:wm};}},
-{id:'retro',name:'Retro / Vintage',cat:'Elektronik',emoji:'📺',create(c){const hp=mkHP(c,200),lp=mkLP(c,7000),wm=mkPK(c,400,3);hp.connect(lp);lp.connect(wm);return{input:hp,output:wm};}},
-{id:'dijital',name:'Dijital Bozulma',cat:'Elektronik',emoji:'💻',create(c){const ws=c.createWaveShaper(),cv=new Float32Array(256);for(let i=0;i<256;i++){const x=(i*2)/256-1;cv[i]=Math.max(-.7,Math.min(.7,x*2.2));}ws.curve=cv;ws.oversample='4x';return{input:ws,output:ws};}},
 {id:'robot',name:'Robot',cat:'Elektronik',emoji:'🤖',create(c){const i=mkGn(c,1),f1=mkPK(c,120,10,8),f2=mkPK(c,400,-5,4),f3=mkPK(c,1200,9,6),ws=mkWS(c,25),lp=mkLP(c,6000);i.connect(f1);f1.connect(f2);f2.connect(f3);f3.connect(ws);ws.connect(lp);return{input:i,output:lp};}},
-{id:'interkom',name:'İnterkom',cat:'Elektronik',emoji:'🔊',create(c){const hp=mkHP(c,450),lp=mkLP(c,3000),ws=mkWS(c,18);hp.connect(lp);lp.connect(ws);return{input:hp,output:ws};}},
+{id:'dijital',name:'Dijital Bozulma',cat:'Elektronik',emoji:'💻',create(c){const ws=c.createWaveShaper(),cv=new Float32Array(256);for(let i=0;i<256;i++){const x=(i*2)/256-1;cv[i]=Math.max(-.7,Math.min(.7,x*2.2));}ws.curve=cv;ws.oversample='4x';return{input:ws,output:ws};}},
+{id:'retro',name:'Retro / Vintage',cat:'Elektronik',emoji:'📺',create(c){const hp=mkHP(c,200),lp=mkLP(c,7000),wm=mkPK(c,400,3);hp.connect(lp);lp.connect(wm);return{input:hp,output:wm};}},
 {id:'kompresyon',name:'Kompresyon',cat:'Dinamik',emoji:'🗜️',create(c){const n=mkComp(c,-24,4,3,.003,.25);return{input:n,output:n};}},
 {id:'hard_limit',name:'Hard Limit',cat:'Dinamik',emoji:'🔒',create(c){const n=mkComp(c,-6,20,0,.001,.08);return{input:n,output:n};}},
-{id:'yumusat',name:'Yumuşatma',cat:'Dinamik',emoji:'🌸',create(c){const ws=c.createWaveShaper(),n=256,cv=new Float32Array(n);for(let i=0;i<256;i++){const x=(i*2)/n-1;cv[i]=(3/2)*x-(1/2)*x*x*x;}ws.curve=cv;ws.oversample='2x';return{input:ws,output:ws};}},
 {id:'distortion',name:'Distorsiyon',cat:'Dinamik',emoji:'⚡',create(c){const n=mkWS(c,80);return{input:n,output:n};}},
 {id:'overdrive',name:'Overdrive',cat:'Dinamik',emoji:'🔥',create(c){const n=mkWS(c,40);return{input:n,output:n};}},
-{id:'reverb_small',name:'Az Reverb',cat:'Modülasyon',emoji:'📶',create(c){return wd(c,.28,mkIR(c,.8,3));}},
+{id:'reverb_small',name:'Az Reverb',cat:'Modülasyon',emoji:'📶',create(c){return wdry(c,.28,mkIR(c,.8,3));}},
 {id:'echo',name:'Echo',cat:'Modülasyon',emoji:'🔁',create(c){const i=mkGn(c,1),o=mkGn(c,1),del=c.createDelay(2);del.delayTime.value=.3;const fb=mkGn(c,.45);del.connect(fb);fb.connect(del);i.connect(mkGn(c,1)).connect(o);i.connect(del);del.connect(mkGn(c,.55)).connect(o);return{input:i,output:o};}},
 {id:'echo_long',name:'Uzun Echo',cat:'Modülasyon',emoji:'🔄',create(c){const i=mkGn(c,1),o=mkGn(c,1),del=c.createDelay(3);del.delayTime.value=.55;const fb=mkGn(c,.5);del.connect(fb);fb.connect(del);i.connect(mkGn(c,1)).connect(o);i.connect(del);del.connect(mkGn(c,.6)).connect(o);return{input:i,output:o};}},
 {id:'tremolo',name:'Tremolo',cat:'Modülasyon',emoji:'💓',create(c){const i=mkGn(c,1),out=mkGn(c,.55),lfo=c.createOscillator(),lG=mkGn(c,.45);lfo.frequency.value=5;lfo.connect(lG);lG.connect(out.gain);lfo.start();i.connect(out);return{input:i,output:out};}},
@@ -436,19 +468,12 @@ const EFFECTS=[
 {id:'dev',name:'Dev Sesi',cat:'Perde',emoji:'👹',pitchMult:.58,create(c){const n=mkLS(c,200,6);return{input:n,output:n};}},
 {id:'kadin',name:'Kadın Tonu',cat:'Perde',emoji:'💃',pitchMult:1.28,create(c){const n=mkGn(c,1);return{input:n,output:n};}},
 {id:'erkek',name:'Erkek Tonu',cat:'Perde',emoji:'🕺',pitchMult:.82,create(c){const n=mkGn(c,1);return{input:n,output:n};}},
-{id:'pitch_up',name:'+10% Perde',cat:'Perde',emoji:'⬆️',pitchMult:1.1,create(c){const n=mkGn(c,1);return{input:n,output:n};}},
-{id:'pitch_dn',name:'-10% Perde',cat:'Perde',emoji:'⬇️',pitchMult:.9,create(c){const n=mkGn(c,1);return{input:n,output:n};}},
 {id:'karizmatik',name:'Karizmatik',cat:'Karakter',emoji:'😎',create(c){const i=mkGn(c,1),o=mkGn(c,1),comp=mkComp(c,-18,3,6,.005,.12),wm=mkPK(c,250,3,1.5),rev=mkIR(c,1.2,2.5);i.connect(comp);comp.connect(wm);wm.connect(mkGn(c,.78)).connect(o);wm.connect(rev);rev.connect(mkGn(c,.28)).connect(o);return{input:i,output:o};}},
 {id:'sakin',name:'Sakin',cat:'Karakter',emoji:'🧘',create(c){const i=mkGn(c,1),o=mkGn(c,1),comp=mkComp(c,-30,2,8,.015,.3),wm=mkPK(c,280,3,1),lp=mkLP(c,9000),rev=mkIR(c,.9,3);i.connect(comp);comp.connect(wm);wm.connect(lp);lp.connect(mkGn(c,.8)).connect(o);lp.connect(rev);rev.connect(mkGn(c,.25)).connect(o);return{input:i,output:o};}},
 {id:'havali',name:'Havalı',cat:'Karakter',emoji:'🕶️',create(c){const ws=mkWS(c,20),bs=mkLS(c,200,5),pr=mkPK(c,3500,4,2);ws.connect(bs);bs.connect(pr);return{input:ws,output:pr};}},
 {id:'dramatik',name:'Dramatik',cat:'Karakter',emoji:'🎭',create(c){const i=mkGn(c,1),o=mkGn(c,1),comp=mkComp(c,-15,5,2,.002,.15),rev=mkIR(c,4,1);i.connect(comp);comp.connect(mkGn(c,.55)).connect(o);comp.connect(rev);rev.connect(mkGn(c,.7)).connect(o);return{input:i,output:o};}},
 {id:'epik',name:'Epik',cat:'Karakter',emoji:'⚔️',create(c){const i=mkGn(c,1),o=mkGn(c,1),comp=mkComp(c,-20,5,2,.003,.2),bs=mkLS(c,200,7),rev=mkIR(c,3.5,1.2);i.connect(comp);comp.connect(bs);bs.connect(mkGn(c,.5)).connect(o);bs.connect(rev);rev.connect(mkGn(c,.75)).connect(o);return{input:i,output:o};}},
 {id:'karanlik',name:'Karanlık',cat:'Karakter',emoji:'🌑',create(c){const i=mkGn(c,1),o=mkGn(c,1),lp=mkLP(c,4500,.9),bs=mkLS(c,200,6),rev=mkIR(c,4,.8);i.connect(lp);lp.connect(bs);bs.connect(mkGn(c,.55)).connect(o);bs.connect(rev);rev.connect(mkGn(c,.6)).connect(o);return{input:i,output:o};}},
-{id:'gizemli',name:'Gizemli',cat:'Karakter',emoji:'🔮',pitchMult:.92,create(c){const i=mkGn(c,1),o=mkGn(c,1),rev=mkIR(c,2.5,1.5),del=c.createDelay(1);del.delayTime.value=.25;i.connect(mkGn(c,.6)).connect(o);i.connect(rev);rev.connect(mkGn(c,.45)).connect(o);i.connect(del);del.connect(mkGn(c,.2)).connect(o);return{input:i,output:o};}},
-{id:'romantik',name:'Romantik',cat:'Karakter',emoji:'🌹',create(c){const i=mkGn(c,1),o=mkGn(c,1),comp=mkComp(c,-28,2.5,8,.01,.2),wm=mkPK(c,350,3.5,1),lp=mkLP(c,9500),rev=mkIR(c,1.5,2.5);i.connect(comp);comp.connect(wm);wm.connect(lp);lp.connect(mkGn(c,.75)).connect(o);lp.connect(rev);rev.connect(mkGn(c,.32)).connect(o);return{input:i,output:o};}},
-{id:'guclu',name:'Güçlü',cat:'Karakter',emoji:'💪',create(c){const bs=mkLS(c,200,8),comp=mkComp(c,-12,6,1,.001,.05);bs.connect(comp);return{input:bs,output:comp};}},
-{id:'otoriter',name:'Otoriter',cat:'Karakter',emoji:'🎖️',create(c){const mid=mkPK(c,1200,5,2),pr=mkPK(c,3000,3,2),comp=mkComp(c,-20,4,3,.003,.15);mid.connect(pr);pr.connect(comp);return{input:mid,output:comp};}},
-{id:'kizgin',name:'Kızgın',cat:'Karakter',emoji:'😤',create(c){const ws=mkWS(c,60),mid=mkPK(c,1500,5,2),comp=mkComp(c,-15,5);ws.connect(mid);mid.connect(comp);return{input:ws,output:comp};}},
 {id:'sinema',name:'Sinema Anlatıcı',cat:'Karakter',emoji:'🎬',create(c){const i=mkGn(c,1),o=mkGn(c,1),hp=mkHP(c,80),comp=mkComp(c,-20,4,4,.003,.2),wm=mkPK(c,280,4,1.5),rev=mkIR(c,3,1.3);i.connect(hp);hp.connect(comp);comp.connect(wm);wm.connect(mkGn(c,.6)).connect(o);wm.connect(rev);rev.connect(mkGn(c,.55)).connect(o);return{input:i,output:o};}},
 {id:'belgesel',name:'Belgesel',cat:'Karakter',emoji:'📹',create(c){const i=mkGn(c,1),o=mkGn(c,1),comp=mkComp(c,-22,3.5,5,.005,.2),hp=mkHP(c,100),rev=mkIR(c,1.2,2.5);i.connect(hp);hp.connect(comp);comp.connect(mkGn(c,.78)).connect(o);comp.connect(rev);rev.connect(mkGn(c,.28)).connect(o);return{input:i,output:o};}},
 {id:'haber',name:'Haber Spikeri',cat:'Karakter',emoji:'📰',create(c){const hp=mkHP(c,90),comp=mkComp(c,-18,4,3,.003,.15),pr=mkPK(c,3000,4,2);hp.connect(comp);comp.connect(pr);return{input:hp,output:pr};}},
@@ -456,34 +481,60 @@ const EFFECTS=[
 {id:'tanri',name:'Tanrı Sesi',cat:'Karakter',emoji:'⚡',pitchMult:.68,create(c){const i=mkGn(c,1),o=mkGn(c,1),bs=mkLS(c,200,8),comp=mkComp(c,-20,5,2),rev=mkIR(c,6,.55);i.connect(bs);bs.connect(comp);comp.connect(mkGn(c,.4)).connect(o);comp.connect(rev);rev.connect(mkGn(c,.85)).connect(o);return{input:i,output:o};}},
 {id:'fisılti',name:'Fısıltı',cat:'Karakter',emoji:'🤫',create(c){const hp=mkHP(c,2000),lp=mkLP(c,8000),g=mkGn(c,.45);hp.connect(lp);lp.connect(g);return{input:hp,output:g};}},
 {id:'seytan',name:'Şeytani',cat:'Karakter',emoji:'😈',pitchMult:.62,create(c){const i=mkGn(c,1),o=mkGn(c,1),ws=mkWS(c,60),bs=mkLS(c,200,6),rev=mkIR(c,3.5,.9);i.connect(ws);ws.connect(bs);bs.connect(mkGn(c,.55)).connect(o);bs.connect(rev);rev.connect(mkGn(c,.6)).connect(o);return{input:i,output:o};}},
+{id:'guclu',name:'Güçlü',cat:'Karakter',emoji:'💪',create(c){const bs=mkLS(c,200,8),comp=mkComp(c,-12,6,1,.001,.05);bs.connect(comp);return{input:bs,output:comp};}},
+{id:'otoriter',name:'Otoriter',cat:'Karakter',emoji:'🎖️',create(c){const mid=mkPK(c,1200,5,2),pr=mkPK(c,3000,3,2),comp=mkComp(c,-20,4,3,.003,.15);mid.connect(pr);pr.connect(comp);return{input:mid,output:comp};}},
 {id:'eglenceli',name:'Eğlenceli',cat:'Karakter',emoji:'🎉',pitchMult:1.08,create(c){const i=mkGn(c,1),o=mkGn(c,1);i.connect(mkGn(c,.7)).connect(o);[[22,.5,.004],[18,.4,.003]].forEach(([ms,rate,dep])=>{const del=c.createDelay(.1);del.delayTime.value=ms/1000;const lfo=c.createOscillator();lfo.frequency.value=rate;lfo.connect(mkGn(c,dep)).connect(del.delayTime);lfo.start();i.connect(del);del.connect(mkGn(c,.3)).connect(o);});return{input:i,output:o};}},
-{id:'oyun',name:'Oyun Karakteri',cat:'Karakter',emoji:'🎮',pitchMult:.92,create(c){const n=mkComp(c,-20,4,3,.003,.15);return{input:n,output:n};}},
 ];
 
 // ═══════════════════════════════════
 // STATE
 // ═══════════════════════════════════
-let apiKey='';
+let serverUrl='';
+let isConnected=false;
 let refFile=null;
-let clonedVoices=[];      // [{id, name}]
+let clonedVoices=[];
 let activeVoiceId=null;
 let activeEffectIds=new Set();
-let lastBlob=null;        // raw audio from Fish Audio
-let lastBuf=null;         // decoded AudioBuffer
+let lastBlob=null,lastBuf=null;
 let sourceNode=null,destNode=null;
 let isPlaying=false,isPaused=false,isRecording=false;
 let mediaRec=null,recChunks=[],recBlob=null;
 const vizTimer={t:null};
 
 // ═══════════════════════════════════
-// API KEY
+// CONNECTION
 // ═══════════════════════════════════
-function onApiKey(){
-  apiKey=document.getElementById('api-key').value.trim();
-  const b=document.getElementById('api-badge');
-  if(apiKey.length>8){b.className='api-badge ok';b.textContent='✓ Girildi';}
-  else{b.className='api-badge idle';b.textContent='Bekleniyor';}
+function onUrlInput(){
+  serverUrl=document.getElementById('server-url').value.trim().replace(/\/$/,'');
   refreshUI();
+}
+
+async function testConnection(){
+  if(!serverUrl){setSt('⚠ URL girin','');return;}
+  setCdot('checking','🔌 Bağlantı test ediliyor…');
+  try{
+    const res=await fetch(serverUrl+'/health',{method:'GET',signal:AbortSignal.timeout(8000)});
+    const data=await res.json();
+    if(data.status==='ok'){
+      isConnected=true;
+      setCdot('ok',`✅ Bağlı — ${data.model||'XTTS'} (${data.device||'cpu'})`);
+      setSt('✅ Sunucu bağlandı! Ses yükleyebilirsiniz','ok');
+      document.getElementById('step3').classList.add('done');
+      refreshUI();
+    } else {
+      throw new Error('Sunucu yanıtı beklenmedik');
+    }
+  }catch(err){
+    isConnected=false;
+    setCdot('err','❌ Bağlantı kurulamadı: '+err.message);
+    setSt('⚠ Sunucuya ulaşılamadı','');
+    refreshUI();
+  }
+}
+
+function setCdot(cls,msg){
+  document.getElementById('cdot').className='cdot '+cls;
+  document.getElementById('cstatus').textContent=msg;
 }
 
 // ═══════════════════════════════════
@@ -495,250 +546,125 @@ function setRefFile(f){
   refFile=f;
   document.getElementById('vl-name').textContent=f.name;
   document.getElementById('vl-meta').textContent=`${(f.size/1024/1024).toFixed(2)} MB · ${f.type||'audio'}`;
-  setVlSt('pending','Klonlanmayı bekliyor');
+  setVlSt('pending','Yüklenmedi');
   document.getElementById('vl').classList.add('show');
   refreshUI();
 }
-function removeFile(){
-  refFile=null;
-  document.getElementById('vl').classList.remove('show');
-  refreshUI();
-}
-function setVlSt(cls,txt){
-  const el=document.getElementById('vl-st');
-  el.className='vl-status '+cls;el.textContent=txt;
-}
+function removeFile(){refFile=null;document.getElementById('vl').classList.remove('show');refreshUI();}
+function setVlSt(cls,txt){const el=document.getElementById('vl-st');el.className='vl-status '+cls;el.textContent=txt;}
 
 // ═══════════════════════════════════
-// VOICE CLONING — Fish Audio /v1/model
+// UPLOAD VOICE TO XTTS SERVER
 // ═══════════════════════════════════
-async function cloneVoice(){
-  if(!apiKey||!refFile)return;
-
-  // Warn if file is too small (< 500 KB ≈ likely under 30s)
-  if(refFile.size < 500*1024){
-    const ok=confirm(
-      '⚠️ Ses dosyanız çok küçük görünüyor (' + (refFile.size/1024).toFixed(0) + ' KB).\n\n' +
-      'Fish Audio iyi bir klonlama için en az 30 saniye, tercihen 1-3 dakika temiz ses ister.\n\n' +
-      'Yine de devam etmek istiyor musunuz?'
-    );
-    if(!ok)return;
-  }
-
+async function uploadVoice(){
+  if(!isConnected){setSt('⚠ Önce sunucuya bağlanın','');return;}
+  if(!refFile){return;}
   setVlSt('uploading','⏳ Yükleniyor…');
   document.getElementById('clone-btn').disabled=true;
-  setSt('🔬 Ses Fish Audio\'ya yükleniyor…','loading');
-
+  setSt('📤 Ses sunucuya yükleniyor…','loading');
   try{
-    // Fish Audio model API — multipart/form-data
-    // Encode as msgpack-compatible JSON blob + file (Fish Audio v1 format)
+    const voiceId='voice_'+Date.now();
     const fd=new FormData();
-    fd.append('title', refFile.name.replace(/\.[^.]+$/,'') + ' — Klonlanan Ses');
-    fd.append('visibility', 'private');
-    fd.append('type', 'tts');
-    fd.append('train_mode', 'fast');
-    fd.append('voices', refFile, refFile.name);
-
-    // Log what we are sending for debugging
-    console.log('Sending to Fish Audio:',{
-      title: fd.get('title'),
-      visibility: fd.get('visibility'),
-      type: fd.get('type'),
-      file: refFile.name, size: refFile.size, mime: refFile.type
-    });
-
-    const res=await fetch('https://api.fish.audio/model',{
-      method:'POST',
-      headers:{'Authorization':'Bearer '+apiKey},
-      body:fd
-    });
-
-    // Read raw text for better error messages
-    const rawText=await res.text();
-    console.log('Fish Audio raw response ('+res.status+'):',rawText.slice(0,500));
-    let data;
-    try{data=JSON.parse(rawText);}catch(e){data={_raw:rawText};}
-
-    if(!res.ok){
-      let msg='HTTP '+res.status;
-      if(data.detail){
-        msg=typeof data.detail==='string'
-          ?data.detail
-          :Array.isArray(data.detail)
-            ?data.detail.map(d=>(d.loc||[]).join('.')+'→'+d.msg).join('; ')
-            :JSON.stringify(data.detail);
-      } else if(data.message){msg=data.message;}
-      else if(rawText&&rawText.length<500){msg=rawText;}
-      throw new Error('HTTP '+res.status+': '+msg);
-    }
-
-    const voiceId=data._id||data.id||data.model_id||data.modelId;
-    if(!voiceId)throw new Error('Ses ID alınamadı. API yanıtı: '+JSON.stringify(data).slice(0,400));
-
-    const name=refFile.name.replace(/\.[^.]+$/,'');
-    clonedVoices.push({id:voiceId,name});
+    fd.append('audio',refFile,refFile.name);
+    fd.append('voice_id',voiceId);
+    const res=await fetch(serverUrl+'/clone',{method:'POST',body:fd});
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.error||`HTTP ${res.status}`);
+    clonedVoices.push({id:voiceId,name:refFile.name.replace(/\.[^.]+$/,'')});
     activeVoiceId=voiceId;
+    setVlSt('ready','✅ Yüklendi');
+    setSt('✅ Ses yüklendi! Metin yazıp Ctrl+Q ile oluşturun','ok');
+    document.getElementById('step4').classList.add('done');
     renderCVList();
-    setVlSt('ready','✓ Klonlandı');
-    setSt('✓ Ses klonlandı! Metin yazıp Ctrl+Q ile oluşturun','ok');
-    document.getElementById('api-badge').className='api-badge ok';
-    document.getElementById('api-badge').textContent='✓ Bağlandı';
+    refreshUI();
   }catch(err){
-    const msg=err.message||'Bilinmeyen hata';
-    setVlSt('err','✕ Hata');
-    setSt('⚠ '+msg,'');
-    console.error('Clone error full:',err);
-    alert('Klonlama Hatası — Tam Mesaj:\n\n'+msg);
-    if(msg.includes('401')||msg.includes('403')||msg.includes('Unauthorized')){
-      document.getElementById('api-badge').className='api-badge err';
-      document.getElementById('api-badge').textContent='✕ Geçersiz anahtar';
-    }
+    setVlSt('err','✕ '+err.message);
+    setSt('⚠ '+err.message,'');
   }
   document.getElementById('clone-btn').disabled=false;
-  refreshUI();
 }
 
 function renderCVList(){
   const el=document.getElementById('cv-list');
-  if(!clonedVoices.length){el.innerHTML='<span style="color:var(--muted);font-size:11px">Henüz klonlanan ses yok.</span>';return;}
+  if(!clonedVoices.length){el.innerHTML='<span style="color:var(--muted);font-size:11px">Henüz ses yüklenmedi.</span>';return;}
   el.innerHTML=clonedVoices.map(v=>`
     <div class="cv-item${v.id===activeVoiceId?' active':''}" onclick="selectVoice('${v.id}')">
-      <span class="cv-item-icon">🎙️</span>
+      <span style="font-size:16px">🎙️</span>
       <div class="cv-item-info">
-        <div class="cv-item-name" style="color:${v.id===activeVoiceId?'var(--teal)':'var(--txt)'}">${v.name}</div>
-        <div class="cv-item-id">${v.id.slice(0,16)}…</div>
+        <div class="cv-item-name" style="color:${v.id===activeVoiceId?'var(--purple)':'var(--txt)'}">${v.name}</div>
       </div>
-      ${v.id===activeVoiceId?'<span class="cv-item-active">Aktif</span>':''}
-      <button class="cv-item-del" onclick="event.stopPropagation();deleteVoice('${v.id}')" title="Sil">✕</button>
+      ${v.id===activeVoiceId?'<span style="font-size:9px;color:var(--purple);background:rgba(167,139,250,.12);padding:2px 6px;border-radius:4px">Aktif</span>':''}
+      <button class="cv-item-del" onclick="event.stopPropagation();deleteVoice('${v.id}')">✕</button>
     </div>`).join('');
 }
-function selectVoice(id){activeVoiceId=id;renderCVList();refreshUI();setSt('✓ Ses seçildi — Ctrl+Q ile oluşturun','ok');}
+function selectVoice(id){activeVoiceId=id;renderCVList();refreshUI();}
 function deleteVoice(id){clonedVoices=clonedVoices.filter(v=>v.id!==id);if(activeVoiceId===id)activeVoiceId=clonedVoices[0]?.id||null;renderCVList();refreshUI();}
 
 // ═══════════════════════════════════
-// GENERATE — Fish Audio /v1/tts
+// GENERATE — POST /tts → WAV buffer
 // ═══════════════════════════════════
 async function generate(){
-  if(!apiKey||!activeVoiceId)return;
+  if(!isConnected||!activeVoiceId)return;
   const text=document.getElementById('txt').value.trim();
   if(!text){setSt('⚠ Metin girin','');return;}
-
   stopPlay();
-  setSt('⏳ Fish Audio ile ses oluşturuluyor…','loading');
+  setSt('⏳ XTTS v2 ses oluşturuyor… (~10-30sn)','loading');
   setGenBtn('loading');
   showProg(true);
-
   try{
-    animProg(0,55,1200);
-
-    const fmt=document.getElementById('fmt').value;
-
-    const body={
-      text:text,
-      reference_id:activeVoiceId,
-      format:fmt,
-      normalize:true,
-      latency:'normal',
-      chunk_length:200,
-    };
-
-    const res=await fetch('https://api.fish.audio/v1/tts',{
+    animProg(0,40,3000);
+    const lang=document.getElementById('lang-sel').value;
+    const res=await fetch(serverUrl+'/tts',{
       method:'POST',
-      headers:{
-        'Authorization':'Bearer '+apiKey,
-        'Content-Type':'application/json',
-      },
-      body:JSON.stringify(body)
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({text,voice_id:activeVoiceId,language:lang})
     });
-
-    if(!res.ok){
-      const err=await res.json().catch(()=>({}));
-      throw new Error(err.message||err.detail||`HTTP ${res.status}`);
-    }
-
-    animProg(55,85,800);
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||`HTTP ${res.status}`);}
+    animProg(40,85,1000);
     const arrayBuf=await res.arrayBuffer();
-    lastBlob=new Blob([arrayBuf],{type:'audio/'+fmt});
-
-    // Decode for Web Audio
+    lastBlob=new Blob([arrayBuf],{type:'audio/wav'});
     const ctx=AC();
     const decoded=await ctx.decodeAudioData(arrayBuf.slice(0));
     lastBuf=decoded;
-
     animProg(85,100,300);
-    await delay(320);
+    await delay(350);
     showProg(false);
-
     playBufWithFx(decoded);
-
   }catch(err){
     showProg(false);
     setGenBtn('idle');
-    setSt('⚠ Hata: '+err.message,'');
-    if(String(err.message).includes('401')||String(err.message).includes('403')){
-      document.getElementById('api-badge').className='api-badge err';
-      document.getElementById('api-badge').textContent='✕ Geçersiz anahtar';
-    }
+    setSt('⚠ '+err.message,'');
   }
 }
 
 // ═══════════════════════════════════
-// PLAY THROUGH EFFECTS CHAIN
+// PLAY WITH EFFECTS
 // ═══════════════════════════════════
 function playBufWithFx(buf){
   if(sourceNode){try{sourceNode.stop();}catch(e){}}
-
   const ctx=AC();
   const activeFx=EFFECTS.filter(e=>activeEffectIds.has(e.id));
   const pitchMult=activeFx.reduce((a,e)=>a*(e.pitchMult||1),1);
-  const vol=parseFloat(document.getElementById('vol').value);
-
-  // Build chain
   const entry=mkGn(ctx,1);
   let cur=entry;
   for(const fx of activeFx){const n=fx.create(ctx);cur.connect(n.input);cur=n.output;}
-
-  const master=mkGn(ctx,vol);
-  cur.connect(master);
-  master.connect(ctx.destination);
-
-  // Recorder output
+  const master=mkGn(ctx,1);
+  cur.connect(master);master.connect(ctx.destination);
   destNode=ctx.createMediaStreamDestination();
   master.connect(destNode);
   if(isRecording)startMR(destNode.stream);
-
   sourceNode=ctx.createBufferSource();
   sourceNode.buffer=buf;
   sourceNode.playbackRate.value=pitchMult;
   sourceNode.connect(entry);
-  sourceNode.onended=()=>{
-    isPlaying=false;stopViz();setGenBtn('idle');
-    setSt('✓ Oynatma tamamlandı','ok');
-    if(isRecording)finishRec();
-    document.getElementById('btn-dl').disabled=!lastBlob;
-  };
+  sourceNode.onended=()=>{isPlaying=false;stopViz();setGenBtn('idle');setSt('✅ Tamamlandı','ok');if(isRecording)finishRec();document.getElementById('btn-dl').disabled=!lastBlob;};
   sourceNode.start();
-  isPlaying=true;
-  startViz();
-  setGenBtn('playing');
-  setSt('▶ Klonlanan ses oynatılıyor…','play');
+  isPlaying=true;startViz();setGenBtn('playing');
+  setSt('▶ XTTS v2 klonlanan ses oynatılıyor…','play');
 }
-
-function stopPlay(){
-  if(sourceNode){try{sourceNode.stop();}catch(e){}}
-  sourceNode=null;isPlaying=false;isPaused=false;
-  stopViz();setGenBtn('idle');
-  document.getElementById('btn-pause').textContent='⏸';
-}
-function pausePlay(){
-  if(!_ac)return;
-  if(_ac.state==='running'&&isPlaying){_ac.suspend();isPaused=true;document.getElementById('btn-pause').textContent='▶';setSt('⏸ Duraklatıldı','');}
-  else if(_ac.state==='suspended'){_ac.resume();isPaused=false;document.getElementById('btn-pause').textContent='⏸';setSt('▶ Devam…','play');}
-}
-function replayWithNewFx(){
-  if(!lastBlob||isPlaying)return;
-  lastBlob.arrayBuffer().then(ab=>AC().decodeAudioData(ab).then(buf=>{lastBuf=buf;playBufWithFx(buf);}));
-}
+function stopPlay(){if(sourceNode){try{sourceNode.stop();}catch(e){}}sourceNode=null;isPlaying=false;isPaused=false;stopViz();setGenBtn('idle');document.getElementById('btn-pause').textContent='⏸';}
+function pausePlay(){if(!_ac)return;if(_ac.state==='running'&&isPlaying){_ac.suspend();isPaused=true;document.getElementById('btn-pause').textContent='▶';setSt('⏸ Duraklatıldı','');}else if(_ac.state==='suspended'){_ac.resume();isPaused=false;document.getElementById('btn-pause').textContent='⏸';setSt('▶ Devam…','play');}}
+function replayWithNewFx(){if(!lastBlob||isPlaying)return;lastBlob.arrayBuffer().then(ab=>AC().decodeAudioData(ab).then(buf=>{lastBuf=buf;playBufWithFx(buf);}));}
 
 // ═══════════════════════════════════
 // RECORDING
@@ -749,52 +675,31 @@ async function toggleRec(){
   document.getElementById('btn-rec').classList.add('active');
   document.getElementById('btn-rec').textContent='⏹ Durdur';
   document.getElementById('btn-dl').disabled=true;
-  if(isPlaying&&destNode){startMR(destNode.stream);}
-  else{setSt('⏺ Kayıt hazır — Ctrl+Q ile oluşturun','rec');}
+  if(isPlaying&&destNode)startMR(destNode.stream);
+  else setSt('⏺ Kayıt hazır — Ctrl+Q ile oluşturun','rec');
 }
-function startMR(stream){
-  const mime=['audio/webm;codecs=opus','audio/webm','audio/ogg'].find(t=>MediaRecorder.isTypeSupported(t))||'audio/webm';
-  mediaRec=new MediaRecorder(stream,{mimeType:mime});
-  mediaRec.ondataavailable=e=>{if(e.data.size>0)recChunks.push(e.data);};
-  mediaRec.start(100);setSt('⏺ Kaydediliyor…','rec');
-}
-function finishRec(){
-  isRecording=false;
-  document.getElementById('btn-rec').classList.remove('active');
-  document.getElementById('btn-rec').textContent='⏺ Kayıt';
-  if(mediaRec&&mediaRec.state!=='inactive')mediaRec.stop();
-  setTimeout(()=>{
-    if(recChunks.length){recBlob=new Blob(recChunks,{type:'audio/webm'});document.getElementById('btn-dl').disabled=false;setSt('✓ Kayıt hazır — İndir','ok');}
-  },350);
-}
-function download(){
-  const blob=recBlob||lastBlob;if(!blob)return;
-  const ext=recBlob?'webm':(document.getElementById('fmt').value||'mp3');
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download=`klonlanan-ses-${Date.now()}.${ext}`;a.click();URL.revokeObjectURL(url);
-}
+function startMR(stream){const mime=['audio/webm;codecs=opus','audio/webm','audio/ogg'].find(t=>MediaRecorder.isTypeSupported(t))||'audio/webm';mediaRec=new MediaRecorder(stream,{mimeType:mime});mediaRec.ondataavailable=e=>{if(e.data.size>0)recChunks.push(e.data);};mediaRec.start(100);setSt('⏺ Kaydediliyor…','rec');}
+function finishRec(){isRecording=false;document.getElementById('btn-rec').classList.remove('active');document.getElementById('btn-rec').textContent='⏺ Kayıt';if(mediaRec&&mediaRec.state!=='inactive')mediaRec.stop();setTimeout(()=>{if(recChunks.length){recBlob=new Blob(recChunks,{type:'audio/webm'});document.getElementById('btn-dl').disabled=false;setSt('✅ Kayıt hazır — İndir','ok');}},350);}
+function dlAudio(){const blob=recBlob||lastBlob;if(!blob)return;const ext=recBlob?'webm':'wav';const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`xtts-klonlanan-${Date.now()}.${ext}`;a.click();URL.revokeObjectURL(url);}
 
 // ═══════════════════════════════════
 // VISUALIZER
 // ═══════════════════════════════════
 (()=>{const el=document.getElementById('viz');if(!el)return;for(let i=0;i<44;i++){const b=document.createElement('div');b.className='vbar';el.appendChild(b);}})();
-function startViz(){
-  const el=document.getElementById('viz');if(!el||vizTimer.t)return;
-  const bars=el.querySelectorAll('.vbar');
-  vizTimer.t=setInterval(()=>{bars.forEach(b=>{b.style.height=(4+Math.random()*34)+'px';b.classList.add('on');});},85);
-}
-function stopViz(){
-  clearInterval(vizTimer.t);vizTimer.t=null;
-  document.querySelectorAll('#viz .vbar').forEach(b=>{b.style.height='5px';b.classList.remove('on');});
-}
+function startViz(){const el=document.getElementById('viz');if(!el||vizTimer.t)return;const bars=el.querySelectorAll('.vbar');vizTimer.t=setInterval(()=>{bars.forEach(b=>{b.style.height=(4+Math.random()*34)+'px';b.classList.add('on');});},85);}
+function stopViz(){clearInterval(vizTimer.t);vizTimer.t=null;document.querySelectorAll('#viz .vbar').forEach(b=>{b.style.height='5px';b.classList.remove('on');});}
 
 // ═══════════════════════════════════
-// PROGRESS
+// PROGRESS & UTILS
 // ═══════════════════════════════════
-let _progAnim=null;
-function showProg(s){document.getElementById('gen-prog').classList.toggle('show',s);if(!s){document.getElementById('gen-fill').style.width='0%';clearInterval(_progAnim);}}
-function animProg(from,to,ms){clearInterval(_progAnim);const fill=document.getElementById('gen-fill'),steps=20,step=(to-from)/steps,iv=ms/steps;let cur=from;fill.style.width=from+'%';_progAnim=setInterval(()=>{cur+=step;fill.style.width=Math.min(cur,to)+'%';if(cur>=to)clearInterval(_progAnim);},iv);}
+let _pa=null;
+function showProg(s){document.getElementById('gen-prog').classList.toggle('show',s);if(!s){document.getElementById('gen-fill').style.width='0%';clearInterval(_pa);}}
+function animProg(from,to,ms){clearInterval(_pa);const fill=document.getElementById('gen-fill'),steps=20,step=(to-from)/steps,iv=ms/steps;let cur=from;fill.style.width=from+'%';_pa=setInterval(()=>{cur+=step;fill.style.width=Math.min(cur,to)+'%';if(cur>=to)clearInterval(_pa);},iv);}
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
+function setSt(msg,state){document.getElementById('stxt').textContent=msg;document.getElementById('sdot').className='sdot'+(state?' '+state:'');}
+function setGenBtn(mode){const btn=document.getElementById('btn-gen');if(mode==='loading'){btn.disabled=true;btn.innerHTML='⏳ Oluşturuluyor…';}else if(mode==='playing'){btn.disabled=false;btn.innerHTML='■ Oynuyor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}else{btn.disabled=!(isConnected&&activeVoiceId&&document.getElementById('txt').value.trim());btn.innerHTML='▶ Oluştur&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}}
+function refreshUI(){document.getElementById('clone-btn').disabled=!(isConnected&&refFile);setGenBtn('idle');}
+function onTextInput(){document.getElementById('char-ct').textContent=document.getElementById('txt').value.length+' karakter';refreshUI();}
 
 // ═══════════════════════════════════
 // EFFECTS UI
@@ -803,44 +708,10 @@ const CATS=['Tümü',...new Set(EFFECTS.map(e=>e.cat))];
 let activeCat='';
 function buildPills(){document.getElementById('cat-pills').innerHTML=CATS.map(c=>`<button class="cpill${c==='Tümü'?' on':''}" onclick="setCat('${c==='Tümü'?'':c}','${c}')">${c}</button>`).join('');}
 function setCat(cat,label){activeCat=cat;document.querySelectorAll('.cpill').forEach(p=>p.classList.toggle('on',p.textContent===label));renderFx();}
-function renderFx(){
-  const q=document.getElementById('eff-search').value.toLowerCase();
-  const list=EFFECTS.filter(e=>(!q||e.name.toLowerCase().includes(q)||e.cat.toLowerCase().includes(q)||e.id.includes(q))&&(!activeCat||e.cat===activeCat));
-  const grid=document.getElementById('eff-grid');
-  if(!list.length){grid.innerHTML='<div class="no-res">Sonuç bulunamadı 🔍</div>';return;}
-  grid.innerHTML=list.map(e=>{
-    const on=activeEffectIds.has(e.id);
-    return`<div class="eff-card${on?' on':''}" onclick="toggleFx('${e.id}')">
-      <span class="eff-cb"></span>
-      <span class="eff-emoji">${e.emoji}</span>
-      <span class="eff-name">${e.name}</span>
-      <span class="eff-cat">${e.cat}</span>
-    </div>`;
-  }).join('');
-}
-function toggleFx(id){
-  if(activeEffectIds.has(id))activeEffectIds.delete(id);else activeEffectIds.add(id);
-  renderFx();document.getElementById('eff-count').textContent=activeEffectIds.size+' aktif';
-  if(lastBlob&&!isPlaying)replayWithNewFx();
-}
+function renderFx(){const q=document.getElementById('eff-search').value.toLowerCase();const list=EFFECTS.filter(e=>(!q||e.name.toLowerCase().includes(q)||e.cat.toLowerCase().includes(q))&&(!activeCat||e.cat===activeCat));const grid=document.getElementById('eff-grid');if(!list.length){grid.innerHTML='<div class="no-res">Sonuç bulunamadı 🔍</div>';return;}grid.innerHTML=list.map(e=>{const on=activeEffectIds.has(e.id);return`<div class="eff-card${on?' on':''}" onclick="toggleFx('${e.id}')"><span class="eff-cb"></span><span class="eff-emoji">${e.emoji}</span><span class="eff-name">${e.name}</span><span class="eff-cat">${e.cat}</span></div>`;}).join('');}
+function toggleFx(id){if(activeEffectIds.has(id))activeEffectIds.delete(id);else activeEffectIds.add(id);renderFx();document.getElementById('eff-count').textContent=activeEffectIds.size+' aktif';if(lastBlob&&!isPlaying)replayWithNewFx();}
 function clearFx(){activeEffectIds.clear();renderFx();document.getElementById('eff-count').textContent='0 aktif';}
 buildPills();renderFx();
-
-// ═══════════════════════════════════
-// UTILS
-// ═══════════════════════════════════
-function setSt(msg,state){document.getElementById('stxt').textContent=msg;document.getElementById('sdot').className='sdot'+(state?' '+state:'');}
-function setGenBtn(mode){
-  const btn=document.getElementById('btn-gen');
-  if(mode==='loading'){btn.disabled=true;btn.innerHTML='⏳ Oluşturuluyor…';}
-  else if(mode==='playing'){btn.disabled=false;btn.innerHTML='■ Oynuyor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}
-  else{btn.disabled=!(apiKey&&activeVoiceId&&document.getElementById('txt').value.trim());btn.innerHTML='▶ Oluştur&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}
-}
-function refreshUI(){
-  document.getElementById('clone-btn').disabled=!(apiKey&&refFile);
-  setGenBtn('idle');
-}
-function onTextInput(){document.getElementById('char-ct').textContent=document.getElementById('txt').value.length+' karakter';refreshUI();}
 
 // ═══════════════════════════════════
 // KEYBOARD
