@@ -513,7 +513,7 @@ async function testConnection(){
   if(!serverUrl){setSt('⚠ URL girin','');return;}
   setCdot('checking','🔌 Bağlantı test ediliyor…');
   try{
-    const res=await fetch(serverUrl+'/health',{method:'GET',signal:AbortSignal.timeout(8000)});
+    const res=await fetch(serverUrl+'/health',{method:'GET',headers:{'ngrok-skip-browser-warning':'true'},signal:AbortSignal.timeout(8000)});
     const data=await res.json();
     if(data.status==='ok'){
       isConnected=true;
@@ -567,7 +567,7 @@ async function uploadVoice(){
     const fd=new FormData();
     fd.append('audio',refFile,refFile.name);
     fd.append('voice_id',voiceId);
-    const res=await fetch(serverUrl+'/clone',{method:'POST',body:fd});
+    const res=await fetch(serverUrl+'/clone',{method:'POST',headers:{'ngrok-skip-browser-warning':'true'},body:fd});
     const data=await res.json();
     if(!res.ok)throw new Error(data.error||`HTTP ${res.status}`);
     clonedVoices.push({id:voiceId,name:refFile.name.replace(/\.[^.]+$/,'')});
@@ -616,7 +616,7 @@ async function generate(){
     const lang=document.getElementById('lang-sel').value;
     const res=await fetch(serverUrl+'/tts',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{'Content-Type':'application/json','ngrok-skip-browser-warning':'true'},
       body:JSON.stringify({text,voice_id:activeVoiceId,language:lang})
     });
     if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||`HTTP ${res.status}`);}
