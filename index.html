@@ -799,6 +799,7 @@ input[type=range]::-webkit-slider-thumb:hover{
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color:var(--acc3)"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
     <span class="eff-head-title">Ses Efektleri</span>
     <span class="eff-ct" id="eff-count">0 aktif</span>
+    <span id="eff-warning" style="display:none;font-size:10px;color:#ff4560;background:rgba(255,69,96,.1);border:1px solid rgba(255,69,96,.25);padding:3px 9px;border-radius:10px;"></span>
     <div class="eff-head-right">
       <button class="btn-sm save" onclick="savePreset()">＋ Preset Kaydet</button>
       <button class="btn-sm clear" onclick="clearFx()">✕ Temizle</button>
@@ -1402,11 +1403,50 @@ function renderFx(){
   }).join('');
 }
 function toggleFx(id){
-  if(activeEffectIds.has(id))activeEffectIds.delete(id);else activeEffectIds.add(id);
+  if(activeEffectIds.has(id)){
+    activeEffectIds.delete(id);
+  } else {
+    // Category conflict check: only 1 per category allowed for Karakter
+    const fx=EFFECTS.find(e=>e.id===id);
+    if(fx&&fx.cat==='Karakter'){
+      // Remove other Karakter effects first
+      const karakter=EFFECTS.filter(e=>e.cat==='Karakter'&&activeEffectIds.has(e.id));
+      if(karakter.length>0){
+        karakter.forEach(k=>activeEffectIds.delete(k.id));
+      }
+    }
+    // Perde category: only 1 pitch effect at a time
+    if(fx&&fx.cat==='Perde'){
+      const perde=EFFECTS.filter(e=>e.cat==='Perde'&&activeEffectIds.has(e.id));
+      perde.forEach(k=>activeEffectIds.delete(k.id));
+    }
+    activeEffectIds.add(id);
+  }
   renderFx();updateEffCount();checkPresetActive();updateActiveFxStrip();
+  checkEffectWarning();
 }
+
+function checkEffectWarning(){
+  const warn=document.getElementById('eff-warning');
+  if(!warn)return;
+  const active=EFFECTS.filter(e=>activeEffectIds.has(e.id));
+  const hasSpace=active.some(e=>e.cat==='Mekan');
+  const hasReverb=active.some(e=>['reverb_small','reverb_room','reverb_med','reverb_plate','reverb_large','reverb_hall'].includes(e.id));
+  const hasEcho=active.some(e=>['echo','echo_long'].includes(e.id));
+  const warnings=[];
+  if(hasSpace&&hasReverb)warnings.push('Mekan + Reverb çakışması');
+  if(hasSpace&&hasEcho)warnings.push('Mekan + Echo çakışması');
+  if(active.length>4)warnings.push(active.length+' efekt çok fazla olabilir');
+  if(warnings.length){
+    warn.style.display='inline-flex';
+    warn.textContent='⚠ '+warnings.join(' · ');
+  } else {
+    warn.style.display='none';
+  }
+}
+
 function updateEffCount(){document.getElementById('eff-count').textContent=activeEffectIds.size+' aktif';}
-function clearFx(){activeEffectIds.clear();renderFx();updateEffCount();checkPresetActive();updateActiveFxStrip();}
+function clearFx(){activeEffectIds.clear();renderFx();updateEffCount();checkPresetActive();updateActiveFxStrip();checkEffectWarning();}
 
 // ═══════════════════════════════════════════
 // PRESETS
@@ -1422,7 +1462,7 @@ function savePreset(){
 function loadPreset(id){
   const p=presets.find(p=>p.id===id);if(!p)return;
   activeEffectIds=new Set(p.effects);activePresetId=id;
-  renderFx();updateEffCount();renderPresets();updateActiveFxStrip();
+  renderFx();updateEffCount();renderPresets();updateActiveFxStrip();checkEffectWarning();
 }
 function deletePreset(id){
   if(!confirm('Preset silinsin mi?'))return;
@@ -1462,4 +1502,3 @@ document.addEventListener('keydown',e=>{
 </script>
 </body>
 </html>
-
