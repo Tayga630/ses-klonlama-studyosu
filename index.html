@@ -463,10 +463,24 @@ function apiFetch(path, opts={}){
 function onSettings(){
   const k=getKey();
   const b=document.getElementById('key-badge');
-  if(k.length>10){b.className='status-chip ok';b.textContent='✓ Girildi';}
-  else{b.className='status-chip';b.textContent='Girilmedi';}
+  if(k.length>10){
+    b.className='status-chip ok';b.textContent='✓ Girildi';
+    localStorage.setItem('el_api_key', k);
+  } else {
+    b.className='status-chip';b.textContent='Girilmedi';
+    localStorage.removeItem('el_api_key');
+  }
   refreshUI();
 }
+
+// API key'i sayfa açılışında yükle
+(function loadSavedKey(){
+  const saved=localStorage.getItem('el_api_key');
+  if(saved){
+    document.getElementById('api-key').value=saved;
+    onSettings();
+  }
+})();
 
 async function testProxy(){
   const proxy=getProxy();
@@ -568,6 +582,18 @@ async function deleteVoice(id){
 // ═══════════════════════
 // GENERATE
 // ═══════════════════════
+// Noktalama işaretlerini SSML duraklamalarına dönüştür
+function applyPunctuationPauses(text){
+  // SSML destekleniyorsa break tag kullan
+  let t = text
+    .replace(/\.\.\./g, '<break time="900ms"/>')   // üç nokta → 900ms
+    .replace(/\./g,     '. <break time="650ms"/>') // nokta → 650ms
+    .replace(/\?/g,     '? <break time="650ms"/>') // soru işareti → 650ms
+    .replace(/!/g,      '! <break time="650ms"/>') // ünlem → 650ms
+    .replace(/,/g,      ', <break time="300ms"/>'); // virgül → 300ms
+  return '<speak>' + t + '</speak>';
+}
+
 async function generate(){
   if(!getKey()||!activeVoiceId)return;
   const text=document.getElementById('txt').value.trim();
@@ -581,11 +607,17 @@ async function generate(){
     const stability=parseInt(document.getElementById('stability').value)/100;
     const similarity=parseInt(document.getElementById('similarity').value)/100;
     const style=parseInt(document.getElementById('style').value)/100;
+
+    // Noktalama işaretlerini SSML break tag'lerine dönüştür
+    const processedText = applyPunctuationPauses(text);
+    const isSSML = processedText.startsWith('<speak>');
+
     const r=await apiFetch(`/v1/text-to-speech/${activeVoiceId}`,{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'audio/mpeg'},
       body:JSON.stringify({
-        text,model_id:model,
+        text: processedText,
+        model_id: model,
         voice_settings:{stability,similarity_boost:similarity,style,use_speaker_boost:true}
       })
     });
@@ -656,7 +688,10 @@ let activeCat='';
 function buildPills(){document.getElementById('cat-pills').innerHTML=CATS.map(c=>`<button class="cpill${c==='Tümü'?' on':''}" onclick="setCat('${c==='Tümü'?'':c}','${c}')">${c}</button>`).join('');}
 function setCat(cat,label){activeCat=cat;document.querySelectorAll('.cpill').forEach(p=>p.classList.toggle('on',p.textContent===label));renderFx();}
 function renderFx(){const q=document.getElementById('eff-search').value.toLowerCase();const list=EFFECTS.filter(e=>(!q||e.name.toLowerCase().includes(q)||e.cat.toLowerCase().includes(q))&&(!activeCat||e.cat===activeCat));const grid=document.getElementById('eff-grid');if(!list.length){grid.innerHTML='<div class="no-res">Sonuç bulunamadı 🔍</div>';return;}grid.innerHTML=list.map(e=>{const on=activeEffectIds.has(e.id);return`<div class="eff-card${on?' on':''}" onclick="toggleFx('${e.id}')"><span class="eff-cb"></span><span class="eff-emoji">${e.emoji}</span><span class="eff-name">${e.name}</span><span class="eff-cat">${e.cat}</span></div>`;}).join('');}
-function toggleFx(id){if(activeEffectIds.has(id))activeEffectIds.delete(id);else activeEffectIds.add(id);renderFx();document.getElementById('eff-count').textContent=activeEffectIds.size+' aktif';if(lastBlob&&!isPlaying)replayFx();}
+function toggleFx(id){if(activeEffectIds.has(id))activeEffectIds.delete(id);else activeEffectIds.add(id);renderFx();document.getElementById('eff-count').textContent=activeEffectIds.size+' aktif';
+  // Eğer şu an oynatılıyorsa efekti güncelle ama yeniden başlatma
+  // Bir sonraki "Oluştur" butonunda seçili efektler uygulanacak
+}
 function clearFx(){activeEffectIds.clear();renderFx();document.getElementById('eff-count').textContent='0 aktif';}
 buildPills();renderFx();
 
