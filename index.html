@@ -498,6 +498,25 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
 .err-action{font-size:11px;color:var(--txt3);background:var(--sur3);border-radius:var(--r);padding:9px 12px;margin-bottom:16px;line-height:1.6;}
 .err-action strong{color:var(--txt);display:block;margin-bottom:2px;}
 
+/* ─── BACKUP PANEL ──────────────────────────────────────── */
+.backup-bar{
+  background:var(--sur);border:1px solid var(--brd);border-radius:var(--r2);
+  padding:11px 16px;margin-bottom:14px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.backup-bar-title{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;display:flex;align-items:center;gap:7px;}
+.backup-info{font-size:10px;color:var(--txt3);flex:1;}
+.backup-info strong{color:var(--good);}
+.backup-info.warn strong{color:var(--amber);}
+.backup-last{font-size:9.5px;color:var(--txt3);font-family:'DM Mono',monospace;}
+.backup-drop{
+  border:2px dashed var(--brd2);border-radius:var(--r);
+  padding:18px;text-align:center;cursor:pointer;transition:all .18s;
+  position:relative;background:var(--sur3);
+}
+.backup-drop:hover,.backup-drop.drag{border-color:var(--acc);background:rgba(0,229,180,.04);}
+.backup-drop input{position:absolute;inset:0;opacity:0;cursor:pointer;}
+
 /* ─── PRONOUNCE PANEL ───────────────────────────────────── */
 .dict-panel{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r2);margin-bottom:14px;overflow:hidden;}
 .dict-head{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--brd);flex-wrap:wrap;}
@@ -937,6 +956,30 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
   </div>
 </div><!-- /view-library -->
 
+<!-- ═══ YEDEKLEME ÇUBUĞU ════════════════════════════════ -->
+<div class="backup-bar" id="backup-bar">
+  <div class="backup-bar-title">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--good)" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    Veri Yedekleme
+  </div>
+  <div class="backup-info" id="backup-info">
+    <strong>Verilerinizi düzenli yedekleyin</strong> — Tarayıcı geçmişi/önbellek temizlenince tüm veriler silinir.
+  </div>
+  <span class="backup-last" id="backup-last-time"></span>
+  <div style="display:flex;gap:7px;flex-wrap:wrap;">
+    <button class="btn btn-good btn-sm" id="btn-backup-export">
+      ↓ Tüm Verileri Yedekle
+    </button>
+    <label class="btn btn-blue btn-sm" style="cursor:pointer;">
+      ↑ Yedekten Geri Yükle
+      <input type="file" id="backup-import-inp" accept=".json" style="display:none;">
+    </label>
+    <button class="btn btn-amber btn-sm" id="btn-auto-restore" title="Uygulamanın otomatik tuttuğu son anlık yedekten geri yükle">
+      ↺ Otomatik Yedekten Kurtar
+    </button>
+  </div>
+</div>
+
 <!-- ═══ TELAFFUZ SÖZLÜĞÜ ════════════════════════════════ -->
 <div class="dict-panel" id="dict-panel">
   <div class="dict-head">
@@ -1098,6 +1141,12 @@ const Store = (() => {
   function set(patch) {
     _s = { ..._s, ...patch };
     _subs.forEach(fn => fn(_s));
+    // Kritik veriler değişince otomatik yedekle
+    const criticalKeys = ['voices','presets','profiles','settings','activeVoiceId'];
+    if (criticalKeys.some(k => k in patch)) {
+      // Defer to avoid blocking render
+      setTimeout(() => { if (typeof Backup !== 'undefined') Backup.autoSave(); }, 300);
+    }
   }
 
   function load() {
@@ -2799,6 +2848,259 @@ const Ctrl = (() => {
 // EVENT BINDING + INIT
 // ═══════════════════════════════════════════════════════════
 // ═══════════════════════════════════════════════════════════
+// BACKUP — Otomatik + Manuel yedekleme sistemi
+// ═══════════════════════════════════════════════════════════
+const Backup = (() => {
+  const LS_KEYS = [
+    'el_api_key', 'el_proxy_url', 'el_voices',
+    'el_presets', 'el_settings', 'el_profiles',
+    'vf_pronounce_dict', 'vf_ihtisam_ver',
+  ];
+  const BACKUP_TS_KEY  = 'vf_last_backup';
+  const AUTO_DATA_KEY  = 'vf_auto_backup_data';   // otomatik yedek verisi
+  const AUTO_TS_KEY    = 'vf_auto_backup_ts';     // otomatik yedek zamanı
+  const CHANGE_CT_KEY  = 'vf_change_count';       // değişim sayacı
+  const AUTO_THRESHOLD = 3;                        // 3 değişimde bir otomatik yedekle
+
+  // ── Export ──────────────────────────────────────────────
+  async function exportAll() {
+    const data = { version: '1.0', ts: Date.now(), app: 'VoiceForge İhtişam', ls: {} };
+
+    // localStorage
+    LS_KEYS.forEach(key => {
+      const val = localStorage.getItem(key);
+      if (val) data.ls[key] = val;
+    });
+
+    // IndexedDB — library + scenarios
+    try {
+      const libItems  = await DB.getAll('library');
+      const scenarios = await DB.getAll('scenarios');
+      // Convert ArrayBuffers to base64 for JSON serialization
+      data.library = await Promise.all(libItems.map(async item => {
+        const copy = { ...item };
+        if (item.ab) {
+          copy.ab_b64 = _ab2b64(item.ab);
+          delete copy.ab;
+        }
+        return copy;
+      }));
+      data.scenarios = scenarios;
+    } catch(e) {
+      console.warn('IndexedDB export partial:', e);
+      data.library = [];
+      data.scenarios = [];
+    }
+
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    const date = new Date().toLocaleDateString('tr-TR').replace(/\./g,'-');
+    a.href = url;
+    a.download = `voiceforge-yedek-${date}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    // Save backup timestamp
+    const now = new Date().toLocaleString('tr-TR');
+    localStorage.setItem(BACKUP_TS_KEY, now);
+    updateLastBackupInfo();
+    Errors.ok('✅ Veriler yedeklendi! Dosyayı güvenli bir yere kaydedin.');
+  }
+
+  // ── Import ──────────────────────────────────────────────
+  async function importFrom(file) {
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+
+      if (!data.ls && !data.library) {
+        Errors.err('Geçersiz yedek dosyası.');
+        return;
+      }
+
+      const confirm_msg = `Bu işlem mevcut verilerinizin üzerine yazacak.
+
+Yedek tarihi: ${data.ts ? new Date(data.ts).toLocaleString('tr-TR') : 'Bilinmiyor'}
+Ses sayısı: ${data.ls?.el_voices ? JSON.parse(data.ls.el_voices).length : 0}
+Kütüphane: ${data.library?.length || 0} ses
+Senaryo: ${data.scenarios?.length || 0}
+
+Devam etmek istiyor musunuz?`;
+      if (!confirm(confirm_msg)) return;
+
+      // Restore localStorage
+      if (data.ls) {
+        Object.entries(data.ls).forEach(([key, val]) => {
+          localStorage.setItem(key, val);
+        });
+      }
+
+      // Restore IndexedDB
+      if (data.library?.length) {
+        for (const item of data.library) {
+          const restored = { ...item };
+          if (item.ab_b64) {
+            restored.ab = _b642ab(item.ab_b64);
+            delete restored.ab_b64;
+          }
+          try { await DB.put('library', restored); } catch(e) { console.warn('lib item restore fail:', e); }
+        }
+      }
+      if (data.scenarios?.length) {
+        for (const sc of data.scenarios) {
+          try { await DB.put('scenarios', sc); } catch(e) {}
+        }
+      }
+
+      Errors.ok('✅ Veriler geri yüklendi! Sayfa yenileniyor…');
+      setTimeout(() => location.reload(), 1500);
+    } catch(e) {
+      Errors.err('Yedek dosyası okunamadı: ' + e.message);
+    }
+  }
+
+  // ── Auto-remind ──────────────────────────────────────────
+  function checkBackupReminder() {
+    const last = localStorage.getItem(BACKUP_TS_KEY);
+    const info = document.getElementById('backup-info');
+    const bar  = document.getElementById('backup-bar');
+    if (!info) return;
+
+    if (!last) {
+      // Never backed up
+      info.innerHTML = '<strong>⚠ Hiç yedek alınmamış!</strong> Tarayıcı önbelleği temizlenirse tüm veriler silinir.';
+      info.className = 'backup-info warn';
+      if (bar) bar.style.borderColor = 'rgba(240,165,0,.4)';
+    } else {
+      info.innerHTML = `<strong>✅ Verileriniz güvende</strong> — Son yedek: ${last}`;
+      info.className = 'backup-info';
+    }
+    updateLastBackupInfo();
+  }
+
+  function updateLastBackupInfo() {
+    const el = document.getElementById('backup-last-time');
+    if (!el) return;
+    const last = localStorage.getItem(BACKUP_TS_KEY);
+    el.textContent = last ? 'Son yedek: ' + last : '';
+  }
+
+  // ── Helpers ──────────────────────────────────────────────
+  function _ab2b64(ab) {
+    const bytes = new Uint8Array(ab);
+    let binary = '';
+    for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+    return btoa(binary);
+  }
+  function _b642ab(b64) {
+    const binary = atob(b64);
+    const ab = new ArrayBuffer(binary.length);
+    const view = new Uint8Array(ab);
+    for (let i = 0; i < binary.length; i++) view[i] = binary.charCodeAt(i);
+    return ab;
+  }
+
+  function bindEvents() {
+    document.getElementById('btn-backup-export')?.addEventListener('click', exportAll);
+    document.getElementById('btn-auto-restore')?.addEventListener('click', restoreFromAutoBackup);
+    document.getElementById('backup-import-inp')?.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) importFrom(file);
+      e.target.value = '';
+    });
+  }
+
+
+  // ── Otomatik yedekleme — veri değişince çağır ──────────
+  function autoSave() {
+    try {
+      const snapshot = _collectLS();
+      localStorage.setItem(AUTO_DATA_KEY, JSON.stringify(snapshot));
+      localStorage.setItem(AUTO_TS_KEY, Date.now().toString());
+
+      // Değişim sayacını artır
+      const ct = parseInt(localStorage.getItem(CHANGE_CT_KEY) || '0') + 1;
+      localStorage.setItem(CHANGE_CT_KEY, ct.toString());
+
+      // Eşiğe ulaşınca kullanıcıya uyarı ver
+      if (ct >= AUTO_THRESHOLD) {
+        localStorage.setItem(CHANGE_CT_KEY, '0');
+        _showBackupNudge();
+      }
+      updateLastBackupInfo();
+    } catch(e) { console.warn('autoSave error:', e); }
+  }
+
+  // Bildirim balonu — "Yedekle" butonu önerir
+  function _showBackupNudge() {
+    const existing = document.getElementById('backup-nudge');
+    if (existing) return; // zaten gösteriliyor
+    const div = document.createElement('div');
+    div.id = 'backup-nudge';
+    div.style.cssText = [
+      'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:9999',
+      'background:#0c1118;border:1px solid rgba(0,214,143,.4);border-radius:12px',
+      'padding:13px 20px;display:flex;align-items:center;gap:12px',
+      'box-shadow:0 8px 32px rgba(0,0,0,.5);font-size:12px;color:#d8e0f5',
+      'animation:toastIn .25s ease',
+    ].join(';');
+    div.innerHTML = `
+      <span style="font-size:18px">💾</span>
+      <div>
+        <div style="font-weight:600;margin-bottom:2px;">Verilerinizi yedekleyin</div>
+        <div style="font-size:10.5px;color:#8492b8;">Ses profilleriniz ve ayarlarınız değişti.</div>
+      </div>
+      <button id="nudge-backup-btn" style="
+        background:rgba(0,214,143,.1);border:1px solid rgba(0,214,143,.3);
+        color:#00d68f;border-radius:7px;padding:7px 14px;cursor:pointer;
+        font-family:'Syne',sans-serif;font-weight:700;font-size:11px;white-space:nowrap;
+      ">↓ Şimdi Yedekle</button>
+      <button id="nudge-close-btn" style="
+        background:transparent;border:none;color:#48567a;
+        cursor:pointer;font-size:16px;padding:0 4px;
+      ">✕</button>`;
+    document.body.appendChild(div);
+    document.getElementById('nudge-backup-btn')?.addEventListener('click', () => {
+      exportAll(); div.remove();
+    });
+    document.getElementById('nudge-close-btn')?.addEventListener('click', () => div.remove());
+    // 12 saniye sonra otomatik kapat
+    setTimeout(() => { if (div.parentNode) div.remove(); }, 12000);
+  }
+
+  // Acil kurtarma — otomatik yedekten geri yükle
+  async function restoreFromAutoBackup() {
+    const raw = localStorage.getItem(AUTO_DATA_KEY);
+    if (!raw) { Errors.warn('Otomatik yedek bulunamadı.'); return; }
+    try {
+      const snapshot = JSON.parse(raw);
+      const ts = localStorage.getItem(AUTO_TS_KEY);
+      const tsStr = ts ? new Date(parseInt(ts)).toLocaleString('tr-TR') : 'Bilinmiyor';
+      const voiceCount = snapshot['el_voices'] ? JSON.parse(snapshot['el_voices']).length : 0;
+      if (!confirm(`Otomatik yedekten geri yüklensin mi?
+
+Yedek tarihi: ${tsStr}
+Ses sayısı: ${voiceCount}
+
+Mevcut veriler üzerine yazılacak.`)) return;
+      Object.entries(snapshot).forEach(([k,v]) => localStorage.setItem(k, v));
+      Errors.ok('✅ Otomatik yedekten geri yüklendi! Sayfa yenileniyor…');
+      setTimeout(() => location.reload(), 1200);
+    } catch(e) { Errors.err('Geri yükleme başarısız: ' + e.message); }
+  }
+
+  function _collectLS() {
+    const snap = {};
+    LS_KEYS.forEach(k => { const v = localStorage.getItem(k); if(v) snap[k] = v; });
+    return snap;
+  }
+
+  return { exportAll, importFrom, restoreFromAutoBackup, autoSave, checkBackupReminder, bindEvents };
+})();
+
+// ═══════════════════════════════════════════════════════════
 // SÖZLÜK UI
 // ═══════════════════════════════════════════════════════════
 const DictUI = (() => {
@@ -3213,6 +3515,23 @@ const DictUI = (() => {
   // Dictionary UI init
   DictUI.bindEvents();
   DictUI.renderUserDict();
+
+  // Backup system
+  Backup.bindEvents();
+  Backup.checkBackupReminder();
+  Backup.autoSave(); // İlk yüklemede anlık snapshot al
+
+  // Sayfa kapanmadan önce yedeklenmemiş veri varsa uyar
+  window.addEventListener('beforeunload', (e) => {
+    const lastBackup = localStorage.getItem('vf_last_backup');
+    const autoTs     = localStorage.getItem('vf_auto_backup_ts');
+    // Eğer hiç manuel yedek alınmamışsa uyar
+    if (!lastBackup && autoTs) {
+      e.preventDefault();
+      e.returnValue = 'Verilerinizi henüz yedeklemediniz. Çıkmak istiyor musunuz?';
+      return e.returnValue;
+    }
+  });
 
   console.log('%cVoiceForge Studio İhtişam — Yüklendi ✅','color:#00e5b4;font-weight:bold;font-size:14px;');
 })();
