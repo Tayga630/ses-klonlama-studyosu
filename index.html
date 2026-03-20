@@ -750,18 +750,18 @@ input[type=range]::-webkit-slider-thumb:hover{
         </div>
         <div class="div"></div>
         <div class="sldr">
-          <div class="sldr-head">Kararlılık <span id="stab-v">50%</span></div>
-          <input type="range" id="stability" min="0" max="100" value="50"
+          <div class="sldr-head">Kararlılık <span id="stab-v">70%</span></div>
+          <input type="range" id="stability" min="0" max="100" value="70"
             oninput="document.getElementById('stab-v').textContent=this.value+'%';saveSettings()">
         </div>
         <div class="sldr">
-          <div class="sldr-head">Benzerlik <span id="sim-v">80%</span></div>
-          <input type="range" id="similarity" min="0" max="100" value="80"
+          <div class="sldr-head">Benzerlik <span id="sim-v">90%</span></div>
+          <input type="range" id="similarity" min="0" max="100" value="90"
             oninput="document.getElementById('sim-v').textContent=this.value+'%';saveSettings()">
         </div>
         <div class="sldr">
-          <div class="sldr-head">Stil <span id="style-v">25%</span></div>
-          <input type="range" id="style" min="0" max="100" value="25"
+          <div class="sldr-head">Stil <span id="style-v">0%</span></div>
+          <input type="range" id="style" min="0" max="100" value="0"
             oninput="document.getElementById('style-v').textContent=this.value+'%';saveSettings()">
         </div>
         <div class="div"></div>
@@ -967,13 +967,15 @@ function saveSettings(){
 }
 function loadSettings(){
   try{
-    const s=JSON.parse(localStorage.getItem('el_voice_settings')||'{}');
-    const set=(id,val,labelId,suffix)=>{if(val&&document.getElementById(id)){document.getElementById(id).value=val;if(labelId)document.getElementById(labelId).textContent=val+suffix;}};
+    const DEFAULTS={stability:'70',similarity:'90',style:'0',speed:'1.0'};
+    const saved=JSON.parse(localStorage.getItem('el_voice_settings')||'{}');
+    const s={...DEFAULTS,...saved};
+    const set=(id,val,labelId,suffix)=>{if(val!==undefined&&document.getElementById(id)){document.getElementById(id).value=val;if(labelId)document.getElementById(labelId).textContent=val+suffix;}};
     set('stability',s.stability,'stab-v','%');
     set('similarity',s.similarity,'sim-v','%');
     set('style',s.style,'style-v','%');
     if(s.speed){set('playback-speed',s.speed,'speed-v','×');document.getElementById('speed-v').textContent=parseFloat(s.speed).toFixed(2)+'×';}
-    if(s.model)document.getElementById('model').value=s.model;
+    if(s.model) document.getElementById('model').value=s.model;
   }catch(e){}
 }
 
@@ -1011,6 +1013,9 @@ async function testProxy(){
 (function init(){
   const savedKey=localStorage.getItem('el_api_key');
   if(savedKey){document.getElementById('api-key').value=savedKey;onSettings();}
+  // Clear old settings to apply new optimized defaults
+  const ver=localStorage.getItem('vf_ver');
+  if(ver!=='1.2'){localStorage.removeItem('el_voice_settings');localStorage.setItem('vf_ver','1.2');}
   loadVoices();loadPresets();loadSettings();
   // renderFx and buildPills called after CATS is defined (bottom of script)
   // Init waveform placeholder bars
