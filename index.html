@@ -273,7 +273,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
       </div>
       <div class="div"></div>
       <div class="clabel">Model & Ses Ayarları</div>
-      <select id="model" style="margin-bottom:10px;">
+      <select id="model" style="margin-bottom:10px;" onchange="saveSettings()">
         <option value="eleven_multilingual_v2" selected>eleven_multilingual_v2 ⭐ (Önerilen — Türkçe)</option>
         <option value="eleven_turbo_v2_5">eleven_turbo_v2_5 (Hızlı)</option>
         <option value="eleven_multilingual_v1">eleven_multilingual_v1</option>
@@ -281,17 +281,27 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
       <div class="sldr-row">
         <label>Kararlılık <span id="stab-v">50%</span></label>
         <input type="range" id="stability" min="0" max="100" value="50"
-          oninput="document.getElementById('stab-v').textContent=this.value+'%'">
+          oninput="document.getElementById('stab-v').textContent=this.value+'%';saveSettings()">
       </div>
       <div class="sldr-row">
         <label>Benzerlik <span id="sim-v">80%</span></label>
         <input type="range" id="similarity" min="0" max="100" value="80"
-          oninput="document.getElementById('sim-v').textContent=this.value+'%'">
+          oninput="document.getElementById('sim-v').textContent=this.value+'%';saveSettings()">
       </div>
       <div class="sldr-row">
         <label>Stil <span id="style-v">25%</span></label>
         <input type="range" id="style" min="0" max="100" value="25"
-          oninput="document.getElementById('style-v').textContent=this.value+'%'">
+          oninput="document.getElementById('style-v').textContent=this.value+'%';saveSettings()">
+      </div>
+      <div class="div"></div>
+      <div class="clabel">Oynatma Hızı</div>
+      <div class="sldr-row">
+        <label>Hız <span id="speed-v">1.00×</span></label>
+        <input type="range" id="playback-speed" min="0.25" max="2.0" step="0.05" value="1.0"
+          oninput="onSpeedChange(this.value)">
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:-6px;margin-bottom:4px;">
+        <span>0.25×</span><span>0.5×</span><span>0.75×</span><span>1×</span><span>1.25×</span><span>1.5×</span><span>1.75×</span><span>2×</span>
       </div>
     </div>
 
@@ -318,7 +328,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
         <button class="btn btn-ghost" id="btn-pause" onclick="pausePlay()">⏸</button>
       </div>
       <div class="trow2">
-        <button class="btn btn-dl" id="btn-dl" onclick="dlAudio()" disabled>↓ İndir</button>
+        <button class="btn btn-dl" id="btn-dl" onclick="dlAudio()" disabled title="Oynatmaya gerek yok — direkt indir">↓ İndir (MP3)</button>
       </div>
       <div class="status-row">
         <div class="sdot" id="sdot"></div>
@@ -520,9 +530,10 @@ function onSettings(){
   }
 })();
 
-// Kayıtlı sesleri ve presetleri yükle
+// Kayıtlı sesleri, presetleri ve ayarları yükle
 loadVoices();
 loadPresets();
+loadSettings();
 
 async function testProxy(){
   const proxy=getProxy();
@@ -723,7 +734,10 @@ function playBufWithFx(buf){
   for(const fx of activeFx){const n=fx.create(ctx);cur.connect(n.input);cur=n.output;}
   const master=mkGn(ctx,1);cur.connect(master);master.connect(ctx.destination);
   sourceNode=ctx.createBufferSource();
-  sourceNode.buffer=buf;sourceNode.playbackRate.value=pitchMult;sourceNode.connect(entry);
+  sourceNode.buffer=buf;
+  const speedVal=parseFloat(document.getElementById('playback-speed')?.value||'1.0');
+  sourceNode.playbackRate.value=pitchMult*speedVal;
+  sourceNode.connect(entry);
   sourceNode.onended=()=>{isPlaying=false;stopViz();setGenBtn('idle');setSt('✅ Tamamlandı','ok');document.getElementById('btn-dl').disabled=!lastBlob;};
   sourceNode.start();isPlaying=true;startViz();setGenBtn('playing');
   setSt('▶ Klonlanan ses oynatılıyor…','play');
@@ -852,6 +866,51 @@ function checkPresetActive(){
   const same = p.effects.length===activeEffectIds.size &&
     p.effects.every(e=>activeEffectIds.has(e));
   if(!same){ activePresetId=null; renderPresets(); }
+}
+
+// ═══════════════════════
+// SETTINGS PERSISTENCE
+// ═══════════════════════
+function saveSettings(){
+  const s={
+    stability: document.getElementById('stability').value,
+    similarity: document.getElementById('similarity').value,
+    style: document.getElementById('style').value,
+    speed: document.getElementById('playback-speed')?.value||'1.0',
+    model: document.getElementById('model').value,
+  };
+  localStorage.setItem('el_voice_settings', JSON.stringify(s));
+}
+
+function loadSettings(){
+  try{
+    const saved=localStorage.getItem('el_voice_settings');
+    if(!saved) return;
+    const s=JSON.parse(saved);
+    if(s.stability){
+      document.getElementById('stability').value=s.stability;
+      document.getElementById('stab-v').textContent=s.stability+'%';
+    }
+    if(s.similarity){
+      document.getElementById('similarity').value=s.similarity;
+      document.getElementById('sim-v').textContent=s.similarity+'%';
+    }
+    if(s.style){
+      document.getElementById('style').value=s.style;
+      document.getElementById('style-v').textContent=s.style+'%';
+    }
+    if(s.speed&&document.getElementById('playback-speed')){
+      document.getElementById('playback-speed').value=s.speed;
+      document.getElementById('speed-v').textContent=parseFloat(s.speed).toFixed(2)+'×';
+    }
+    if(s.model) document.getElementById('model').value=s.model;
+  }catch(e){}
+}
+
+function onSpeedChange(val){
+  const v=parseFloat(val).toFixed(2);
+  document.getElementById('speed-v').textContent=v+'×';
+  saveSettings();
 }
 
 document.addEventListener('keydown',e=>{
