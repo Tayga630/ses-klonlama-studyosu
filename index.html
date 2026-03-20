@@ -491,7 +491,8 @@ async function generate(){
     const length_penalty=parseFloat(document.getElementById('sim').value);
 
     // Start prediction
-    const startRes=await fetch('https://api.replicate.com/v1/predictions',{
+    const PROXY='https://fish-proxy.gkaan630.workers.dev/proxy';
+    const startRes=await fetch(PROXY+'/https://api.replicate.com/v1/predictions',{
       method:'POST',
       headers:{
         'Authorization':'Token '+apiToken,
@@ -528,7 +529,7 @@ async function generate(){
     while(attempts<60){
       await delay(3000);
       attempts++;
-      const pollRes=await fetch(`https://api.replicate.com/v1/predictions/${predId}`,{
+      const pollRes=await fetch(`${PROXY}/https://api.replicate.com/v1/predictions/${predId}`,{
         headers:{'Authorization':'Token '+apiToken}
       });
       const poll=await pollRes.json();
@@ -545,8 +546,9 @@ async function generate(){
 
     animProg(85,95,500);
 
-    // Fetch audio
-    const audioRes=await fetch(audioUrl);
+    // Fetch audio (through proxy if replicate domain)
+    const audioFetchUrl=audioUrl.includes('replicate')?PROXY+'/'+audioUrl:audioUrl;
+    const audioRes=await fetch(audioFetchUrl);
     const arrayBuf=await audioRes.arrayBuffer();
     lastBlob=new Blob([arrayBuf],{type:'audio/wav'});
 
