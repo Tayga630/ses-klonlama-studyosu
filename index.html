@@ -1129,13 +1129,11 @@ function clearText(){document.getElementById('txt').value='';onText();}
 // GENERATE
 // ═══════════════════════════════════════════
 function applyPunctuationPauses(text){
-  let t=text
-    .replace(/\.\.\./g,'<break time="900ms"/>')
-    .replace(/\./g,'. <break time="650ms"/>')
-    .replace(/\?/g,'? <break time="650ms"/>')
-    .replace(/!/g,'! <break time="650ms"/>')
-    .replace(/,/g,', <break time="300ms"/>');
-  return '<speak>'+t+'</speak>';
+  // ElevenLabs kendi noktalama işaretlerini doğal okur — SSML eklemeye gerek yok
+  // Sadece üç noktayı biraz daha belirgin yapmak için boşluk ekle
+  return text
+    .replace(/\.\.\./g,'...  ')   // üç nokta = ekstra boşluk
+    .replace(/([.!?])\s+/g,'$1   '); // cümle sonu = biraz daha nefes
 }
 
 async function generate(){
