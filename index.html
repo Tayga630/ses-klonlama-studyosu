@@ -498,6 +498,32 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
 .err-action{font-size:11px;color:var(--txt3);background:var(--sur3);border-radius:var(--r);padding:9px 12px;margin-bottom:16px;line-height:1.6;}
 .err-action strong{color:var(--txt);display:block;margin-bottom:2px;}
 
+/* ─── PRONOUNCE PANEL ───────────────────────────────────── */
+.dict-panel{background:var(--sur);border:1px solid var(--brd);border-radius:var(--r2);margin-bottom:14px;overflow:hidden;}
+.dict-head{display:flex;align-items:center;gap:9px;padding:10px 14px;border-bottom:1px solid var(--brd);flex-wrap:wrap;}
+.dict-head-title{font-family:'Syne',sans-serif;font-weight:700;font-size:12.5px;}
+.dict-body{padding:13px;display:flex;flex-direction:column;gap:10px;}
+.dict-add-row{display:flex;gap:7px;align-items:center;}
+.dict-add-row input{flex:1;font-size:12px;padding:7px 10px;}
+.dict-table-wrap{max-height:260px;overflow-y:auto;}
+.dict-table-wrap::-webkit-scrollbar{width:3px;}
+.dict-table-wrap::-webkit-scrollbar-thumb{background:var(--brd);border-radius:2px;}
+.dict-table{width:100%;border-collapse:collapse;font-size:11px;}
+.dict-table th{text-align:left;padding:6px 10px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt3);border-bottom:1px solid var(--brd);font-weight:500;}
+.dict-table td{padding:6px 10px;border-bottom:1px solid rgba(30,40,64,.5);vertical-align:middle;}
+.dict-table tr:last-child td{border-bottom:none;}
+.dict-table tr:hover td{background:var(--sur3);}
+.dict-word{font-family:'DM Mono',monospace;color:var(--acc);font-weight:500;}
+.dict-phonetic{color:var(--txt2);}
+.dict-source{font-size:8.5px;padding:2px 6px;border-radius:8px;}
+.dict-source.user{background:var(--amber-d);color:var(--amber);}
+.dict-source.builtin{background:var(--sur3);color:var(--txt3);}
+.dict-tabs{display:flex;gap:4px;}
+.dict-tab{padding:4px 11px;background:var(--sur3);border:1px solid var(--brd);border-radius:6px;font-size:10px;color:var(--txt3);cursor:pointer;transition:all .15s;font-weight:500;}
+.dict-tab.active{background:var(--acc-d);border-color:var(--acc-g);color:var(--acc);}
+.dict-preview{background:var(--sur3);border-radius:var(--r);padding:10px 12px;font-size:11.5px;color:var(--txt2);line-height:1.7;min-height:36px;font-family:'Inter',sans-serif;}
+.dict-preview .changed{color:var(--acc);font-weight:600;background:rgba(0,229,180,.08);padding:1px 3px;border-radius:3px;}
+
 /* ─── FOOTER ─────────────────────────────────────────── */
 #footer{border-top:1px solid var(--brd);padding-top:12px;margin-top:14px;display:flex;justify-content:space-between;font-size:9.5px;color:var(--txt3);flex-wrap:wrap;gap:6px;}
 #footer a{color:var(--txt3);text-decoration:none;}
@@ -911,6 +937,49 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
   </div>
 </div><!-- /view-library -->
 
+<!-- ═══ TELAFFUZ SÖZLÜĞÜ ════════════════════════════════ -->
+<div class="dict-panel" id="dict-panel">
+  <div class="dict-head">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--acc)" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+    <span class="dict-head-title">Telaffuz Sözlüğü</span>
+    <span style="font-size:9.5px;color:var(--txt3);">— ElevenLabs'a gönderilmeden önce metin düzeltilir</span>
+    <div class="dict-tabs" style="margin-left:auto;">
+      <button class="dict-tab active" data-dtab="custom">Özel Eklemeler</button>
+      <button class="dict-tab" data-dtab="builtin">Yerleşik Sözlük</button>
+      <button class="dict-tab" data-dtab="preview">Önizleme</button>
+    </div>
+  </div>
+  <div class="dict-body">
+    <!-- CUSTOM tab -->
+    <div id="dict-custom-tab">
+      <div class="dict-add-row">
+        <input type="text" id="dict-word-inp" placeholder="Kelime veya kısaltma (ör: NATO)" style="max-width:200px;">
+        <input type="text" id="dict-phon-inp" placeholder="Fonetik karşılık (ör: NATO)">
+        <button class="btn btn-acc btn-sm" id="btn-dict-add">＋ Ekle</button>
+      </div>
+      <div class="dict-table-wrap" id="dict-user-table">
+        <div style="font-size:10.5px;color:var(--txt3);text-align:center;padding:12px 0;">
+          Henüz özel ekleme yok. Yukarıdan ekleyin.
+        </div>
+      </div>
+    </div>
+    <!-- BUILTIN tab -->
+    <div id="dict-builtin-tab" style="display:none;">
+      <div style="font-size:10px;color:var(--txt3);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">
+        <span id="dict-builtin-count">0 giriş yüklendi</span>
+        <input type="text" id="dict-builtin-search" placeholder="Sözlükte ara…" style="width:200px;font-size:11px;padding:5px 9px;">
+      </div>
+      <div class="dict-table-wrap" id="dict-builtin-table"></div>
+    </div>
+    <!-- PREVIEW tab -->
+    <div id="dict-preview-tab" style="display:none;">
+      <div style="font-size:9.5px;color:var(--txt3);margin-bottom:8px;">Stüdyo'daki metni sözlükten geçirilmiş haliyle gösterir:</div>
+      <div class="dict-preview" id="dict-preview-text">Metin girişi boş.</div>
+      <div style="font-size:9px;color:var(--txt3);margin-top:6px;">Yeşil: sözlükten dönüştürülen kelimeler</div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══ EFFECTS PANEL (paylaşımlı) ══════════════════════ -->
 <div id="eff-panel">
   <div class="eff-head">
@@ -1316,11 +1385,13 @@ const API = (() => {
   }
 
   async function generate(text, voiceId, settings) {
+    // Telaffuz sözlüğünden geç
+    const processedText = typeof Pronounce !== 'undefined' ? Pronounce.process(text) : text;
     const r = await _fetch(`/v1/text-to-speech/${voiceId}`, {
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'audio/mpeg'},
       body: JSON.stringify({
-        text,
+        text: processedText,
         model_id: settings.model,
         voice_settings: {
           stability:        settings.stability / 100,
@@ -1342,6 +1413,411 @@ const API = (() => {
   }
 
   return { testProxy, cloneVoice, generate, deleteVoice };
+})();
+
+
+// ═══════════════════════════════════════════════════════════
+// TELAFFUZ SÖZLÜĞÜ — Doğru okuma için metin ön işleme
+// ═══════════════════════════════════════════════════════════
+const Pronounce = (() => {
+  // Her giriş: [regex_veya_string, fonetik_karşılık]
+  // Önce tam eşleşme, sonra kısmi eşleşme sırası önemli
+  // ElevenLabs Türkçe için: kelimeleri fonetik Türkçe ile yaz
+
+  const DICT = [
+    // ── KÜRESEL KURULUŞLAR ─────────────────────────────────
+    ['IMF',         'İ-M-F'],
+    ['NATO',        'NATO'],
+    ['UNICEF',      'YUNİSEF'],
+    ['UNESCO',      'UNESko'],
+    ['WHO',         'Dünya Sağlık Örgütü'],
+    ['WTO',         'Dünya Ticaret Örgütü'],
+    ['BM',          'Birleşmiş Milletler'],
+    ['UN',          'Birleşmiş Milletler'],
+    ['EU',          'Avrupa Birliği'],
+    ['AB',          'Avrupa Birliği'],
+    ['G20',         'G Yirmi'],
+    ['G7',          'G Yedi'],
+    ['G8',          'G Sekiz'],
+    ['OECD',        'O-E-C-D'],
+    ['IMF',         'İ-M-F'],
+    ['ILO',         'I-L-O'],
+    ['WEF',         'Dünya Ekonomik Forumu'],
+
+    // ── TÜRKİYE KURULUŞLARI ────────────────────────────────
+    ['TBMM',        'Türkiye Büyük Millet Meclisi'],
+    ['TCMB',        'Türkiye Cumhuriyet Merkez Bankası'],
+    ['TÜİK',        'TÜİK'],
+    ['BDDK',        'Bankacılık Düzenleme ve Denetleme Kurumu'],
+    ['SPK',         'Sermaye Piyasası Kurulu'],
+    ['RTÜK',        'Radyo ve Televizyon Üst Kurulu'],
+    ['YÖK',         'Yükseköğretim Kurulu'],
+    ['TRT',         'T-R-T'],
+    ['PTT',         'P-T-T'],
+    ['THY',         'Türk Hava Yolları'],
+    ['BOTAŞ',       'BOTAŞ'],
+    ['EPDK',        'Enerji Piyasası Düzenleme Kurumu'],
+    ['KGK',         'Kamu Gözetimi Kurumu'],
+    ['HSK',         'Hâkimler ve Savcılar Kurulu'],
+    ['AYM',         'Anayasa Mahkemesi'],
+    ['Danıştay',    'Danıştay'],
+    ['MEB',         'Milli Eğitim Bakanlığı'],
+    ['MGK',         'Milli Güvenlik Kurulu'],
+    ['TÜBİTAK',     'TÜBİTAK'],
+    ['TOGG',        'TOGG'],
+    ['ASELSAN',     'ASELSAN'],
+    ['ROKETSAN',    'ROKETSAN'],
+    ['TUSAŞ',       'TUSAŞ'],
+    ['KKK',         'Kara Kuvvetleri Komutanlığı'],
+    ['HGM',         'Harita Genel Müdürlüğü'],
+    ['OSB',         'Organize Sanayi Bölgesi'],
+
+    // ── DÜNYA LİDERLERİ / SİYASİ İSİMLER ──────────────────
+    ['Putin',       'Putin'],
+    ['Zelensky',    'Zelenskiy'],
+    ['Zelenskyy',   'Zelenskiy'],
+    ['Biden',       'Bayden'],
+    ['Trump',       'Tramp'],
+    ['Macron',      'Makron'],
+    ['Scholz',      'Şolts'],
+    ['Meloni',      'Meloni'],
+    ['Modi',        'Modi'],
+    ['Xi Jinping',  'Şi Cinping'],
+    ['Xi',          'Şi'],
+    ['Jinping',     'Cinping'],
+    ['Kim Jong-un', 'Kim Çong-un'],
+    ['Kim Jong Un', 'Kim Çong Un'],
+    ['Netanyahu',   'Netanyahu'],
+    ['Erdoğan',     'Erdoğan'],
+    ['Özel',        'Özel'],
+    ['Bahçeli',     'Bahçeli'],
+    ['Kılıçdaroğlu','Kılıçdaroğlu'],
+    ['Özgür',       'Özgür'],
+    ['Şimşek',      'Şimşek'],
+
+    // ── TEKNOLOJİ ŞİRKETLERİ ───────────────────────────────
+    ['Apple',       'Apple'],
+    ['Google',      'Gugıl'],
+    ['Microsoft',   'Microsoft'],
+    ['Amazon',      'Amazon'],
+    ['Meta',        'Meta'],
+    ['Tesla',       'Tesla'],
+    ['OpenAI',      'Open-Ay-Ay'],
+    ['ChatGPT',     'Çet-G-P-T'],
+    ['GPT',         'G-P-T'],
+    ['GPT-4',       'G-P-T dört'],
+    ['GPT-4o',      'G-P-T dört-o'],
+    ['Claude',      'Klod'],
+    ['Gemini',      'Cemini'],
+    ['NVIDIA',      'Invidiya'],
+    ['AMD',         'A-M-D'],
+    ['Intel',       'İntel'],
+    ['Samsung',     'Samsung'],
+    ['Huawei',      'Huavey'],
+    ['Xiaomi',      'Şiaomi'],
+    ['ByteDance',   'Baytdens'],
+    ['TikTok',      'Tiktok'],
+    ['YouTube',     'Yutup'],
+    ['Instagram',   'Instagram'],
+    ['WhatsApp',    'Vatsap'],
+    ['Spotify',     'Spotify'],
+    ['Netflix',     'Netflix'],
+    ['Twitter',     'Twitter'],
+    ['X.com',       'X nokta com'],
+    ['LinkedIn',    'Linkdin'],
+    ['GitHub',      'Gıthab'],
+    ['Anthropic',   'Antropik'],
+    ['DeepMind',    'Dip-Maynd'],
+    ['SpaceX',      'SpaysEks'],
+    ['Neuralink',   'Nörolink'],
+
+    // ── FİNANS TERİMLERİ ────────────────────────────────────
+    ['USD',         'Amerikan doları'],
+    ['EUR',         'Euro'],
+    ['GBP',         'İngiliz sterlini'],
+    ['JPY',         'Japon yeni'],
+    ['TRY',         'Türk lirası'],
+    ['TL',          'Türk lirası'],
+    ['BTC',         'Bitcoin'],
+    ['ETH',         'Ethereum'],
+    ['GDP',         'G-D-P'],
+    ['GSYİH',       'GSYİH'],
+    ['CPI',         'Tüketici fiyat endeksi'],
+    ['TÜFE',        'TÜFE'],
+    ['ÜFE',         'ÜFE'],
+    ['BIST',        'BİST'],
+    ['BIST100',     'BİST yüz'],
+    ['S&P',         'S ve P'],
+    ['S&P500',      'S ve P beş yüz'],
+    ['Nasdaq',      'Nasdak'],
+    ['Dow Jones',   'Dav Cons'],
+    ['Fed',         'Fed'],
+    ['ECB',         'Avrupa Merkez Bankası'],
+    ['FED',         'Fed'],
+    ['repo',        'repo'],
+    ['swap',        'svap'],
+    ['hedge',       'hec'],
+    ['hedge fund',  'hec fand'],
+    ['IPO',         'İ-P-O'],
+    ['ETF',         'E-T-F'],
+    ['baz puan',    'baz puan'],
+    ['bp',          'baz puan'],
+
+    // ── MEDYA ───────────────────────────────────────────────
+    ['CNN',         'C-N-N'],
+    ['BBC',         'B-B-C'],
+    ['Reuters',     'Röyters'],
+    ['Bloomberg',   'Bloomberg'],
+    ['Forbes',      'Forbes'],
+    ['NYT',         'New York Times'],
+    ['WSJ',         'Wall Street Journal'],
+    ['FT',          'Financial Times'],
+    ['NTV',         'N-T-V'],
+    ['CNN Türk',    'C-N-N Türk'],
+    ['A Haber',     'A Haber'],
+    ['TRT Haber',   'T-R-T Haber'],
+
+    // ── SAVUNMA / ASKERİ ────────────────────────────────────
+    ['NATO',        'NATO'],
+    ['F-16',        'F on altı'],
+    ['F-35',        'F otuz beş'],
+    ['TB2',         'T-B iki'],
+    ['Bayraktar',   'Bayraktar'],
+    ['S-400',       'S dört yüz'],
+    ['İHA',         'İnsansız Hava Aracı'],
+    ['SİHA',        'Silahlı İnsansız Hava Aracı'],
+    ['TSK',         'Türk Silahlı Kuvvetleri'],
+
+    // ── ENERJİ ──────────────────────────────────────────────
+    ['OPEC',        'O-PEK'],
+    ['LNG',         'L-N-G'],
+    ['LPG',         'L-P-G'],
+    ['kWh',         'kilovat-saat'],
+    ['MW',          'megavat'],
+    ['GW',          'gigavat'],
+    ['TW',          'teravat'],
+    ['CO2',         'CO iki'],
+    ['CO₂',         'karbondioksit'],
+    ['GHG',         'sera gazı'],
+
+    // ── SAĞLIK ──────────────────────────────────────────────
+    ['WHO',         'Dünya Sağlık Örgütü'],
+    ['PCR',         'P-C-R'],
+    ['mRNA',        'M-R-N-A'],
+    ['DNA',         'D-N-A'],
+    ['RNA',         'R-N-A'],
+    ['COVID',       'Kovid'],
+    ['Covid-19',    'Kovid on dokuz'],
+    ['COVID-19',    'Kovid on dokuz'],
+    ['HIV',         'H-İ-V'],
+    ['AIDS',        'Eyds'],
+    ['MRI',         'M-R-İ'],
+    ['CT',          'Bilgisayarlı tomografi'],
+
+    // ── EĞİTİM ──────────────────────────────────────────────
+    ['PhD',         'Doktora'],
+    ['MBA',         'M-B-A'],
+    ['MIT',         'M-İ-T'],
+    ['Harvard',     'Harvard'],
+    ['Oxford',      'Oksford'],
+    ['Cambridge',   'Keymbrıc'],
+    ['Stanford',    'Stanford'],
+    ['ODTÜ',        'Orta Doğu Teknik Üniversitesi'],
+    ['İTÜ',         'İstanbul Teknik Üniversitesi'],
+    ['BOUN',        'Boğaziçi Üniversitesi'],
+
+    // ── SOSYAL MEDYA / İNTERNET ─────────────────────────────
+    ['URL',         'U-R-L'],
+    ['HTTP',        'H-T-T-P'],
+    ['HTTPS',       'H-T-T-P-S'],
+    ['API',         'A-P-İ'],
+    ['AI',          'Yapay Zeka'],
+    ['ML',          'Makine Öğrenmesi'],
+    ['IoT',         'Nesnelerin İnterneti'],
+    ['VR',          'Sanal Gerçeklik'],
+    ['AR',          'Artırılmış Gerçeklik'],
+    ['NFT',         'N-F-T'],
+    ['SaaS',        'S-A-A-S'],
+    ['B2B',         'B iki B'],
+    ['B2C',         'B iki C'],
+    ['SEO',         'S-E-O'],
+
+    // ── COĞRAFYA / ÜLKELER ──────────────────────────────────
+    ['ABD',         'Amerika Birleşik Devletleri'],
+    ['USA',         'Amerika'],
+    ['UK',          'Birleşik Krallık'],
+    ['UAE',         'Birleşik Arap Emirlikleri'],
+    ['BAE',         'Birleşik Arap Emirlikleri'],
+    ['S. Arabistan','Suudi Arabistan'],
+    ['K. Kore',     'Kuzey Kore'],
+    ['G. Kore',     'Güney Kore'],
+    ['Çin',         'Çin'],
+    ['Hong Kong',   'Hong Kong'],
+    ['Tayvan',      'Tayvan'],
+    ['İsrail',      'İsrail'],
+    ['Filistin',    'Filistin'],
+    ['Ukrayna',     'Ukrayna'],
+    ['Rusya',       'Rusya'],
+
+    // ── GENEL KISALTMALAR ────────────────────────────────────
+    ['vs.',         'karşısında'],
+    ['vs',          'karşısında'],
+    ['vb.',         've benzeri'],
+    ['vb',          've benzeri'],
+    ['vd.',         've diğerleri'],
+    ['vd',          've diğerleri'],
+    ['bkz.',        'bakınız'],
+    ['bkz',         'bakınız'],
+    ['örn.',        'örneğin'],
+    ['örn',         'örneğin'],
+    ['yüz.',        'yüzyıl'],
+    ['yy.',         'yüzyıl'],
+    ['dk.',         'dakika'],
+    ['sn.',         'saniye'],
+    ['km.',         'kilometre'],
+    ['km',          'kilometre'],
+    ['m²',          'metrekare'],
+    ['km²',         'kilometrekare'],
+    ['TL.',         'Türk lirası'],
+    ['%',           'yüzde '],
+    ['&',           've'],
+    ['$',           'dolar'],
+    ['€',           'euro'],
+    ['£',           'sterlin'],
+    ['¥',           'yen'],
+
+    // ── RAKAM FORMATLARI ─────────────────────────────────────
+    // Bunlar regex ile işlenir
+    // ['1.000.000', 'bir milyon'] — regex bölümünde
+
+    // ── ÖZEL TÜRKÇE TELAFFUZ ─────────────────────────────────
+    ['startup',     'startap'],
+    ['update',      'apdeyt'],
+    ['download',    'daunlod'],
+    ['upload',      'aplod'],
+    ['software',    'softveer'],
+    ['hardware',    'hardveer'],
+    ['podcast',     'podcast'],
+    ['webinar',     'vebinar'],
+    ['workshop',    'vörkşop'],
+    ['meeting',     'miting'],
+    ['deadline',    'dedlayn'],
+    ['feedback',    'fidbek'],
+    ['online',      'onlayn'],
+    ['offline',     'oflayn'],
+    ['live',        'layv'],
+    ['streaming',   'striming'],
+    ['content',     'içerik'],
+    ['influencer',  'influenser'],
+    ['hashtag',     'eşteg'],
+    ['tweet',       'tvit'],
+    ['retweet',     'ritvit'],
+    ['like',        'layk'],
+    ['follow',      'folov'],
+    ['unfollow',    'anfolov'],
+    ['share',       'şer'],
+    ['story',       'stori'],
+    ['reel',        'ril'],
+    ['shorts',      'şorts'],
+    ['thumbnail',   'tanmıl'],
+    ['clickbait',   'klikbeyt'],
+    ['engagement',  'angeyçment'],
+    ['reach',       'riç'],
+    ['impression',  'impressyon'],
+
+    // ── SPOR ────────────────────────────────────────────────
+    ['Champions League', 'Şampiyonlar Ligi'],
+    ['Premier League',   'Premier Lig'],
+    ['La Liga',          'La Liga'],
+    ['Bundesliga',       'Bundesliga'],
+    ['Serie A',          'Seri A'],
+    ['Ligue 1',          'Lig Bir'],
+    ['FIFA',             'FIFA'],
+    ['UEFA',             'UEFA'],
+    ['NBA',              'N-B-A'],
+    ['NFL',              'N-F-L'],
+    ['F1',               'Formula Bir'],
+    ['Formula 1',        'Formula Bir'],
+    ['MotoGP',           'Moto Ci Pi'],
+    ['Wimbledon',        'Vimblıdın'],
+    ['Roland Garros',    'Roland Garo'],
+
+    // ── FİLM / MÜZİK / KÜLTÜR ──────────────────────────────
+    ['Oscar',       'Oskar'],
+    ['Grammy',      'Gremi'],
+    ['Emmy',        'Emi'],
+    ['Billboard',   'Bilbord'],
+    ['Hollywood',   'Holivud'],
+    ['Marvel',      'Marvel'],
+    ['Disney',      'Dizni'],
+    ['Pixar',       'Piksar'],
+    ['Warner',      'Varner'],
+    ['Netflix',     'Netflix'],
+    ['HBO',         'H-B-O'],
+    ['Prime Video', 'Praym Video'],
+  ];
+
+  // Kullanıcı özel sözlüğü (localStorage'dan yüklenir)
+  let _userDict = [];
+
+  function loadUserDict() {
+    try {
+      const saved = localStorage.getItem('vf_pronounce_dict');
+      if (saved) _userDict = JSON.parse(saved);
+    } catch { _userDict = []; }
+  }
+
+  function saveUserDict() {
+    localStorage.setItem('vf_pronounce_dict', JSON.stringify(_userDict));
+  }
+
+  function addEntry(word, phonetic) {
+    // Remove existing entry if present
+    _userDict = _userDict.filter(e => e[0].toLowerCase() !== word.toLowerCase());
+    _userDict.unshift([word, phonetic]);
+    saveUserDict();
+  }
+
+  function removeEntry(index) {
+    _userDict.splice(index, 1);
+    saveUserDict();
+  }
+
+  function getUserDict() { return _userDict; }
+  function getBuiltinDict() { return DICT; }
+
+  // Ana işlem fonksiyonu
+  function process(text) {
+    if (!text) return text;
+    let result = text;
+
+    // 1. Kullanıcı sözlüğü (öncelikli — tam kelime eşleşmesi)
+    for (const [word, phonetic] of _userDict) {
+      result = _replaceWord(result, word, phonetic);
+    }
+
+    // 2. Yerleşik sözlük
+    for (const [word, phonetic] of DICT) {
+      result = _replaceWord(result, word, phonetic);
+    }
+
+    return result;
+  }
+
+  function _replaceWord(text, word, phonetic) {
+    // Kelime sınırlarına dikkat et, büyük/küçük harf duyarsız
+    // Türkçe karakterleri de kapsayan regex
+    try {
+      const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp('(?<![\\wÇçĞğİıÖöŞşÜü])' + escaped + '(?![\\wÇçĞğİıÖöŞşÜü])', 'g');
+      return text.replace(regex, phonetic);
+    } catch {
+      return text.split(word).join(phonetic);
+    }
+  }
+
+  loadUserDict();
+  return { process, addEntry, removeEntry, getUserDict, getBuiltinDict, saveUserDict };
 })();
 
 const EFFECTS=[
@@ -2322,6 +2798,119 @@ const Ctrl = (() => {
 // ═══════════════════════════════════════════════════════════
 // EVENT BINDING + INIT
 // ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
+// SÖZLÜK UI
+// ═══════════════════════════════════════════════════════════
+const DictUI = (() => {
+  function renderUserDict() {
+    const entries = Pronounce.getUserDict();
+    const wrap = document.getElementById('dict-user-table');
+    if (!wrap) return;
+    if (!entries.length) {
+      wrap.innerHTML = '<div style="font-size:10.5px;color:var(--txt3);text-align:center;padding:12px 0;">Henüz özel ekleme yok. Yukarıdan ekleyin.</div>';
+      return;
+    }
+    wrap.innerHTML = `<table class="dict-table">
+      <thead><tr><th>Kelime</th><th>Fonetik Karşılık</th><th></th></tr></thead>
+      <tbody>
+        ${entries.map((e,i)=>`<tr>
+          <td class="dict-word">${e[0]}</td>
+          <td class="dict-phonetic">${e[1]}</td>
+          <td><button class="btn-icon danger" data-udict-del="${i}" style="padding:2px 5px;font-size:11px;">✕</button></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+  }
+
+  function renderBuiltinDict(filter='') {
+    const entries = Pronounce.getBuiltinDict();
+    const wrap = document.getElementById('dict-builtin-table');
+    const cnt  = document.getElementById('dict-builtin-count');
+    if (!wrap) return;
+    const filtered = filter ? entries.filter(e=>
+      e[0].toLowerCase().includes(filter.toLowerCase()) ||
+      e[1].toLowerCase().includes(filter.toLowerCase())
+    ) : entries;
+    if (cnt) cnt.textContent = filtered.length + ' / ' + entries.length + ' giriş';
+    if (!filtered.length) { wrap.innerHTML='<div style="font-size:10.5px;color:var(--txt3);text-align:center;padding:12px 0;">Sonuç yok.</div>'; return; }
+    wrap.innerHTML = `<table class="dict-table">
+      <thead><tr><th>Kelime / Kısaltma</th><th>Fonetik Karşılık</th><th>Tip</th></tr></thead>
+      <tbody>
+        ${filtered.map(e=>`<tr>
+          <td class="dict-word">${e[0]}</td>
+          <td class="dict-phonetic">${e[1]}</td>
+          <td><span class="dict-source builtin">Yerleşik</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+  }
+
+  function renderPreview() {
+    const txt = document.getElementById('txt')?.value || '';
+    const el  = document.getElementById('dict-preview-text');
+    if (!el) return;
+    if (!txt.trim()) { el.innerHTML = '<span style="color:var(--txt3)">Stüdyo'daki metin alanı boş.</span>'; return; }
+    const processed = Pronounce.process(txt);
+    // Highlight changes
+    let highlighted = processed;
+    const orig = txt;
+    if (processed !== orig) {
+      // Show diff by comparing words
+      el.innerHTML = '<span style="color:var(--txt3);font-size:9.5px;display:block;margin-bottom:6px;">Orijinal → Dönüştürülmüş:</span>' +
+        '<div style="color:var(--txt3);margin-bottom:4px;">' + _escHtml(orig.slice(0,300)) + '</div>' +
+        '<div style="color:var(--txt);">' + _escHtml(processed.slice(0,300)) + '</div>';
+    } else {
+      el.innerHTML = '<span style="color:var(--good)">✅ Sözlük dönüşümü yok — metin olduğu gibi gönderilir.</span>';
+    }
+  }
+
+  function _escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function switchTab(tab) {
+    ['custom','builtin','preview'].forEach(t=>{
+      const el=document.getElementById('dict-'+t+'-tab');
+      const btn=document.querySelector(`[data-dtab="${t}"]`);
+      if(el) el.style.display=t===tab?'block':'none';
+      if(btn) btn.classList.toggle('active',t===tab);
+    });
+    if(tab==='builtin') renderBuiltinDict();
+    if(tab==='preview') renderPreview();
+  }
+
+  function bindEvents() {
+    // Tab switching
+    document.querySelector('.dict-tabs')?.addEventListener('click', e=>{
+      const tab=e.target.dataset.dtab; if(tab) switchTab(tab);
+    });
+    // Add entry
+    document.getElementById('btn-dict-add')?.addEventListener('click', ()=>{
+      const word=document.getElementById('dict-word-inp')?.value.trim();
+      const phon=document.getElementById('dict-phon-inp')?.value.trim();
+      if(!word||!phon){ Errors.warn('Kelime ve fonetik karşılık gerekli'); return; }
+      Pronounce.addEntry(word,phon);
+      document.getElementById('dict-word-inp').value='';
+      document.getElementById('dict-phon-inp').value='';
+      renderUserDict();
+      Errors.ok('✅ Eklendi: '+word+' → '+phon);
+    });
+    // Enter key for add
+    ['dict-word-inp','dict-phon-inp'].forEach(id=>{
+      document.getElementById(id)?.addEventListener('keydown',e=>{if(e.key==='Enter') document.getElementById('btn-dict-add')?.click();});
+    });
+    // Delete user entry
+    document.getElementById('dict-user-table')?.addEventListener('click',e=>{
+      const idx=e.target.dataset.udictDel;
+      if(idx!==undefined){ Pronounce.removeEntry(parseInt(idx)); renderUserDict(); }
+    });
+    // Builtin search
+    document.getElementById('dict-builtin-search')?.addEventListener('input',function(){ renderBuiltinDict(this.value); });
+  }
+
+  return { renderUserDict, renderBuiltinDict, renderPreview, bindEvents, switchTab };
+})();
+
 (function bindAll() {
   const $ = id => document.getElementById(id);
 
@@ -2621,9 +3210,12 @@ const Ctrl = (() => {
   if (voices.length) UI.setSt('✅ '+voices.length+' kayıtlı ses yüklendi','ok');
   else UI.setSt('Başlamak için API anahtarı girin ve ses klonlayın','');
 
+  // Dictionary UI init
+  DictUI.bindEvents();
+  DictUI.renderUserDict();
+
   console.log('%cVoiceForge Studio İhtişam — Yüklendi ✅','color:#00e5b4;font-weight:bold;font-size:14px;');
 })();
 </script>
 </body>
 </html>
-
