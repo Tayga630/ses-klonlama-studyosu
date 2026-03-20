@@ -8,97 +8,104 @@
 <style>
 :root{
   --bg:#07080c;--s1:#0f1118;--s2:#151a24;--s3:#1a2030;
-  --brd:#222840;--acc:#f0a500;--purple:#a78bfa;--blue:#5b9fff;
+  --brd:#222840;--acc:#f0a500;--teal:#00c9a7;--blue:#5b9fff;
   --txt:#e0e4f5;--muted:#45506e;--good:#36d67e;--bad:#ff4d4d;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--txt);font-family:'DM Mono',monospace;min-height:100vh;}
 body::before{content:'';position:fixed;inset:0;
-  background:radial-gradient(ellipse 60% 40% at 15% 15%,rgba(167,139,250,.035) 0%,transparent 55%),
+  background:radial-gradient(ellipse 60% 40% at 15% 15%,rgba(0,201,167,.035) 0%,transparent 55%),
              radial-gradient(ellipse 50% 40% at 85% 85%,rgba(91,159,255,.025) 0%,transparent 55%);
   pointer-events:none;z-index:0;}
 .wrap{max-width:1080px;margin:0 auto;padding:30px 20px;position:relative;z-index:1;}
 header{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
-.logo{width:44px;height:44px;background:var(--purple);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:hex 3s ease-in-out infinite;}
-@keyframes hex{0%,100%{filter:brightness(1);}50%{filter:brightness(1.4) drop-shadow(0 0 14px var(--purple));}}
+.logo{width:44px;height:44px;background:var(--teal);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:hex 3s ease-in-out infinite;}
+@keyframes hex{0%,100%{filter:brightness(1);}50%{filter:brightness(1.4) drop-shadow(0 0 14px var(--teal));}}
 .logo svg{width:20px;height:20px;}
 .hinfo h1{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.5px;}
 .hinfo p{font-size:9.5px;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-top:1px;}
 .hbadges{margin-left:auto;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
 .hb{font-size:9.5px;padding:4px 10px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;}
-.hb-free{background:rgba(54,214,126,.12);border:1px solid rgba(54,214,126,.3);color:var(--good);}
-.hb-purple{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.3);color:var(--purple);}
+.hb-teal{background:rgba(0,201,167,.12);border:1px solid rgba(0,201,167,.3);color:var(--teal);}
+.hb-blue{background:rgba(91,159,255,.1);border:1px solid rgba(91,159,255,.3);color:var(--blue);}
 .hb-key{background:var(--s3);border:1px solid var(--brd);color:var(--muted);}
+.card{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:20px;}
+.clabel{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
 
-/* API BANNER */
-.api-banner{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:16px 20px;margin-bottom:20px;}
-.api-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
-.api-icon{font-size:22px;}
-.api-text strong{color:var(--purple);font-size:13px;display:block;margin-bottom:2px;}
-.api-text span{font-size:10.5px;color:var(--muted);line-height:1.7;}
-.api-text a{color:var(--blue);text-decoration:none;}
-.api-text a:hover{text-decoration:underline;}
-.api-row{display:flex;gap:8px;align-items:center;}
-.api-input{flex:1;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:12px;padding:9px 12px;outline:none;transition:border-color .2s;}
-.api-input:focus{border-color:var(--purple);}
+/* SETTINGS BANNER */
+.settings-banner{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:18px 20px;margin-bottom:20px;}
+.sb-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.sb-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:600px){.sb-grid{grid-template-columns:1fr;}}
+.inp-group label{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+.inp-row{display:flex;gap:8px;align-items:center;}
+.api-input{flex:1;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:11.5px;padding:9px 12px;outline:none;transition:border-color .2s;}
+.api-input:focus{border-color:var(--teal);}
 .api-input::placeholder{color:var(--muted);}
-.api-badge{font-size:10px;padding:4px 10px;border-radius:6px;white-space:nowrap;}
-.api-badge.idle{background:var(--s3);border:1px solid var(--brd);color:var(--muted);}
-.api-badge.ok{background:rgba(54,214,126,.1);border:1px solid rgba(54,214,126,.3);color:var(--good);}
-.api-badge.err{background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.3);color:var(--bad);}
-.steps-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
-.step-mini{background:var(--s2);border:1px solid var(--brd);border-radius:8px;padding:10px 12px;}
-.step-mini-num{font-size:9px;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
-.step-mini-txt{font-size:10.5px;color:var(--muted);line-height:1.55;}
-.step-mini-txt b{color:var(--txt);}
+.status-chip{font-size:10px;padding:4px 10px;border-radius:6px;white-space:nowrap;border:1px solid var(--brd);background:var(--s3);color:var(--muted);}
+.status-chip.ok{background:rgba(54,214,126,.1);border-color:rgba(54,214,126,.3);color:var(--good);}
+.status-chip.err{background:rgba(255,77,77,.1);border-color:rgba(255,77,77,.3);color:var(--bad);}
+.test-btn{padding:9px 14px;background:rgba(0,201,167,.12);border:1px solid rgba(0,201,167,.3);color:var(--teal);font-family:'Syne',sans-serif;font-weight:700;font-size:11px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:all .2s;}
+.test-btn:hover{background:rgba(0,201,167,.22);}
+.sb-note{font-size:10px;color:var(--muted);line-height:1.7;margin-top:12px;padding:10px 12px;background:var(--s2);border-radius:8px;}
+.sb-note a{color:var(--blue);text-decoration:none;}
 
 /* MAIN GRID */
 .main-grid{display:grid;grid-template-columns:1fr 290px;gap:18px;margin-bottom:18px;}
 @media(max-width:720px){.main-grid{grid-template-columns:1fr;}}
-.card{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:20px;}
-.clabel{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
 .left-col{display:flex;flex-direction:column;gap:16px;}
-
-/* DROP ZONE */
 .drop-zone{background:var(--s2);border:2px dashed var(--brd);border-radius:10px;padding:26px 20px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
-.drop-zone:hover,.drop-zone.drag{border-color:var(--purple);background:rgba(167,139,250,.04);}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--teal);background:rgba(0,201,167,.04);}
 .drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;}
 .dz-icon{font-size:28px;margin-bottom:8px;}
 .dz-title{font-size:13px;color:var(--txt);margin-bottom:4px;}
 .dz-sub{font-size:10.5px;color:var(--muted);}
-.voice-loaded{display:none;margin-top:12px;background:var(--s3);border:1px solid rgba(167,139,250,.2);border-radius:9px;padding:12px 15px;align-items:center;gap:12px;}
+.voice-loaded{display:none;margin-top:12px;background:var(--s3);border:1px solid rgba(0,201,167,.2);border-radius:9px;padding:12px 15px;align-items:center;gap:12px;}
 .voice-loaded.show{display:flex;}
 .vl-info{flex:1;}
-.vl-name{font-size:12px;color:var(--purple);}
+.vl-name{font-size:12px;color:var(--teal);}
 .vl-meta{font-size:10px;color:var(--muted);margin-top:2px;}
+.vl-status{font-size:10px;padding:3px 8px;border-radius:5px;white-space:nowrap;}
+.vl-status.pending{background:rgba(240,165,0,.12);color:var(--acc);}
+.vl-status.cloning{background:rgba(91,159,255,.12);color:var(--blue);animation:blink 1s infinite;}
+.vl-status.ready{background:rgba(54,214,126,.1);color:var(--good);}
+.vl-status.err{background:rgba(255,77,77,.1);color:var(--bad);}
 .vl-remove{background:transparent;border:1px solid var(--brd);color:var(--muted);font-size:10px;padding:4px 8px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;}
 .vl-remove:hover{border-color:var(--bad);color:var(--bad);}
-
+.clone-btn{width:100%;padding:11px;background:rgba(0,201,167,.1);border:1px solid rgba(0,201,167,.3);color:var(--teal);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;border-radius:9px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;}
+.clone-btn:hover:not(:disabled){background:rgba(0,201,167,.2);}
+.clone-btn:disabled{opacity:.35;cursor:not-allowed;}
 textarea{width:100%;min-height:200px;background:var(--s2);border:1px solid var(--brd);border-radius:10px;color:var(--txt);font-family:'DM Mono',monospace;font-size:13.5px;line-height:1.78;padding:14px;resize:vertical;outline:none;transition:border-color .2s;}
-textarea:focus{border-color:var(--purple);}
+textarea:focus{border-color:var(--teal);}
 textarea::placeholder{color:var(--muted);}
 .char-row{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--muted);}
 select{width:100%;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:11.5px;padding:9px 11px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2345506e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
-select:focus{border-color:var(--purple);outline:none;}
+select:focus{border-color:var(--teal);outline:none;}
 .sldr-row{margin-bottom:12px;}
 .sldr-row label{display:flex;justify-content:space-between;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 .sldr-row label span{color:var(--acc);}
 input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--s3);border-radius:3px;outline:none;cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--acc);border-radius:50%;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--acc);border-radius:50%;cursor:pointer;transition:transform .15s;}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);}
 .viz{height:50px;background:var(--s2);border-radius:8px;display:flex;align-items:center;gap:2px;padding:8px 14px;overflow:hidden;margin-top:14px;}
-.vbar{flex:1;max-width:4px;background:var(--purple);border-radius:2px;height:5px;opacity:.3;transition:height .08s ease,opacity .08s;}
+.vbar{flex:1;max-width:4px;background:var(--teal);border-radius:2px;height:5px;opacity:.3;transition:height .08s ease,opacity .08s;}
 .vbar.on{opacity:1;}
 .right-col{display:flex;flex-direction:column;gap:14px;}
 .div{height:1px;background:var(--brd);margin:12px 0;}
-
-/* TRANSPORT */
+.cv-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--s2);border-radius:7px;margin-bottom:6px;cursor:pointer;border:1px solid var(--brd);transition:border-color .2s;}
+.cv-item:hover{border-color:var(--muted);}
+.cv-item.active{border-color:var(--teal);}
+.cv-item-info{flex:1;min-width:0;}
+.cv-item-name{font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.cv-item-del{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 5px;}
+.cv-item-del:hover{color:var(--bad);}
 .transport{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:17px;}
 .trow{display:flex;gap:8px;}
 .trow2{display:flex;gap:8px;margin-top:8px;}
 .btn{padding:11px 12px;border:none;border-radius:9px;font-family:'Syne',sans-serif;font-weight:700;font-size:12.5px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px;letter-spacing:.3px;position:relative;}
-.btn-gen{background:var(--purple);color:#07080c;flex:2;}
+.btn-gen{background:var(--teal);color:#07080c;flex:2;}
 .btn-gen::after{content:'Ctrl+Q';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:8px;font-family:'DM Mono',monospace;background:rgba(0,0,0,.2);padding:2px 5px;border-radius:3px;}
-.btn-gen:hover:not(:disabled){background:#c4b5fd;transform:translateY(-1px);box-shadow:0 6px 20px rgba(167,139,250,.3);}
+.btn-gen:hover:not(:disabled){background:#00ddb8;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,201,167,.3);}
 .btn-gen:disabled{opacity:.35;cursor:not-allowed;transform:none;}
 .btn-ghost{background:var(--s2);color:var(--txt);border:1px solid var(--brd);flex:1;}
 .btn-ghost:hover{border-color:var(--muted);}
@@ -109,16 +116,15 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 .btn-dl:disabled{opacity:.3;cursor:not-allowed;color:var(--muted);border-color:var(--brd);}
 .status-row{margin-top:10px;background:var(--s2);border-radius:7px;padding:9px 12px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px;min-height:34px;}
 .sdot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s;}
-.sdot.play{background:var(--purple);box-shadow:0 0 8px var(--purple);}
+.sdot.play{background:var(--teal);box-shadow:0 0 8px var(--teal);}
+.sdot.rec{background:var(--bad);box-shadow:0 0 8px var(--bad);animation:blink 1.2s infinite;}
 .sdot.ok{background:var(--good);}
 .sdot.loading{background:var(--blue);animation:blink .7s infinite;}
 .sdot.err{background:var(--bad);}
 @keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
 .gen-prog{margin-top:10px;height:3px;background:var(--s3);border-radius:3px;overflow:hidden;display:none;}
 .gen-prog.show{display:block;}
-.gen-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--blue));width:0%;transition:width .35s ease;border-radius:3px;}
-
-/* EFFECTS */
+.gen-fill{height:100%;background:linear-gradient(90deg,var(--teal),var(--blue));width:0%;transition:width .35s ease;border-radius:3px;}
 .effects-wrap{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:20px;margin-bottom:18px;}
 .eff-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
 .eff-top h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
@@ -127,21 +133,21 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 .eff-clear:hover{border-color:var(--bad);color:var(--bad);}
 .search-bar{position:relative;margin-bottom:11px;}
 .search-bar input{width:100%;background:var(--s2);border:1px solid var(--brd);border-radius:9px;color:var(--txt);font-family:'DM Mono',monospace;font-size:13px;padding:10px 14px 10px 38px;outline:none;transition:border-color .2s;}
-.search-bar input:focus{border-color:var(--purple);}
+.search-bar input:focus{border-color:var(--teal);}
 .search-bar input::placeholder{color:var(--muted);}
 .si{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none;}
 .cat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px;}
-.cpill{background:var(--s2);border:1px solid var(--brd);color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:5px 11px;border-radius:20px;cursor:pointer;transition:all .15px;white-space:nowrap;}
-.cpill:hover,.cpill.on{border-color:var(--purple);color:var(--purple);background:rgba(167,139,250,.07);}
+.cpill{background:var(--s2);border:1px solid var(--brd);color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:5px 11px;border-radius:20px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.cpill:hover,.cpill.on{border-color:var(--teal);color:var(--teal);background:rgba(0,201,167,.07);}
 .eff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:7px;max-height:400px;overflow-y:auto;padding-right:3px;}
 .eff-grid::-webkit-scrollbar{width:4px;}
 .eff-grid::-webkit-scrollbar-thumb{background:var(--brd);border-radius:3px;}
 .eff-card{background:var(--s2);border:1px solid var(--brd);border-radius:9px;padding:10px 8px 9px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .15s;user-select:none;position:relative;}
 .eff-card:hover{border-color:var(--muted);transform:translateY(-1px);}
-.eff-card.on{border-color:var(--purple);background:rgba(167,139,250,.07);}
+.eff-card.on{border-color:var(--teal);background:rgba(0,201,167,.07);}
 .eff-cb{position:absolute;top:7px;right:7px;width:15px;height:15px;border:1.5px solid var(--brd);border-radius:3px;background:var(--s3);transition:all .15s;display:flex;align-items:center;justify-content:center;pointer-events:none;}
 .eff-card:hover .eff-cb{border-color:var(--muted);}
-.eff-card.on .eff-cb{background:var(--purple);border-color:var(--purple);}
+.eff-card.on .eff-cb{background:var(--teal);border-color:var(--teal);}
 .eff-card.on .eff-cb::after{content:'✓';font-size:9px;font-weight:800;color:#07080c;line-height:1;}
 .eff-emoji{font-size:19px;line-height:1;margin-top:2px;}
 .eff-name{font-size:10px;text-align:center;line-height:1.3;color:var(--txt);}
@@ -149,10 +155,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 .no-res{grid-column:1/-1;text-align:center;color:var(--muted);font-size:12px;padding:28px;}
 .info-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 @media(max-width:600px){.info-row{grid-template-columns:1fr;}}
-.info-box{background:rgba(167,139,250,.04);border:1px solid rgba(167,139,250,.13);border-radius:10px;padding:13px;font-size:11px;line-height:1.75;color:#9080c0;}
-.info-box strong{color:var(--purple);display:block;margin-bottom:4px;}
-.info-box.green{background:rgba(54,214,126,.04);border-color:rgba(54,214,126,.13);color:#60a880;}
-.info-box.green strong{color:var(--good);}
+.info-box{background:rgba(0,201,167,.04);border:1px solid rgba(0,201,167,.13);border-radius:10px;padding:13px;font-size:11px;line-height:1.75;color:#60a89a;}
+.info-box strong{color:var(--teal);display:block;margin-bottom:4px;}
+.info-box.blue{background:rgba(91,159,255,.04);border-color:rgba(91,159,255,.13);color:#6090c0;}
+.info-box.blue strong{color:var(--blue);}
 </style>
 </head>
 <body>
@@ -168,70 +174,63 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
   </div>
   <div class="hinfo">
     <h1>SES KLONLAMA STÜDYOSU</h1>
-    <p>Replicate · XTTS v2 · Colab Gerektirmez</p>
+    <p>ElevenLabs · Gerçek Ses Klonlama</p>
   </div>
   <div class="hbadges">
-    <span class="hb hb-free">Ücretsiz Kredi</span>
-    <span class="hb hb-purple">XTTS v2</span>
+    <span class="hb hb-teal">ElevenLabs</span>
+    <span class="hb hb-blue">64+ Efekt</span>
     <span class="hb hb-key">Ctrl+Q</span>
   </div>
 </header>
 
-<!-- API BANNER -->
-<div class="api-banner">
-  <div class="api-top">
-    <div class="api-icon">🔑</div>
-    <div class="api-text">
-      <strong>Replicate API Token — Colab'a gerek yok, Python kurulumu yok</strong>
-      <span>
-        Ücretsiz hesap: <a href="https://replicate.com" target="_blank">replicate.com</a> →
-        Sağ üst profil → <b>API tokens</b> → <b>Create token</b> · Yeni hesaba ~$0.10 ücretsiz kredi verilir
-      </span>
+<!-- SETTINGS -->
+<div class="settings-banner">
+  <div class="sb-title">⚙️ Bağlantı Ayarları</div>
+  <div class="sb-grid">
+    <div class="inp-group">
+      <label>ElevenLabs API Anahtarı</label>
+      <div class="inp-row">
+        <input type="password" class="api-input" id="api-key"
+          placeholder="sk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          oninput="onSettings()">
+        <span class="status-chip" id="key-badge">Girilmedi</span>
+      </div>
+    </div>
+    <div class="inp-group">
+      <label>Cloudflare Worker Proxy URL</label>
+      <div class="inp-row">
+        <input type="text" class="api-input" id="proxy-url"
+          placeholder="https://fish-proxy.KULLANICI.workers.dev/proxy"
+          value="https://fish-proxy.gkaan630.workers.dev/proxy"
+          oninput="onSettings()">
+        <button class="test-btn" onclick="testProxy()">Test</button>
+      </div>
     </div>
   </div>
-  <div class="api-row" style="margin-bottom:8px;">
-    <input type="password" class="api-input" id="api-key"
-      placeholder="r8_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx — Replicate API token"
-      oninput="onApiKey()">
-    <span class="api-badge idle" id="api-badge">Bekleniyor</span>
-  </div>
-  <div class="api-row">
-    <input type="text" class="api-input" id="proxy-url"
-      placeholder="Cloudflare Worker URL: https://fish-proxy.KULLANICI.workers.dev/proxy"
-      style="font-size:11px;"
-      value="https://fish-proxy.gkaan630.workers.dev/proxy">
-    <button onclick="testProxy()" style="padding:9px 14px;background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.35);color:var(--purple);font-family:Syne,sans-serif;font-weight:700;font-size:11px;border-radius:8px;cursor:pointer;white-space:nowrap;">Test Et</button>
-  </div>
-  <div id="proxy-status" style="font-size:10px;color:var(--muted);margin-top:6px;padding:6px 10px;background:var(--s2);border-radius:6px;display:none;"></div>
-  <div class="steps-mini">
-    <div class="step-mini">
-      <div class="step-mini-num">Adım 1</div>
-      <div class="step-mini-txt"><a href="https://replicate.com/signin" target="_blank" style="color:var(--blue)">replicate.com</a>'a kayıt ol → API token al</div>
-    </div>
-    <div class="step-mini">
-      <div class="step-mini-num">Adım 2</div>
-      <div class="step-mini-txt">Token'ı üstteki kutuya yapıştır → referans sesi yükle</div>
-    </div>
-    <div class="step-mini">
-      <div class="step-mini-num">Adım 3</div>
-      <div class="step-mini-txt">Metin yaz → efekt seç → <b>Ctrl+Q</b> ile oluştur</div>
-    </div>
+  <div class="sb-note">
+    🔑 <a href="https://elevenlabs.io" target="_blank">elevenlabs.io</a> → Profile → API Keys → Create API Key
+    &nbsp;|&nbsp;
+    ☁️ Cloudflare Worker: <a href="https://dash.cloudflare.com" target="_blank">dash.cloudflare.com</a> → Workers → <b>fish-proxy</b> → Edit Code → yeni worker kodunu yapıştır → Save
+    &nbsp;|&nbsp;
+    <span id="proxy-test-result"></span>
   </div>
 </div>
 
 <!-- MAIN GRID -->
 <div class="main-grid">
   <div class="left-col">
+
+    <!-- VOICE UPLOAD -->
     <div class="card">
-      <div class="clabel">Referans Ses — Klonlanacak Ses</div>
+      <div class="clabel">Adım 1 — Referans Ses Yükle (Klonlanacak Ses)</div>
       <div class="drop-zone" id="dz"
         ondragover="event.preventDefault();this.classList.add('drag')"
         ondragleave="this.classList.remove('drag')"
         ondrop="onDrop(event)">
         <input type="file" accept="audio/*" onchange="onFile(this.files[0])">
         <div class="dz-icon">🎙️</div>
-        <div class="dz-title">Klonlanacak sesi buraya sürükleyin veya seçin</div>
-        <div class="dz-sub">MP3 · WAV · M4A · En az 6 saniye, gürültüsüz ses</div>
+        <div class="dz-title">Klonlanacak sesi sürükleyin veya seçin</div>
+        <div class="dz-sub">MP3 · WAV · M4A · FLAC · Min 30sn, tek konuşmacı, gürültüsüz</div>
       </div>
       <div class="voice-loaded" id="vl">
         <span style="font-size:22px">🎙️</span>
@@ -239,59 +238,62 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
           <div class="vl-name" id="vl-name"></div>
           <div class="vl-meta" id="vl-meta"></div>
         </div>
+        <span class="vl-status pending" id="vl-st">Klonlanmayı bekliyor</span>
         <button class="vl-remove" onclick="removeFile()">✕</button>
       </div>
+      <button class="clone-btn" id="clone-btn" onclick="cloneVoice()" disabled>
+        🔬 Sesi Klonla — ElevenLabs'a Yükle
+      </button>
     </div>
 
+    <!-- TEXT -->
     <div class="card">
-      <div class="clabel">Okunacak Metin</div>
+      <div class="clabel">Adım 2 — Okunacak Metni Yaz</div>
       <textarea id="txt"
-        placeholder="Bu metni klonlanan sesiniz okuyacak. Türkçe yazabilirsiniz…"
+        placeholder="Klonlanan ses bu metni okuyacak. Türkçe yazabilirsiniz…"
         oninput="onText()"></textarea>
       <div class="char-row">
         <span id="char-ct">0 karakter</span>
-        <span>Türkçe dahil 17 dil</span>
+        <span>Türkçe dahil 29 dil · eleven_multilingual_v2</span>
       </div>
       <div class="div"></div>
-      <div class="clabel">Dil</div>
-      <select id="lang">
-        <option value="tr" selected>🇹🇷 Türkçe</option>
-        <option value="en">🇬🇧 İngilizce</option>
-        <option value="de">🇩🇪 Almanca</option>
-        <option value="fr">🇫🇷 Fransızca</option>
-        <option value="es">🇪🇸 İspanyolca</option>
-        <option value="it">🇮🇹 İtalyanca</option>
-        <option value="pt">🇵🇹 Portekizce</option>
-        <option value="ru">🇷🇺 Rusça</option>
-        <option value="ar">🇸🇦 Arapça</option>
-        <option value="zh-cn">🇨🇳 Çince</option>
-        <option value="ja">🇯🇵 Japonca</option>
-        <option value="ko">🇰🇷 Korece</option>
+      <div class="clabel">Model & Ses Ayarları</div>
+      <select id="model" style="margin-bottom:10px;">
+        <option value="eleven_multilingual_v2" selected>eleven_multilingual_v2 ⭐ (Önerilen — Türkçe)</option>
+        <option value="eleven_turbo_v2_5">eleven_turbo_v2_5 (Hızlı)</option>
+        <option value="eleven_multilingual_v1">eleven_multilingual_v1</option>
       </select>
+      <div class="sldr-row">
+        <label>Kararlılık <span id="stab-v">50%</span></label>
+        <input type="range" id="stability" min="0" max="100" value="50"
+          oninput="document.getElementById('stab-v').textContent=this.value+'%'">
+      </div>
+      <div class="sldr-row">
+        <label>Benzerlik <span id="sim-v">80%</span></label>
+        <input type="range" id="similarity" min="0" max="100" value="80"
+          oninput="document.getElementById('sim-v').textContent=this.value+'%'">
+      </div>
+      <div class="sldr-row">
+        <label>Stil <span id="style-v">25%</span></label>
+        <input type="range" id="style" min="0" max="100" value="25"
+          oninput="document.getElementById('style-v').textContent=this.value+'%'">
+      </div>
     </div>
+
     <div class="viz" id="viz"></div>
   </div>
 
   <div class="right-col">
+    <!-- CLONED VOICES -->
     <div class="card">
-      <div class="clabel">Ses Ayarları</div>
-      <div class="sldr-row">
-        <label>Konuşma Hızı <span id="speed-v">1.0×</span></label>
-        <input type="range" id="speed" min="0.5" max="2.0" step="0.05" value="1.0"
-          oninput="document.getElementById('speed-v').textContent=parseFloat(this.value).toFixed(2)+'×'">
-      </div>
-      <div class="sldr-row">
-        <label>Sıcaklık <span id="temp-v">0.65</span></label>
-        <input type="range" id="temp" min="0.1" max="1.0" step="0.05" value="0.65"
-          oninput="document.getElementById('temp-v').textContent=parseFloat(this.value).toFixed(2)">
-      </div>
-      <div class="sldr-row">
-        <label>Benzerlik <span id="sim-v">0.85</span></label>
-        <input type="range" id="sim" min="0.1" max="1.0" step="0.05" value="0.85"
-          oninput="document.getElementById('sim-v').textContent=parseFloat(this.value).toFixed(2)">
+      <div class="clabel">Klonlanan Sesler</div>
+      <div id="cv-list" style="font-size:11px;color:var(--muted)">Henüz ses klonlanmadı.</div>
+      <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.7;background:var(--s2);border-radius:7px;padding:8px 10px;">
+        💡 Birden fazla ses klonlayıp aralarında geçiş yapabilirsiniz.
       </div>
     </div>
 
+    <!-- TRANSPORT -->
     <div class="transport">
       <div class="clabel">Kontroller</div>
       <div class="gen-prog" id="gen-prog"><div class="gen-fill" id="gen-fill"></div></div>
@@ -305,17 +307,17 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
       </div>
       <div class="status-row">
         <div class="sdot" id="sdot"></div>
-        <span id="stxt">API token girin ve ses yükleyin</span>
+        <span id="stxt">API anahtarı ve proxy ayarlayın</span>
       </div>
     </div>
 
     <div class="card" style="font-size:10.5px;color:var(--muted);line-height:1.9;">
-      <div class="clabel">XTTS v2 Bilgisi</div>
-      <span style="color:var(--good)">✓</span> Gerçek ses klonlama<br>
-      <span style="color:var(--good)">✓</span> Colab gerektirmez<br>
-      <span style="color:var(--good)">✓</span> Türkçe desteği<br>
+      <div class="clabel">ElevenLabs Hakkında</div>
+      <span style="color:var(--good)">✓</span> Endüstri standardı klonlama<br>
+      <span style="color:var(--good)">✓</span> Türkçe dahil 29 dil<br>
+      <span style="color:var(--good)">✓</span> Starter: aylık $5 → 30.000 karakter<br>
       <span style="color:var(--good)">✓</span> 64+ ses efekti<br>
-      <span style="color:var(--good)">✓</span> Ücretsiz kredi ile başla
+      <span style="color:var(--good)">✓</span> Ctrl+Q kısayolu
     </div>
   </div>
 </div>
@@ -338,20 +340,23 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
 
 <div class="info-row">
   <div class="info-box">
-    <strong>🚀 Nasıl Çalışır?</strong>
-    Ses dosyanız base64'e dönüştürülür ve Replicate'in XTTS v2 modeline gönderilir. Model sesinizi klonlayıp metni o sesle üretir. Tüm efektler Web Audio API ile uygulanır.
+    <strong>🚀 Kurulum Özeti</strong>
+    1) Cloudflare Worker'ı güncelle (yeni .js dosyası)<br>
+    2) ElevenLabs API anahtarını gir<br>
+    3) Proxy URL'sini gir → Test Et<br>
+    4) Ses yükle → Klonla → Metin yaz → Ctrl+Q
   </div>
-  <div class="info-box green">
-    <strong>💰 Maliyet</strong>
-    Yeni hesaba ~$0.10 ücretsiz kredi. Bir üretim yaklaşık $0.001-0.003. Yani 30-100 üretim ücretsiz. Sonrası çok ucuz — dakikada birkaç kuruş.
+  <div class="info-box blue">
+    <strong>💡 En İyi Sonuç İçin</strong>
+    Referans sesi: 30sn–3dk, tek konuşmacı, arka plan gürültüsüz. Daha uzun ve temiz ses = daha iyi klonlama. Hazırladığımız işlenmiş ses dosyasını kullanabilirsiniz.
   </div>
 </div>
 
 </div>
 <script>
-// ═══════════════════════════════════
+// ═══════════════════════
 // WEB AUDIO
-// ═══════════════════════════════════
+// ═══════════════════════
 let _ac=null;
 const AC=()=>{if(!_ac)_ac=new(window.AudioContext||window.webkitAudioContext)();if(_ac.state==='suspended')_ac.resume();return _ac;};
 const mkLP=(c,f,q=.7)=>{const n=c.createBiquadFilter();n.type='lowpass';n.frequency.value=f;n.Q.value=q;return n;};
@@ -365,9 +370,9 @@ const mkWS=(c,amt)=>{const ws=c.createWaveShaper(),n=256,cv=new Float32Array(n);
 const mkIR=(c,dur=2,dec=2)=>{const sr=c.sampleRate,len=Math.floor(sr*dur),buf=c.createBuffer(2,len,sr);for(let ch=0;ch<2;ch++){const d=buf.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,dec);}const cv=c.createConvolver();cv.buffer=buf;return cv;};
 const wdry=(c,wet,fx)=>{const o=mkGn(c,1),dG=mkGn(c,1-wet),wG=mkGn(c,wet),i=mkGn(c,1);i.connect(dG);dG.connect(o);i.connect(fx);fx.connect(wG);wG.connect(o);return{input:i,output:o};};
 
-// ═══════════════════════════════════
+// ═══════════════════════
 // EFFECTS
-// ═══════════════════════════════════
+// ═══════════════════════
 const EFFECTS=[
 {id:'bass_boost',name:'Bass Boost',cat:'Frekans',emoji:'🔉',create(c){const n=mkLS(c,200,9);return{input:n,output:n};}},
 {id:'treble_boost',name:'Tiz Boost',cat:'Frekans',emoji:'✨',create(c){const n=mkHS(c,7000,7);return{input:n,output:n};}},
@@ -386,6 +391,7 @@ const EFFECTS=[
 {id:'magara',name:'Mağara',cat:'Mekan',emoji:'🦇',create(c){const i=mkGn(c,1),o=mkGn(c,1),rev=mkIR(c,5,.8),del=c.createDelay(2);del.delayTime.value=.38;const fb=mkGn(c,.5);del.connect(fb);fb.connect(del);i.connect(mkGn(c,.4)).connect(o);i.connect(rev);rev.connect(mkGn(c,.55)).connect(o);i.connect(del);del.connect(mkGn(c,.32)).connect(o);return{input:i,output:o};}},
 {id:'stadyum',name:'Stadyum',cat:'Mekan',emoji:'🏟️',create(c){return wdry(c,.72,mkIR(c,5.5,.55));}},
 {id:'uzay',name:'Uzay',cat:'Mekan',emoji:'🚀',create(c){return wdry(c,.88,mkIR(c,9,.25));}},
+{id:'tunel',name:'Tünel',cat:'Mekan',emoji:'🚇',create(c){const i=mkGn(c,1),o=mkGn(c,1),rev=mkIR(c,2,1.5),del=c.createDelay(1);del.delayTime.value=.18;const fb=mkGn(c,.42);del.connect(fb);fb.connect(del);i.connect(mkGn(c,.5)).connect(o);i.connect(rev);rev.connect(mkGn(c,.4)).connect(o);i.connect(del);del.connect(mkGn(c,.3)).connect(o);return{input:i,output:o};}},
 {id:'su_alti',name:'Su Altı',cat:'Mekan',emoji:'🌊',create(c){const n=mkLP(c,400,2.5);return{input:n,output:n};}},
 {id:'telefon',name:'Telefon',cat:'Elektronik',emoji:'📞',create(c){const hp=mkHP(c,300),lp=mkLP(c,3400);hp.connect(lp);return{input:hp,output:lp};}},
 {id:'radyo',name:'Radyo',cat:'Elektronik',emoji:'📻',create(c){const hp=mkHP(c,500),lp=mkLP(c,3000),ws=mkWS(c,10);hp.connect(lp);lp.connect(ws);return{input:hp,output:ws};}},
@@ -393,8 +399,8 @@ const EFFECTS=[
 {id:'megafon',name:'Megafon',cat:'Elektronik',emoji:'📢',create(c){const hp=mkHP(c,400),lp=mkLP(c,3500),ws=mkWS(c,45),g=mkGn(c,1.8);hp.connect(lp);lp.connect(ws);ws.connect(g);return{input:hp,output:g};}},
 {id:'lofi',name:'Lo-Fi',cat:'Elektronik',emoji:'📼',create(c){const lp=mkLP(c,3000),ws=mkWS(c,15),hp=mkHP(c,80);lp.connect(ws);ws.connect(hp);return{input:lp,output:hp};}},
 {id:'robot',name:'Robot',cat:'Elektronik',emoji:'🤖',create(c){const i=mkGn(c,1),f1=mkPK(c,120,10,8),f2=mkPK(c,400,-5,4),f3=mkPK(c,1200,9,6),ws=mkWS(c,25),lp=mkLP(c,6000);i.connect(f1);f1.connect(f2);f2.connect(f3);f3.connect(ws);ws.connect(lp);return{input:i,output:lp};}},
-{id:'retro',name:'Retro',cat:'Elektronik',emoji:'📺',create(c){const hp=mkHP(c,200),lp=mkLP(c,7000),wm=mkPK(c,400,3);hp.connect(lp);lp.connect(wm);return{input:hp,output:wm};}},
 {id:'dijital',name:'Dijital Bozulma',cat:'Elektronik',emoji:'💻',create(c){const ws=c.createWaveShaper(),cv=new Float32Array(256);for(let i=0;i<256;i++){const x=(i*2)/256-1;cv[i]=Math.max(-.7,Math.min(.7,x*2.2));}ws.curve=cv;ws.oversample='4x';return{input:ws,output:ws};}},
+{id:'retro',name:'Retro',cat:'Elektronik',emoji:'📺',create(c){const hp=mkHP(c,200),lp=mkLP(c,7000),wm=mkPK(c,400,3);hp.connect(lp);lp.connect(wm);return{input:hp,output:wm};}},
 {id:'kompresyon',name:'Kompresyon',cat:'Dinamik',emoji:'🗜️',create(c){const n=mkComp(c,-24,4,3,.003,.25);return{input:n,output:n};}},
 {id:'hard_limit',name:'Hard Limit',cat:'Dinamik',emoji:'🔒',create(c){const n=mkComp(c,-6,20,0,.001,.08);return{input:n,output:n};}},
 {id:'distortion',name:'Distorsiyon',cat:'Dinamik',emoji:'⚡',create(c){const n=mkWS(c,80);return{input:n,output:n};}},
@@ -425,231 +431,226 @@ const EFFECTS=[
 {id:'fisılti',name:'Fısıltı',cat:'Karakter',emoji:'🤫',create(c){const hp=mkHP(c,2000),lp=mkLP(c,8000),g=mkGn(c,.45);hp.connect(lp);lp.connect(g);return{input:hp,output:g};}},
 {id:'seytan',name:'Şeytani',cat:'Karakter',emoji:'😈',pitchMult:.62,create(c){const i=mkGn(c,1),o=mkGn(c,1),ws=mkWS(c,60),bs=mkLS(c,200,6),rev=mkIR(c,3.5,.9);i.connect(ws);ws.connect(bs);bs.connect(mkGn(c,.55)).connect(o);bs.connect(rev);rev.connect(mkGn(c,.6)).connect(o);return{input:i,output:o};}},
 {id:'guclu',name:'Güçlü',cat:'Karakter',emoji:'💪',create(c){const bs=mkLS(c,200,8),comp=mkComp(c,-12,6,1,.001,.05);bs.connect(comp);return{input:bs,output:comp};}},
-{id:'otoriter',name:'Otoriter',cat:'Karakter',emoji:'🎖️',create(c){const mid=mkPK(c,1200,5,2),pr=mkPK(c,3000,3,2),comp=mkComp(c,-20,4,3,.003,.15);mid.connect(pr);pr.connect(comp);return{input:mid,output:comp};}},
 {id:'eglenceli',name:'Eğlenceli',cat:'Karakter',emoji:'🎉',pitchMult:1.08,create(c){const i=mkGn(c,1),o=mkGn(c,1);i.connect(mkGn(c,.7)).connect(o);[[22,.5,.004],[18,.4,.003]].forEach(([ms,rate,dep])=>{const del=c.createDelay(.1);del.delayTime.value=ms/1000;const lfo=c.createOscillator();lfo.frequency.value=rate;lfo.connect(mkGn(c,dep)).connect(del.delayTime);lfo.start();i.connect(del);del.connect(mkGn(c,.3)).connect(o);});return{input:i,output:o};}},
 ];
 
-// ═══════════════════════════════════
+// ═══════════════════════
 // STATE
-// ═══════════════════════════════════
-let apiToken='';
-let refFile=null;
-let refBase64='';
-let lastBlob=null,lastBuf=null;
-let sourceNode=null,destNode=null;
-let isPlaying=false,isPaused=false;
+// ═══════════════════════
+let apiKey='', proxyUrl='', refFile=null;
+let clonedVoices=[], activeVoiceId=null;
 let activeEffectIds=new Set();
+let lastBlob=null, lastBuf=null;
+let sourceNode=null;
+let isPlaying=false, isPaused=false;
 const vizTimer={t:null};
 
-// ═══════════════════════════════════
-// API TOKEN
-// ═══════════════════════════════════
-function onApiKey(){
-  apiToken=document.getElementById('api-key').value.trim();
-  const b=document.getElementById('api-badge');
-  if(apiToken.startsWith('r8_')&&apiToken.length>20){
-    b.className='api-badge ok';b.textContent='✓ Geçerli format';
-  } else if(apiToken.length>5){
-    b.className='api-badge ok';b.textContent='✓ Girildi';
-  } else {
-    b.className='api-badge idle';b.textContent='Bekleniyor';
-  }
+function getProxy(){return(document.getElementById('proxy-url').value.trim().replace(/\/$/,''));}
+function getKey(){return document.getElementById('api-key').value.trim();}
+
+function apiFetch(path, opts={}){
+  const proxy=getProxy();
+  const key=getKey();
+  const url=proxy+'/https://api.elevenlabs.io'+path;
+  const headers=new Headers(opts.headers||{});
+  headers.set('xi-api-key', key);
+  return fetch(url, {...opts, headers});
+}
+
+// ═══════════════════════
+// SETTINGS
+// ═══════════════════════
+function onSettings(){
+  const k=getKey();
+  const b=document.getElementById('key-badge');
+  if(k.length>10){b.className='status-chip ok';b.textContent='✓ Girildi';}
+  else{b.className='status-chip';b.textContent='Girilmedi';}
   refreshUI();
 }
 
-// ═══════════════════════════════════
+async function testProxy(){
+  const proxy=getProxy();
+  const res=document.getElementById('proxy-test-result');
+  res.style.color='var(--muted)';
+  res.textContent='⏳ Test ediliyor...';
+  try{
+    const r=await fetch(proxy+'/https://api.elevenlabs.io/v1/models',{
+      headers:{'xi-api-key': getKey()||'test'}
+    });
+    if(r.status===401||r.status===200||r.status===422){
+      res.style.color='var(--good)';
+      res.textContent='✅ Proxy çalışıyor!';
+    } else {
+      res.style.color='var(--acc)';
+      res.textContent='⚠ HTTP '+r.status;
+    }
+  }catch(e){
+    res.style.color='var(--bad)';
+    res.textContent='❌ Proxy bağlanamıyor: '+e.message;
+  }
+}
+
+// ═══════════════════════
 // FILE
-// ═══════════════════════════════════
-function onFile(f){if(f)loadFile(f);}
-function onDrop(e){e.preventDefault();document.getElementById('dz').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)loadFile(f);}
-function loadFile(f){
+// ═══════════════════════
+function onFile(f){if(f)setFile(f);}
+function onDrop(e){e.preventDefault();document.getElementById('dz').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)setFile(f);}
+function setFile(f){
   refFile=f;
   document.getElementById('vl-name').textContent=f.name;
   document.getElementById('vl-meta').textContent=`${(f.size/1024/1024).toFixed(2)} MB · ${f.type}`;
+  setVlSt('pending','Klonlanmayı bekliyor');
   document.getElementById('vl').classList.add('show');
-  // Convert to base64
-  const reader=new FileReader();
-  reader.onload=e=>{
-    refBase64=e.target.result; // data:audio/...;base64,...
-    setSt('✅ Ses yüklendi — metin yazıp Ctrl+Q ile oluşturun','ok');
-  };
-  reader.readAsDataURL(f);
   refreshUI();
 }
-function removeFile(){refFile=null;refBase64='';document.getElementById('vl').classList.remove('show');refreshUI();}
+function removeFile(){refFile=null;document.getElementById('vl').classList.remove('show');refreshUI();}
+function setVlSt(cls,txt){const e=document.getElementById('vl-st');e.className='vl-status '+cls;e.textContent=txt;}
 
-// ═══════════════════════════════════
-// GENERATE via Replicate XTTS v2
-// ═══════════════════════════════════
+// ═══════════════════════
+// CLONE VOICE
+// ═══════════════════════
+async function cloneVoice(){
+  if(!getKey()||!refFile)return;
+  setVlSt('cloning','⏳ Klonlanıyor…');
+  document.getElementById('clone-btn').disabled=true;
+  setSt('🔬 Ses ElevenLabs\'a yükleniyor…','loading');
+  try{
+    const fd=new FormData();
+    fd.append('name','Klonlanan — '+refFile.name.replace(/\.[^.]+$/,''));
+    fd.append('description','Ses Stüdyosu Pro');
+    fd.append('files', refFile, refFile.name);
+    const r=await apiFetch('/v1/voices/add',{method:'POST',body:fd});
+    const raw=await r.text();
+    let data;try{data=JSON.parse(raw);}catch{data={};}
+    if(!r.ok){
+      let msg='HTTP '+r.status;
+      if(data.detail){msg=typeof data.detail==='string'?data.detail:Array.isArray(data.detail)?data.detail.map(d=>d.msg).join(', '):JSON.stringify(data.detail);}
+      throw new Error(msg);
+    }
+    const vid=data.voice_id||data.id;
+    if(!vid)throw new Error('voice_id alınamadı: '+raw.slice(0,200));
+    clonedVoices.push({id:vid,name:refFile.name.replace(/\.[^.]+$/,'')});
+    activeVoiceId=vid;
+    renderCVList();
+    setVlSt('ready','✅ Klonlandı');
+    setSt('✅ Ses klonlandı! Metin yazıp Ctrl+Q ile oluşturun','ok');
+    refreshUI();
+  }catch(e){
+    setVlSt('err','✕ Hata');
+    setSt('⚠ '+e.message,'err');
+    console.error(e);
+  }
+  document.getElementById('clone-btn').disabled=false;
+}
+
+function renderCVList(){
+  const el=document.getElementById('cv-list');
+  if(!clonedVoices.length){el.innerHTML='<span style="color:var(--muted);font-size:11px">Henüz ses klonlanmadı.</span>';return;}
+  el.innerHTML=clonedVoices.map(v=>`
+    <div class="cv-item${v.id===activeVoiceId?' active':''}" onclick="selectVoice('${v.id}')">
+      <span style="font-size:16px">🎙️</span>
+      <div class="cv-item-info">
+        <div class="cv-item-name" style="color:${v.id===activeVoiceId?'var(--teal)':'var(--txt)'}">${v.name}</div>
+        <div style="font-size:9.5px;color:var(--muted)">${v.id.slice(0,16)}…</div>
+      </div>
+      ${v.id===activeVoiceId?'<span style="font-size:9px;color:var(--teal);background:rgba(0,201,167,.12);padding:2px 6px;border-radius:4px">Aktif</span>':''}
+      <button class="cv-item-del" onclick="event.stopPropagation();deleteVoice('${v.id}')">✕</button>
+    </div>`).join('');
+}
+function selectVoice(id){activeVoiceId=id;renderCVList();refreshUI();}
+async function deleteVoice(id){
+  try{await apiFetch('/v1/voices/'+id,{method:'DELETE'});}catch(e){}
+  clonedVoices=clonedVoices.filter(v=>v.id!==id);
+  if(activeVoiceId===id)activeVoiceId=clonedVoices[0]?.id||null;
+  renderCVList();refreshUI();
+}
+
+// ═══════════════════════
+// GENERATE
+// ═══════════════════════
 async function generate(){
-  if(!apiToken||!refBase64){setSt('⚠ Token ve ses dosyası gerekli','err');return;}
+  if(!getKey()||!activeVoiceId)return;
   const text=document.getElementById('txt').value.trim();
   if(!text){setSt('⚠ Metin girin','err');return;}
-
   stopPlay();
-  setSt('⏳ Replicate XTTS v2 çalışıyor… (~20-40sn)','loading');
+  setSt('⏳ ElevenLabs ses oluşturuyor…','loading');
   setGenBtn('loading');showProg(true);
-
   try{
-    animProg(0,30,3000);
-
-    const lang=document.getElementById('lang').value;
-    const speed=parseFloat(document.getElementById('speed').value);
-    const temperature=parseFloat(document.getElementById('temp').value);
-    const length_penalty=parseFloat(document.getElementById('sim').value);
-
-    // Start prediction
-    const PROXY=document.getElementById('proxy-url').value.trim().replace(/\/$/,'');
-    const startRes=await fetch(PROXY+'/https://api.replicate.com/v1/predictions',{
+    animProg(0,60,1500);
+    const model=document.getElementById('model').value;
+    const stability=parseInt(document.getElementById('stability').value)/100;
+    const similarity=parseInt(document.getElementById('similarity').value)/100;
+    const style=parseInt(document.getElementById('style').value)/100;
+    const r=await apiFetch(`/v1/text-to-speech/${activeVoiceId}`,{
       method:'POST',
-      headers:{
-        'Authorization':'Token '+apiToken,
-        'Content-Type':'application/json',
-      },
+      headers:{'Content-Type':'application/json','Accept':'audio/mpeg'},
       body:JSON.stringify({
-        version:'684bc3855b37866c0c65add2ff39c78f3dea3f4ff103a436465326e0f438d55e',
-        input:{
-          text: text,
-          speaker: refBase64,
-          language: lang,
-          speed: speed,
-          temperature: temperature,
-          length_penalty: length_penalty,
-          repetition_penalty: 5.0,
-          top_k: 50,
-          top_p: 0.85,
-        }
+        text,model_id:model,
+        voice_settings:{stability,similarity_boost:similarity,style,use_speaker_boost:true}
       })
     });
-
-    if(!startRes.ok){
-      const err=await startRes.json().catch(()=>({}));
-      throw new Error(err.detail||err.title||`HTTP ${startRes.status}`);
-    }
-
-    const prediction=await startRes.json();
-    const predId=prediction.id;
-    animProg(30,60,5000);
-
-    // Poll until done
-    let audioUrl=null;
-    let attempts=0;
-    while(attempts<60){
-      await delay(3000);
-      attempts++;
-      const pollRes=await fetch(`${PROXY}/https://api.replicate.com/v1/predictions/${predId}`,{
-        headers:{'Authorization':'Token '+apiToken}
-      });
-      const poll=await pollRes.json();
-      if(poll.status==='succeeded'){
-        audioUrl=poll.output;
-        break;
-      } else if(poll.status==='failed'||poll.status==='canceled'){
-        throw new Error('Replicate hatası: '+(poll.error||poll.status));
-      }
-      animProg(60,85,2000);
-    }
-
-    if(!audioUrl)throw new Error('Zaman aşımı — Replicate yanıt vermedi');
-
-    animProg(85,95,500);
-
-    // Fetch audio (through proxy if replicate domain)
-    const audioFetchUrl=audioUrl.includes('replicate')?PROXY+'/'+audioUrl:audioUrl;
-    const audioRes=await fetch(audioFetchUrl);
-    const arrayBuf=await audioRes.arrayBuffer();
-    lastBlob=new Blob([arrayBuf],{type:'audio/wav'});
-
+    if(!r.ok){const e=await r.json().catch(()=>({}));throw new Error(e.detail?.message||'HTTP '+r.status);}
+    animProg(60,90,500);
+    const ab=await r.arrayBuffer();
+    lastBlob=new Blob([ab],{type:'audio/mpeg'});
     const ctx=AC();
-    const decoded=await ctx.decodeAudioData(arrayBuf.slice(0));
+    const decoded=await ctx.decodeAudioData(ab.slice(0));
     lastBuf=decoded;
-
-    animProg(95,100,200);
+    animProg(90,100,200);
     await delay(250);
     showProg(false);
-
     playBufWithFx(decoded);
-
-  }catch(err){
-    showProg(false);
-    setGenBtn('idle');
-    setSt('⚠ '+err.message,'err');
-    console.error(err);
+  }catch(e){
+    showProg(false);setGenBtn('idle');
+    setSt('⚠ '+e.message,'err');
+    console.error(e);
   }
 }
 
-// ═══════════════════════════════════
-// PLAY WITH EFFECTS
-// ═══════════════════════════════════
+// ═══════════════════════
+// PLAYBACK
+// ═══════════════════════
 function playBufWithFx(buf){
   if(sourceNode){try{sourceNode.stop();}catch(e){}}
   const ctx=AC();
   const activeFx=EFFECTS.filter(e=>activeEffectIds.has(e.id));
   const pitchMult=activeFx.reduce((a,e)=>a*(e.pitchMult||1),1);
-  const entry=mkGn(ctx,1);
-  let cur=entry;
+  const entry=mkGn(ctx,1);let cur=entry;
   for(const fx of activeFx){const n=fx.create(ctx);cur.connect(n.input);cur=n.output;}
-  const master=mkGn(ctx,1);
-  cur.connect(master);
-  master.connect(ctx.destination);
+  const master=mkGn(ctx,1);cur.connect(master);master.connect(ctx.destination);
   sourceNode=ctx.createBufferSource();
-  sourceNode.buffer=buf;
-  sourceNode.playbackRate.value=pitchMult;
-  sourceNode.connect(entry);
-  sourceNode.onended=()=>{
-    isPlaying=false;stopViz();setGenBtn('idle');
-    setSt('✅ Tamamlandı','ok');
-    document.getElementById('btn-dl').disabled=!lastBlob;
-  };
-  sourceNode.start();
-  isPlaying=true;startViz();setGenBtn('playing');
+  sourceNode.buffer=buf;sourceNode.playbackRate.value=pitchMult;sourceNode.connect(entry);
+  sourceNode.onended=()=>{isPlaying=false;stopViz();setGenBtn('idle');setSt('✅ Tamamlandı','ok');document.getElementById('btn-dl').disabled=!lastBlob;};
+  sourceNode.start();isPlaying=true;startViz();setGenBtn('playing');
   setSt('▶ Klonlanan ses oynatılıyor…','play');
 }
+function stopPlay(){if(sourceNode){try{sourceNode.stop();}catch(e){}}sourceNode=null;isPlaying=false;isPaused=false;stopViz();setGenBtn('idle');document.getElementById('btn-pause').textContent='⏸';}
+function pausePlay(){if(!_ac)return;if(_ac.state==='running'&&isPlaying){_ac.suspend();isPaused=true;document.getElementById('btn-pause').textContent='▶';setSt('⏸ Duraklatıldı','');}else if(_ac.state==='suspended'){_ac.resume();isPaused=false;document.getElementById('btn-pause').textContent='⏸';setSt('▶ Devam…','play');}}
+function replayFx(){if(!lastBlob||isPlaying)return;lastBlob.arrayBuffer().then(ab=>AC().decodeAudioData(ab).then(buf=>{lastBuf=buf;playBufWithFx(buf);}));}
+function dlAudio(){if(!lastBlob)return;const url=URL.createObjectURL(lastBlob);const a=document.createElement('a');a.href=url;a.download=`elevenlabs-klonlanan-${Date.now()}.mp3`;a.click();URL.revokeObjectURL(url);}
 
-function stopPlay(){
-  if(sourceNode){try{sourceNode.stop();}catch(e){}}
-  sourceNode=null;isPlaying=false;isPaused=false;
-  stopViz();setGenBtn('idle');
-  document.getElementById('btn-pause').textContent='⏸';
-}
-function pausePlay(){
-  if(!_ac)return;
-  if(_ac.state==='running'&&isPlaying){_ac.suspend();isPaused=true;document.getElementById('btn-pause').textContent='▶';setSt('⏸ Duraklatıldı','');}
-  else if(_ac.state==='suspended'){_ac.resume();isPaused=false;document.getElementById('btn-pause').textContent='⏸';setSt('▶ Devam…','play');}
-}
-function replayFx(){
-  if(!lastBlob||isPlaying)return;
-  lastBlob.arrayBuffer().then(ab=>AC().decodeAudioData(ab).then(buf=>{lastBuf=buf;playBufWithFx(buf);}));
-}
-function dlAudio(){
-  if(!lastBlob)return;
-  const url=URL.createObjectURL(lastBlob);
-  const a=document.createElement('a');a.href=url;a.download=`xtts-klonlanan-${Date.now()}.wav`;a.click();
-  URL.revokeObjectURL(url);
-}
-
-// ═══════════════════════════════════
+// ═══════════════════════
 // VIZ
-// ═══════════════════════════════════
+// ═══════════════════════
 (()=>{const el=document.getElementById('viz');if(!el)return;for(let i=0;i<44;i++){const b=document.createElement('div');b.className='vbar';el.appendChild(b);}})();
 function startViz(){const el=document.getElementById('viz');if(!el||vizTimer.t)return;const bars=el.querySelectorAll('.vbar');vizTimer.t=setInterval(()=>{bars.forEach(b=>{b.style.height=(4+Math.random()*34)+'px';b.classList.add('on');});},85);}
 function stopViz(){clearInterval(vizTimer.t);vizTimer.t=null;document.querySelectorAll('#viz .vbar').forEach(b=>{b.style.height='5px';b.classList.remove('on');});}
 
-// ═══════════════════════════════════
+// ═══════════════════════
 // UTILS
-// ═══════════════════════════════════
+// ═══════════════════════
 let _pa=null;
 function showProg(s){document.getElementById('gen-prog').classList.toggle('show',s);if(!s){document.getElementById('gen-fill').style.width='0%';clearInterval(_pa);}}
 function animProg(from,to,ms){clearInterval(_pa);const fill=document.getElementById('gen-fill'),steps=20,step=(to-from)/steps,iv=ms/steps;let cur=from;fill.style.width=from+'%';_pa=setInterval(()=>{cur+=step;fill.style.width=Math.min(cur,to)+'%';if(cur>=to)clearInterval(_pa);},iv);}
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 function setSt(msg,state){document.getElementById('stxt').textContent=msg;document.getElementById('sdot').className='sdot'+(state?' '+state:'');}
-function setGenBtn(mode){const btn=document.getElementById('btn-gen');if(mode==='loading'){btn.disabled=true;btn.innerHTML='⏳ Oluşturuluyor…';}else if(mode==='playing'){btn.disabled=false;btn.innerHTML='■ Oynuyor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}else{btn.disabled=!(apiToken&&refBase64&&document.getElementById('txt').value.trim());btn.innerHTML='▶ Oluştur&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}}
-function refreshUI(){setGenBtn('idle');}
+function setGenBtn(mode){const btn=document.getElementById('btn-gen');if(mode==='loading'){btn.disabled=true;btn.innerHTML='⏳ Oluşturuluyor…';}else if(mode==='playing'){btn.disabled=false;btn.innerHTML='■ Oynuyor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}else{btn.disabled=!(getKey()&&activeVoiceId&&document.getElementById('txt').value.trim());btn.innerHTML='▶ Oluştur&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}}
+function refreshUI(){document.getElementById('clone-btn').disabled=!(getKey()&&refFile);setGenBtn('idle');}
 function onText(){document.getElementById('char-ct').textContent=document.getElementById('txt').value.length+' karakter';refreshUI();}
 
-// ═══════════════════════════════════
+// ═══════════════════════
 // EFFECTS UI
-// ═══════════════════════════════════
+// ═══════════════════════
 const CATS=['Tümü',...new Set(EFFECTS.map(e=>e.cat))];
 let activeCat='';
 function buildPills(){document.getElementById('cat-pills').innerHTML=CATS.map(c=>`<button class="cpill${c==='Tümü'?' on':''}" onclick="setCat('${c==='Tümü'?'':c}','${c}')">${c}</button>`).join('');}
@@ -659,33 +660,9 @@ function toggleFx(id){if(activeEffectIds.has(id))activeEffectIds.delete(id);else
 function clearFx(){activeEffectIds.clear();renderFx();document.getElementById('eff-count').textContent='0 aktif';}
 buildPills();renderFx();
 
-// ═══════════════════════════════════
+// ═══════════════════════
 // KEYBOARD
-// ═══════════════════════════════════
-async function testProxy(){
-  const proxy = document.getElementById('proxy-url').value.trim().replace(/\/$/,'');
-  const status = document.getElementById('proxy-status');
-  status.style.display='block';
-  status.style.color='var(--muted)';
-  status.textContent='⏳ Test ediliyor...';
-  try{
-    const res = await fetch(proxy+'/https://api.replicate.com/v1/models',{
-      headers:{'Authorization':'Token test'}
-    });
-    const txt = await res.text();
-    if(res.status===401||res.status===403||txt.includes('Invalid')||txt.includes('models')){
-      status.style.color='var(--good)';
-      status.textContent='✅ Proxy çalışıyor! Artık ses oluşturabilirsiniz.';
-    } else {
-      status.style.color='var(--acc)';
-      status.textContent='⚠ Yanıt geldi ama beklenmedik: '+txt.slice(0,100);
-    }
-  }catch(err){
-    status.style.color='var(--bad)';
-    status.textContent='❌ Proxy ulaşılamıyor: '+err.message+' — Worker güncellendi mi?';
-  }
-}
-
+// ═══════════════════════
 document.addEventListener('keydown',e=>{
   if(e.ctrlKey&&e.key.toLowerCase()==='q'){e.preventDefault();isPlaying?stopPlay():generate();}
   if(e.ctrlKey&&e.key==='.'){e.preventDefault();stopPlay();}
