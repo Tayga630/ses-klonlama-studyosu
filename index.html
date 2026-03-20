@@ -1005,7 +1005,7 @@ async function testProxy(){
   const savedKey=localStorage.getItem('el_api_key');
   if(savedKey){document.getElementById('api-key').value=savedKey;onSettings();}
   loadVoices();loadPresets();loadSettings();
-  renderFx();buildPills();
+  // renderFx and buildPills called after CATS is defined (bottom of script)
   // Init waveform placeholder bars
   const ph=document.getElementById('waveform-placeholder');
   for(let i=0;i<60;i++){const b=document.createElement('div');b.className='wbar';ph.appendChild(b);}
@@ -1357,6 +1357,10 @@ function updateActiveFxStrip(){
 // ═══════════════════════════════════════════
 const CATS=['Tümü',...new Set(EFFECTS.map(e=>e.cat))];
 let activeCat='';
+
+// Now that CATS is defined, initialize the UI
+buildPills();renderFx();
+
 function buildPills(){
   document.getElementById('cat-pills').innerHTML=
     CATS.map(c=>`<button class="cpill${c==='Tümü'?' on':''}" onclick="setCat('${c==='Tümü'?'':c}','${c}')">${c}</button>`).join('');
