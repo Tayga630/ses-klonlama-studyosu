@@ -189,12 +189,20 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;heigh
       </span>
     </div>
   </div>
-  <div class="api-row">
+  <div class="api-row" style="margin-bottom:8px;">
     <input type="password" class="api-input" id="api-key"
-      placeholder="r8_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      placeholder="r8_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx — Replicate API token"
       oninput="onApiKey()">
     <span class="api-badge idle" id="api-badge">Bekleniyor</span>
   </div>
+  <div class="api-row">
+    <input type="text" class="api-input" id="proxy-url"
+      placeholder="Cloudflare Worker URL: https://fish-proxy.KULLANICI.workers.dev/proxy"
+      style="font-size:11px;"
+      value="https://fish-proxy.gkaan630.workers.dev/proxy">
+    <button onclick="testProxy()" style="padding:9px 14px;background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.35);color:var(--purple);font-family:Syne,sans-serif;font-weight:700;font-size:11px;border-radius:8px;cursor:pointer;white-space:nowrap;">Test Et</button>
+  </div>
+  <div id="proxy-status" style="font-size:10px;color:var(--muted);margin-top:6px;padding:6px 10px;background:var(--s2);border-radius:6px;display:none;"></div>
   <div class="steps-mini">
     <div class="step-mini">
       <div class="step-mini-num">Adım 1</div>
@@ -491,7 +499,7 @@ async function generate(){
     const length_penalty=parseFloat(document.getElementById('sim').value);
 
     // Start prediction
-    const PROXY='https://fish-proxy.gkaan630.workers.dev/proxy';
+    const PROXY=document.getElementById('proxy-url').value.trim().replace(/\/$/,'');
     const startRes=await fetch(PROXY+'/https://api.replicate.com/v1/predictions',{
       method:'POST',
       headers:{
@@ -654,6 +662,30 @@ buildPills();renderFx();
 // ═══════════════════════════════════
 // KEYBOARD
 // ═══════════════════════════════════
+async function testProxy(){
+  const proxy = document.getElementById('proxy-url').value.trim().replace(/\/$/,'');
+  const status = document.getElementById('proxy-status');
+  status.style.display='block';
+  status.style.color='var(--muted)';
+  status.textContent='⏳ Test ediliyor...';
+  try{
+    const res = await fetch(proxy+'/https://api.replicate.com/v1/models',{
+      headers:{'Authorization':'Token test'}
+    });
+    const txt = await res.text();
+    if(res.status===401||res.status===403||txt.includes('Invalid')||txt.includes('models')){
+      status.style.color='var(--good)';
+      status.textContent='✅ Proxy çalışıyor! Artık ses oluşturabilirsiniz.';
+    } else {
+      status.style.color='var(--acc)';
+      status.textContent='⚠ Yanıt geldi ama beklenmedik: '+txt.slice(0,100);
+    }
+  }catch(err){
+    status.style.color='var(--bad)';
+    status.textContent='❌ Proxy ulaşılamıyor: '+err.message+' — Worker güncellendi mi?';
+  }
+}
+
 document.addEventListener('keydown',e=>{
   if(e.ctrlKey&&e.key.toLowerCase()==='q'){e.preventDefault();isPlaying?stopPlay():generate();}
   if(e.ctrlKey&&e.key==='.'){e.preventDefault();stopPlay();}
