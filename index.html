@@ -841,7 +841,12 @@ input[type=range]::-webkit-slider-thumb:hover{
 // WEB AUDIO HELPERS
 // ═══════════════════════════════════════════
 let _ac=null;
-const AC=()=>{if(!_ac)_ac=new(window.AudioContext||window.webkitAudioContext)();if(_ac.state==='suspended')_ac.resume();return _ac;};
+const AC=()=>{
+  if(!_ac||_ac.state==='closed')
+    _ac=new(window.AudioContext||window.webkitAudioContext)();
+  if(_ac.state==='suspended')_ac.resume();
+  return _ac;
+};
 const mkLP=(c,f,q=.7)=>{const n=c.createBiquadFilter();n.type='lowpass';n.frequency.value=f;n.Q.value=q;return n;};
 const mkHP=(c,f,q=.7)=>{const n=c.createBiquadFilter();n.type='highpass';n.frequency.value=f;n.Q.value=q;return n;};
 const mkLS=(c,f,g)=>{const n=c.createBiquadFilter();n.type='lowshelf';n.frequency.value=f;n.gain.value=g;return n;};
@@ -930,9 +935,10 @@ let clonedVoices=[], activeVoiceId=null;
 let activeEffectIds=new Set();
 let lastBlob=null, lastBuf=null;
 let sourceNode=null;
+let allNodes=[];   // track all audio nodes for cleanup
 let isPlaying=false, isPaused=false;
 let presets=[], activePresetId=null;
-let history=[];   // [{id, name, blob, effects, ts}]
+let history=[];
 const vizTimer={t:null};
 let _pa=null;
 
@@ -1215,13 +1221,19 @@ function clearHistory(){history=[];renderHistory();}
 // PLAYBACK
 // ═══════════════════════════════════════════
 function playBufWithFx(buf){
-  if(sourceNode){try{sourceNode.stop();}catch(e){}}
-  const ctx=AC();
+  // Hard stop: close old context entirely to kill all ghost nodes/feedback loops
+  stopPlay();
+  // Create fresh AudioContext every play — prevents accumulated reverb tails
+  if(_ac){try{_ac.close();}catch(e){}}
+  _ac=new(window.AudioContext||window.webkitAudioContext)();
+  const ctx=_ac;
+
   const activeFx=EFFECTS.filter(e=>activeEffectIds.has(e.id));
   const pitchMult=activeFx.reduce((a,e)=>a*(e.pitchMult||1),1);
   const entry=mkGn(ctx,1);let cur=entry;
   for(const fx of activeFx){const n=fx.create(ctx);cur.connect(n.input);cur=n.output;}
   const master=mkGn(ctx,1);cur.connect(master);master.connect(ctx.destination);
+
   sourceNode=ctx.createBufferSource();
   sourceNode.buffer=buf;
   const spd=parseFloat(document.getElementById('playback-speed')?.value||'1.0');
@@ -1237,13 +1249,17 @@ function playBufWithFx(buf){
   setSt('▶ Klonlanan ses oynatılıyor…','play');
 }
 function stopPlay(){
-  if(sourceNode){try{sourceNode.stop();}catch(e){}}
-  sourceNode=null;isPlaying=false;isPaused=false;
+  if(sourceNode){try{sourceNode.stop();sourceNode.disconnect();}catch(e){}}
+  sourceNode=null;
+  // Close AudioContext to kill ALL nodes including feedback loops and oscillators
+  if(_ac&&_ac.state!=='closed'){try{_ac.close();}catch(e){}_ac=null;}
+  isPlaying=false;isPaused=false;
   stopViz();setGenBtn('idle');
-  document.getElementById('btn-pause').textContent='⏸ Beklet';
+  const pb=document.getElementById('btn-pause');
+  if(pb)pb.textContent='⏸ Beklet';
 }
 function pausePlay(){
-  if(!_ac)return;
+  if(!_ac||_ac.state==='closed')return;
   if(_ac.state==='running'&&isPlaying){
     _ac.suspend();isPaused=true;
     document.getElementById('btn-pause').textContent='▶ Devam';
