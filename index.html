@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ses Klonlama Stüdyosu — XTTS v2</title>
+<title>Ses Klonlama Stüdyosu</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -18,8 +18,6 @@ body::before{content:'';position:fixed;inset:0;
              radial-gradient(ellipse 50% 40% at 85% 85%,rgba(91,159,255,.025) 0%,transparent 55%);
   pointer-events:none;z-index:0;}
 .wrap{max-width:1080px;margin:0 auto;padding:30px 20px;position:relative;z-index:1;}
-
-/* HEADER */
 header{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
 .logo{width:44px;height:44px;background:var(--purple);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;flex-shrink:0;animation:hex 3s ease-in-out infinite;}
 @keyframes hex{0%,100%{filter:brightness(1);}50%{filter:brightness(1.4) drop-shadow(0 0 14px var(--purple));}}
@@ -32,33 +30,27 @@ header{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
 .hb-purple{background:rgba(167,139,250,.12);border:1px solid rgba(167,139,250,.3);color:var(--purple);}
 .hb-key{background:var(--s3);border:1px solid var(--brd);color:var(--muted);}
 
-/* CONNECTION BANNER */
-.conn-banner{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:18px 20px;margin-bottom:20px;}
-.conn-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px;}
-.conn-icon{font-size:22px;}
-.conn-text strong{color:var(--purple);font-size:13px;display:block;margin-bottom:2px;}
-.conn-text span{font-size:10.5px;color:var(--muted);line-height:1.6;}
-.conn-row{display:flex;gap:8px;align-items:center;}
-.conn-input{flex:1;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:12px;padding:9px 12px;outline:none;transition:border-color .2s;}
-.conn-input:focus{border-color:var(--purple);}
-.conn-input::placeholder{color:var(--muted);}
-.conn-btn{padding:9px 16px;background:rgba(167,139,250,.15);border:1px solid rgba(167,139,250,.35);color:var(--purple);font-family:'Syne',sans-serif;font-weight:700;font-size:12px;border-radius:8px;cursor:pointer;white-space:nowrap;transition:all .2s;}
-.conn-btn:hover{background:rgba(167,139,250,.25);}
-.conn-status{display:flex;align-items:center;gap:8px;margin-top:10px;padding:9px 12px;background:var(--s2);border-radius:7px;font-size:11px;color:var(--muted);}
-.cdot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s;}
-.cdot.ok{background:var(--good);box-shadow:0 0 7px var(--good);}
-.cdot.err{background:var(--bad);}
-.cdot.checking{background:var(--blue);animation:blink .7s infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
-
-/* STEPS GUIDE */
-.steps-guide{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:20px;}
-.step-card{background:var(--s1);border:1px solid var(--brd);border-radius:10px;padding:12px 14px;}
-.step-num{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--purple);margin-bottom:5px;}
-.step-title{font-size:12px;color:var(--txt);margin-bottom:3px;font-family:'Syne',sans-serif;font-weight:700;}
-.step-desc{font-size:10px;color:var(--muted);line-height:1.6;}
-.step-card.done{border-color:rgba(54,214,126,.3);background:rgba(54,214,126,.04);}
-.step-card.done .step-num{color:var(--good);}
+/* API BANNER */
+.api-banner{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:16px 20px;margin-bottom:20px;}
+.api-top{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;}
+.api-icon{font-size:22px;}
+.api-text strong{color:var(--purple);font-size:13px;display:block;margin-bottom:2px;}
+.api-text span{font-size:10.5px;color:var(--muted);line-height:1.7;}
+.api-text a{color:var(--blue);text-decoration:none;}
+.api-text a:hover{text-decoration:underline;}
+.api-row{display:flex;gap:8px;align-items:center;}
+.api-input{flex:1;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:12px;padding:9px 12px;outline:none;transition:border-color .2s;}
+.api-input:focus{border-color:var(--purple);}
+.api-input::placeholder{color:var(--muted);}
+.api-badge{font-size:10px;padding:4px 10px;border-radius:6px;white-space:nowrap;}
+.api-badge.idle{background:var(--s3);border:1px solid var(--brd);color:var(--muted);}
+.api-badge.ok{background:rgba(54,214,126,.1);border:1px solid rgba(54,214,126,.3);color:var(--good);}
+.api-badge.err{background:rgba(255,77,77,.1);border:1px solid rgba(255,77,77,.3);color:var(--bad);}
+.steps-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;}
+.step-mini{background:var(--s2);border:1px solid var(--brd);border-radius:8px;padding:10px 12px;}
+.step-mini-num{font-size:9px;color:var(--purple);letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;}
+.step-mini-txt{font-size:10.5px;color:var(--muted);line-height:1.55;}
+.step-mini-txt b{color:var(--txt);}
 
 /* MAIN GRID */
 .main-grid{display:grid;grid-template-columns:1fr 290px;gap:18px;margin-bottom:18px;}
@@ -74,57 +66,30 @@ header{display:flex;align-items:center;gap:14px;margin-bottom:24px;}
 .dz-icon{font-size:28px;margin-bottom:8px;}
 .dz-title{font-size:13px;color:var(--txt);margin-bottom:4px;}
 .dz-sub{font-size:10.5px;color:var(--muted);}
-
-/* VOICE LOADED */
 .voice-loaded{display:none;margin-top:12px;background:var(--s3);border:1px solid rgba(167,139,250,.2);border-radius:9px;padding:12px 15px;align-items:center;gap:12px;}
 .voice-loaded.show{display:flex;}
 .vl-info{flex:1;}
 .vl-name{font-size:12px;color:var(--purple);}
 .vl-meta{font-size:10px;color:var(--muted);margin-top:2px;}
-.vl-status{font-size:10px;padding:3px 8px;border-radius:5px;white-space:nowrap;}
-.vl-status.pending{background:rgba(240,165,0,.12);color:var(--acc);}
-.vl-status.uploading{background:rgba(91,159,255,.12);color:var(--blue);animation:blink 1s infinite;}
-.vl-status.ready{background:rgba(54,214,126,.1);color:var(--good);}
-.vl-status.err{background:rgba(255,77,77,.1);color:var(--bad);}
 .vl-remove{background:transparent;border:1px solid var(--brd);color:var(--muted);font-size:10px;padding:4px 8px;border-radius:5px;cursor:pointer;font-family:'DM Mono',monospace;}
 .vl-remove:hover{border-color:var(--bad);color:var(--bad);}
 
-/* CLONE BTN */
-.clone-btn{width:100%;padding:11px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);color:var(--purple);font-family:'Syne',sans-serif;font-weight:700;font-size:13px;border-radius:9px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px;}
-.clone-btn:hover:not(:disabled){background:rgba(167,139,250,.2);border-color:var(--purple);}
-.clone-btn:disabled{opacity:.35;cursor:not-allowed;}
-
-/* CLONED VOICES LIST */
-.cv-item{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--s2);border-radius:7px;margin-bottom:6px;cursor:pointer;border:1px solid var(--brd);transition:border-color .2s;}
-.cv-item:hover{border-color:var(--muted);}
-.cv-item.active{border-color:var(--purple);}
-.cv-item-info{flex:1;min-width:0;}
-.cv-item-name{font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.cv-item-del{background:transparent;border:none;color:var(--muted);cursor:pointer;font-size:13px;padding:2px 5px;border-radius:4px;}
-.cv-item-del:hover{color:var(--bad);}
-
-/* LANGUAGE SELECT */
-select{width:100%;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:11.5px;padding:9px 11px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2345506e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
-select:focus{border-color:var(--purple);outline:none;}
-
-/* TEXTAREA */
 textarea{width:100%;min-height:200px;background:var(--s2);border:1px solid var(--brd);border-radius:10px;color:var(--txt);font-family:'DM Mono',monospace;font-size:13.5px;line-height:1.78;padding:14px;resize:vertical;outline:none;transition:border-color .2s;}
 textarea:focus{border-color:var(--purple);}
 textarea::placeholder{color:var(--muted);}
 .char-row{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--muted);}
-
-/* SLIDERS */
+select{width:100%;background:var(--s2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-family:'DM Mono',monospace;font-size:11.5px;padding:9px 11px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2345506e' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+select:focus{border-color:var(--purple);outline:none;}
 .sldr-row{margin-bottom:12px;}
 .sldr-row label{display:flex;justify-content:space-between;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 .sldr-row label span{color:var(--acc);}
 input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:var(--s3);border-radius:3px;outline:none;cursor:pointer;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--acc);border-radius:50%;cursor:pointer;transition:transform .15s,box-shadow .15s;}
-input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 0 0 4px rgba(240,165,0,.18);}
-
-/* VIZ */
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;background:var(--acc);border-radius:50%;cursor:pointer;}
 .viz{height:50px;background:var(--s2);border-radius:8px;display:flex;align-items:center;gap:2px;padding:8px 14px;overflow:hidden;margin-top:14px;}
 .vbar{flex:1;max-width:4px;background:var(--purple);border-radius:2px;height:5px;opacity:.3;transition:height .08s ease,opacity .08s;}
 .vbar.on{opacity:1;}
+.right-col{display:flex;flex-direction:column;gap:14px;}
+.div{height:1px;background:var(--brd);margin:12px 0;}
 
 /* TRANSPORT */
 .transport{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:17px;}
@@ -134,38 +99,30 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
 .btn-gen{background:var(--purple);color:#07080c;flex:2;}
 .btn-gen::after{content:'Ctrl+Q';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:8px;font-family:'DM Mono',monospace;background:rgba(0,0,0,.2);padding:2px 5px;border-radius:3px;}
 .btn-gen:hover:not(:disabled){background:#c4b5fd;transform:translateY(-1px);box-shadow:0 6px 20px rgba(167,139,250,.3);}
-.btn-gen:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-gen:disabled{opacity:.35;cursor:not-allowed;transform:none;}
 .btn-ghost{background:var(--s2);color:var(--txt);border:1px solid var(--brd);flex:1;}
 .btn-ghost:hover{border-color:var(--muted);}
 .btn-stop{background:var(--s2);color:var(--txt);border:1px solid var(--brd);flex:1;}
 .btn-stop:hover{border-color:var(--bad);color:var(--bad);}
-.btn-rec{background:var(--s2);color:var(--txt);border:1px solid var(--brd);flex:1;}
-.btn-rec.active{background:rgba(255,77,77,.1);border-color:var(--bad);color:var(--bad);animation:blink 1.2s infinite;}
 .btn-dl{background:linear-gradient(135deg,var(--s2),var(--s3));color:var(--good);border:1px solid rgba(54,214,126,.2);flex:1;}
 .btn-dl:hover:not(:disabled){border-color:var(--good);}
 .btn-dl:disabled{opacity:.3;cursor:not-allowed;color:var(--muted);border-color:var(--brd);}
 .status-row{margin-top:10px;background:var(--s2);border-radius:7px;padding:9px 12px;font-size:11px;color:var(--muted);display:flex;align-items:center;gap:8px;min-height:34px;}
 .sdot{width:7px;height:7px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background .3s;}
 .sdot.play{background:var(--purple);box-shadow:0 0 8px var(--purple);}
-.sdot.rec{background:var(--bad);box-shadow:0 0 8px var(--bad);animation:blink 1.2s infinite;}
 .sdot.ok{background:var(--good);}
 .sdot.loading{background:var(--blue);animation:blink .7s infinite;}
-
-/* PROGRESS */
+.sdot.err{background:var(--bad);}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
 .gen-prog{margin-top:10px;height:3px;background:var(--s3);border-radius:3px;overflow:hidden;display:none;}
 .gen-prog.show{display:block;}
 .gen-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--blue));width:0%;transition:width .35s ease;border-radius:3px;}
-
-/* RIGHT COL */
-.right-col{display:flex;flex-direction:column;gap:14px;}
-.div{height:1px;background:var(--brd);margin:12px 0;}
 
 /* EFFECTS */
 .effects-wrap{background:var(--s1);border:1px solid var(--brd);border-radius:14px;padding:20px;margin-bottom:18px;}
 .eff-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
 .eff-top h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
 .eff-count{background:rgba(240,165,0,.13);color:var(--acc);font-size:11px;padding:3px 9px;border-radius:10px;}
-.eff-note{font-size:10px;color:var(--muted);}
 .eff-clear{margin-left:auto;background:transparent;border:1px solid var(--brd);color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:5px 11px;border-radius:6px;cursor:pointer;transition:all .2s;}
 .eff-clear:hover{border-color:var(--bad);color:var(--bad);}
 .search-bar{position:relative;margin-bottom:11px;}
@@ -174,7 +131,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
 .search-bar input::placeholder{color:var(--muted);}
 .si{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none;}
 .cat-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px;}
-.cpill{background:var(--s2);border:1px solid var(--brd);color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:5px 11px;border-radius:20px;cursor:pointer;transition:all .15s;white-space:nowrap;}
+.cpill{background:var(--s2);border:1px solid var(--brd);color:var(--muted);font-family:'DM Mono',monospace;font-size:10px;padding:5px 11px;border-radius:20px;cursor:pointer;transition:all .15px;white-space:nowrap;}
 .cpill:hover,.cpill.on{border-color:var(--purple);color:var(--purple);background:rgba(167,139,250,.07);}
 .eff-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(106px,1fr));gap:7px;max-height:400px;overflow-y:auto;padding-right:3px;}
 .eff-grid::-webkit-scrollbar{width:4px;}
@@ -190,8 +147,6 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
 .eff-name{font-size:10px;text-align:center;line-height:1.3;color:var(--txt);}
 .eff-cat{font-size:8.5px;color:var(--muted);}
 .no-res{grid-column:1/-1;text-align:center;color:var(--muted);font-size:12px;padding:28px;}
-
-/* INFO */
 .info-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 @media(max-width:600px){.info-row{grid-template-columns:1fr;}}
 .info-box{background:rgba(167,139,250,.04);border:1px solid rgba(167,139,250,.13);border-radius:10px;padding:13px;font-size:11px;line-height:1.75;color:#9080c0;}
@@ -213,103 +168,85 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
   </div>
   <div class="hinfo">
     <h1>SES KLONLAMA STÜDYOSU</h1>
-    <p>XTTS v2 · Google Colab · Tamamen Ücretsiz</p>
+    <p>Replicate · XTTS v2 · Colab Gerektirmez</p>
   </div>
   <div class="hbadges">
-    <span class="hb hb-free">Ücretsiz</span>
+    <span class="hb hb-free">Ücretsiz Kredi</span>
     <span class="hb hb-purple">XTTS v2</span>
-    <span class="hb hb-key">Ctrl+Q = Oynat</span>
+    <span class="hb hb-key">Ctrl+Q</span>
   </div>
 </header>
 
-<!-- STEPS -->
-<div class="steps-guide">
-  <div class="step-card" id="step1">
-    <div class="step-num">Adım 1</div>
-    <div class="step-title">Colab Notebook'u Aç</div>
-    <div class="step-desc">İndirilen .ipynb dosyasını Google Colab'a yükle. T4 GPU seç.</div>
-  </div>
-  <div class="step-card" id="step2">
-    <div class="step-num">Adım 2</div>
-    <div class="step-title">Hücreleri Çalıştır</div>
-    <div class="step-desc">4 hücreyi sırayla çalıştır. Son hücrede ngrok URL çıkacak.</div>
-  </div>
-  <div class="step-card" id="step3">
-    <div class="step-num">Adım 3</div>
-    <div class="step-title">URL'yi Buraya Gir</div>
-    <div class="step-desc">Aşağıdaki alana ngrok URL'sini yapıştır ve Bağlan'a bas.</div>
-  </div>
-  <div class="step-card" id="step4">
-    <div class="step-num">Adım 4</div>
-    <div class="step-title">Ses Yükle ve Klonla</div>
-    <div class="step-desc">Referans sesini yükle → metni yaz → Ctrl+Q ile oluştur.</div>
-  </div>
-</div>
-
-<!-- CONNECTION BANNER -->
-<div class="conn-banner">
-  <div class="conn-top">
-    <span class="conn-icon">🔗</span>
-    <div class="conn-text">
-      <strong>XTTS Sunucu Bağlantısı</strong>
-      <span>Google Colab'da notebook'un son hücresindeki ngrok URL'sini buraya yapıştırın</span>
+<!-- API BANNER -->
+<div class="api-banner">
+  <div class="api-top">
+    <div class="api-icon">🔑</div>
+    <div class="api-text">
+      <strong>Replicate API Token — Colab'a gerek yok, Python kurulumu yok</strong>
+      <span>
+        Ücretsiz hesap: <a href="https://replicate.com" target="_blank">replicate.com</a> →
+        Sağ üst profil → <b>API tokens</b> → <b>Create token</b> · Yeni hesaba ~$0.10 ücretsiz kredi verilir
+      </span>
     </div>
   </div>
-  <div class="conn-row">
-    <input type="text" class="conn-input" id="server-url"
-      placeholder="https://xxxx-xx-xx-xx-xx.ngrok-free.app"
-      oninput="onUrlInput()">
-    <button class="conn-btn" onclick="testConnection()">🔌 Bağlan</button>
+  <div class="api-row">
+    <input type="password" class="api-input" id="api-key"
+      placeholder="r8_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      oninput="onApiKey()">
+    <span class="api-badge idle" id="api-badge">Bekleniyor</span>
   </div>
-  <div class="conn-status">
-    <div class="cdot" id="cdot"></div>
-    <span id="cstatus">Bağlantı yok — ngrok URL'sini girin</span>
+  <div class="steps-mini">
+    <div class="step-mini">
+      <div class="step-mini-num">Adım 1</div>
+      <div class="step-mini-txt"><a href="https://replicate.com/signin" target="_blank" style="color:var(--blue)">replicate.com</a>'a kayıt ol → API token al</div>
+    </div>
+    <div class="step-mini">
+      <div class="step-mini-num">Adım 2</div>
+      <div class="step-mini-txt">Token'ı üstteki kutuya yapıştır → referans sesi yükle</div>
+    </div>
+    <div class="step-mini">
+      <div class="step-mini-num">Adım 3</div>
+      <div class="step-mini-txt">Metin yaz → efekt seç → <b>Ctrl+Q</b> ile oluştur</div>
+    </div>
   </div>
 </div>
 
 <!-- MAIN GRID -->
 <div class="main-grid">
   <div class="left-col">
-
-    <!-- VOICE UPLOAD -->
     <div class="card">
-      <div class="clabel">Adım 1 — Referans Ses Yükle (Klonlanacak Ses)</div>
+      <div class="clabel">Referans Ses — Klonlanacak Ses</div>
       <div class="drop-zone" id="dz"
         ondragover="event.preventDefault();this.classList.add('drag')"
         ondragleave="this.classList.remove('drag')"
         ondrop="onDrop(event)">
-        <input type="file" accept="audio/*" onchange="onFileChosen(this.files[0])">
+        <input type="file" accept="audio/*" onchange="onFile(this.files[0])">
         <div class="dz-icon">🎙️</div>
         <div class="dz-title">Klonlanacak sesi buraya sürükleyin veya seçin</div>
-        <div class="dz-sub">MP3 · WAV · M4A · FLAC · OGG &nbsp;|&nbsp; En az 6 saniye, tercihen 30sn+</div>
+        <div class="dz-sub">MP3 · WAV · M4A · En az 6 saniye, gürültüsüz ses</div>
       </div>
       <div class="voice-loaded" id="vl">
         <span style="font-size:22px">🎙️</span>
         <div class="vl-info">
-          <div class="vl-name" id="vl-name">—</div>
-          <div class="vl-meta" id="vl-meta">—</div>
+          <div class="vl-name" id="vl-name"></div>
+          <div class="vl-meta" id="vl-meta"></div>
         </div>
-        <span class="vl-status pending" id="vl-st">Yüklenmedi</span>
         <button class="vl-remove" onclick="removeFile()">✕</button>
       </div>
-      <button class="clone-btn" id="clone-btn" onclick="uploadVoice()" disabled>
-        🔬 Sesi Sunucuya Yükle
-      </button>
     </div>
 
-    <!-- TEXT INPUT -->
     <div class="card">
-      <div class="clabel">Adım 2 — Okunacak Metni Yaz</div>
+      <div class="clabel">Okunacak Metin</div>
       <textarea id="txt"
-        placeholder="Klonlanan ses bu metni okuyacak. Türkçe yazabilirsiniz — XTTS v2 Türkçeyi destekler…"
-        oninput="onTextInput()"></textarea>
+        placeholder="Bu metni klonlanan sesiniz okuyacak. Türkçe yazabilirsiniz…"
+        oninput="onText()"></textarea>
       <div class="char-row">
         <span id="char-ct">0 karakter</span>
-        <span>Türkçe dahil 17 dil desteklenir</span>
+        <span>Türkçe dahil 17 dil</span>
       </div>
       <div class="div"></div>
-      <div class="clabel">Dil Seçimi</div>
-      <select id="lang-sel" style="margin-bottom:12px;">
+      <div class="clabel">Dil</div>
+      <select id="lang">
         <option value="tr" selected>🇹🇷 Türkçe</option>
         <option value="en">🇬🇧 İngilizce</option>
         <option value="de">🇩🇪 Almanca</option>
@@ -324,25 +261,29 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
         <option value="ko">🇰🇷 Korece</option>
       </select>
     </div>
-
     <div class="viz" id="viz"></div>
   </div>
 
-  <!-- RIGHT -->
   <div class="right-col">
-
-    <!-- VOICES LIST -->
     <div class="card">
-      <div class="clabel">Yüklenen Sesler</div>
-      <div id="cv-list" style="font-size:11px;color:var(--muted)">
-        Henüz ses yüklenmedi.
+      <div class="clabel">Ses Ayarları</div>
+      <div class="sldr-row">
+        <label>Konuşma Hızı <span id="speed-v">1.0×</span></label>
+        <input type="range" id="speed" min="0.5" max="2.0" step="0.05" value="1.0"
+          oninput="document.getElementById('speed-v').textContent=parseFloat(this.value).toFixed(2)+'×'">
       </div>
-      <div style="margin-top:10px;font-size:10px;color:var(--muted);line-height:1.7;background:var(--s2);border-radius:7px;padding:8px 10px;">
-        💡 XTTS v2 sadece <b style="color:var(--txt)">6 saniye</b> sesle bile iyi klonlama yapar. Daha uzun = daha iyi.
+      <div class="sldr-row">
+        <label>Sıcaklık <span id="temp-v">0.65</span></label>
+        <input type="range" id="temp" min="0.1" max="1.0" step="0.05" value="0.65"
+          oninput="document.getElementById('temp-v').textContent=parseFloat(this.value).toFixed(2)">
+      </div>
+      <div class="sldr-row">
+        <label>Benzerlik <span id="sim-v">0.85</span></label>
+        <input type="range" id="sim" min="0.1" max="1.0" step="0.05" value="0.85"
+          oninput="document.getElementById('sim-v').textContent=parseFloat(this.value).toFixed(2)">
       </div>
     </div>
 
-    <!-- TRANSPORT -->
     <div class="transport">
       <div class="clabel">Kontroller</div>
       <div class="gen-prog" id="gen-prog"><div class="gen-fill" id="gen-fill"></div></div>
@@ -352,26 +293,22 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
         <button class="btn btn-ghost" id="btn-pause" onclick="pausePlay()">⏸</button>
       </div>
       <div class="trow2">
-        <button class="btn btn-rec" id="btn-rec" onclick="toggleRec()">⏺ Kayıt</button>
         <button class="btn btn-dl" id="btn-dl" onclick="dlAudio()" disabled>↓ İndir</button>
       </div>
       <div class="status-row">
         <div class="sdot" id="sdot"></div>
-        <span id="stxt">Sunucuya bağlanın ve ses yükleyin</span>
+        <span id="stxt">API token girin ve ses yükleyin</span>
       </div>
     </div>
 
-    <!-- QUICK GUIDE -->
     <div class="card" style="font-size:10.5px;color:var(--muted);line-height:1.9;">
-      <div class="clabel">XTTS v2 Hakkında</div>
+      <div class="clabel">XTTS v2 Bilgisi</div>
       <span style="color:var(--good)">✓</span> Gerçek ses klonlama<br>
-      <span style="color:var(--good)">✓</span> 6sn referans yeterli<br>
+      <span style="color:var(--good)">✓</span> Colab gerektirmez<br>
       <span style="color:var(--good)">✓</span> Türkçe desteği<br>
-      <span style="color:var(--good)">✓</span> Tamamen ücretsiz<br>
-      <span style="color:var(--good)">✓</span> GPU hızlandırmalı<br>
-      <span style="color:var(--good)">✓</span> 64+ ses efekti
+      <span style="color:var(--good)">✓</span> 64+ ses efekti<br>
+      <span style="color:var(--good)">✓</span> Ücretsiz kredi ile başla
     </div>
-
   </div>
 </div>
 
@@ -380,7 +317,7 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
   <div class="eff-top">
     <h3>Ses Efektleri</h3>
     <span class="eff-count" id="eff-count">0 aktif</span>
-    <span class="eff-note">— Oluşturulan sese gerçek zamanlı uygulanır</span>
+    <span style="font-size:10px;color:var(--muted)">— Oluşturulan sese gerçek zamanlı uygulanır</span>
     <button class="eff-clear" onclick="clearFx()">✕ Tümünü Kaldır</button>
   </div>
   <div class="search-bar">
@@ -391,22 +328,21 @@ input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.2);box-shadow:0 
   <div class="eff-grid" id="eff-grid"></div>
 </div>
 
-<!-- INFO -->
 <div class="info-row">
   <div class="info-box">
     <strong>🚀 Nasıl Çalışır?</strong>
-    Colab'daki XTTS v2 modeliniz metni sesinizle üretir. Ses dosyası tarayıcıya gelir, Web Audio API efektlerden geçirir ve hoparlörden çıkar. Colab kapatılırsa sunucu durur.
+    Ses dosyanız base64'e dönüştürülür ve Replicate'in XTTS v2 modeline gönderilir. Model sesinizi klonlayıp metni o sesle üretir. Tüm efektler Web Audio API ile uygulanır.
   </div>
   <div class="info-box green">
-    <strong>🎬 En İyi Sonuç İçin</strong>
-    Referans sesi arka gürültüsüz, net ve 30sn+ olsun. Tek konuşmacı. Daha uzun referans = daha iyi ton ve vurgu kopyalaması. Hazırladığımız işlenmiş sesi de kullanabilirsiniz.
+    <strong>💰 Maliyet</strong>
+    Yeni hesaba ~$0.10 ücretsiz kredi. Bir üretim yaklaşık $0.001-0.003. Yani 30-100 üretim ücretsiz. Sonrası çok ucuz — dakikada birkaç kuruş.
   </div>
 </div>
 
 </div>
 <script>
 // ═══════════════════════════════════
-// WEB AUDIO HELPERS
+// WEB AUDIO
 // ═══════════════════════════════════
 let _ac=null;
 const AC=()=>{if(!_ac)_ac=new(window.AudioContext||window.webkitAudioContext)();if(_ac.state==='suspended')_ac.resume();return _ac;};
@@ -442,7 +378,6 @@ const EFFECTS=[
 {id:'magara',name:'Mağara',cat:'Mekan',emoji:'🦇',create(c){const i=mkGn(c,1),o=mkGn(c,1),rev=mkIR(c,5,.8),del=c.createDelay(2);del.delayTime.value=.38;const fb=mkGn(c,.5);del.connect(fb);fb.connect(del);i.connect(mkGn(c,.4)).connect(o);i.connect(rev);rev.connect(mkGn(c,.55)).connect(o);i.connect(del);del.connect(mkGn(c,.32)).connect(o);return{input:i,output:o};}},
 {id:'stadyum',name:'Stadyum',cat:'Mekan',emoji:'🏟️',create(c){return wdry(c,.72,mkIR(c,5.5,.55));}},
 {id:'uzay',name:'Uzay',cat:'Mekan',emoji:'🚀',create(c){return wdry(c,.88,mkIR(c,9,.25));}},
-{id:'tunel',name:'Tünel',cat:'Mekan',emoji:'🚇',create(c){const i=mkGn(c,1),o=mkGn(c,1),rev=mkIR(c,2,1.5),del=c.createDelay(1);del.delayTime.value=.18;const fb=mkGn(c,.42);del.connect(fb);fb.connect(del);i.connect(mkGn(c,.5)).connect(o);i.connect(rev);rev.connect(mkGn(c,.4)).connect(o);i.connect(del);del.connect(mkGn(c,.3)).connect(o);return{input:i,output:o};}},
 {id:'su_alti',name:'Su Altı',cat:'Mekan',emoji:'🌊',create(c){const n=mkLP(c,400,2.5);return{input:n,output:n};}},
 {id:'telefon',name:'Telefon',cat:'Elektronik',emoji:'📞',create(c){const hp=mkHP(c,300),lp=mkLP(c,3400);hp.connect(lp);return{input:hp,output:lp};}},
 {id:'radyo',name:'Radyo',cat:'Elektronik',emoji:'📻',create(c){const hp=mkHP(c,500),lp=mkLP(c,3000),ws=mkWS(c,10);hp.connect(lp);lp.connect(ws);return{input:hp,output:ws};}},
@@ -450,8 +385,8 @@ const EFFECTS=[
 {id:'megafon',name:'Megafon',cat:'Elektronik',emoji:'📢',create(c){const hp=mkHP(c,400),lp=mkLP(c,3500),ws=mkWS(c,45),g=mkGn(c,1.8);hp.connect(lp);lp.connect(ws);ws.connect(g);return{input:hp,output:g};}},
 {id:'lofi',name:'Lo-Fi',cat:'Elektronik',emoji:'📼',create(c){const lp=mkLP(c,3000),ws=mkWS(c,15),hp=mkHP(c,80);lp.connect(ws);ws.connect(hp);return{input:lp,output:hp};}},
 {id:'robot',name:'Robot',cat:'Elektronik',emoji:'🤖',create(c){const i=mkGn(c,1),f1=mkPK(c,120,10,8),f2=mkPK(c,400,-5,4),f3=mkPK(c,1200,9,6),ws=mkWS(c,25),lp=mkLP(c,6000);i.connect(f1);f1.connect(f2);f2.connect(f3);f3.connect(ws);ws.connect(lp);return{input:i,output:lp};}},
+{id:'retro',name:'Retro',cat:'Elektronik',emoji:'📺',create(c){const hp=mkHP(c,200),lp=mkLP(c,7000),wm=mkPK(c,400,3);hp.connect(lp);lp.connect(wm);return{input:hp,output:wm};}},
 {id:'dijital',name:'Dijital Bozulma',cat:'Elektronik',emoji:'💻',create(c){const ws=c.createWaveShaper(),cv=new Float32Array(256);for(let i=0;i<256;i++){const x=(i*2)/256-1;cv[i]=Math.max(-.7,Math.min(.7,x*2.2));}ws.curve=cv;ws.oversample='4x';return{input:ws,output:ws};}},
-{id:'retro',name:'Retro / Vintage',cat:'Elektronik',emoji:'📺',create(c){const hp=mkHP(c,200),lp=mkLP(c,7000),wm=mkPK(c,400,3);hp.connect(lp);lp.connect(wm);return{input:hp,output:wm};}},
 {id:'kompresyon',name:'Kompresyon',cat:'Dinamik',emoji:'🗜️',create(c){const n=mkComp(c,-24,4,3,.003,.25);return{input:n,output:n};}},
 {id:'hard_limit',name:'Hard Limit',cat:'Dinamik',emoji:'🔒',create(c){const n=mkComp(c,-6,20,0,.001,.08);return{input:n,output:n};}},
 {id:'distortion',name:'Distorsiyon',cat:'Dinamik',emoji:'⚡',create(c){const n=mkWS(c,80);return{input:n,output:n};}},
@@ -489,151 +424,147 @@ const EFFECTS=[
 // ═══════════════════════════════════
 // STATE
 // ═══════════════════════════════════
-let serverUrl='';
-let isConnected=false;
+let apiToken='';
 let refFile=null;
-let clonedVoices=[];
-let activeVoiceId=null;
-let activeEffectIds=new Set();
+let refBase64='';
 let lastBlob=null,lastBuf=null;
 let sourceNode=null,destNode=null;
-let isPlaying=false,isPaused=false,isRecording=false;
-let mediaRec=null,recChunks=[],recBlob=null;
+let isPlaying=false,isPaused=false;
+let activeEffectIds=new Set();
 const vizTimer={t:null};
 
 // ═══════════════════════════════════
-// CONNECTION
+// API TOKEN
 // ═══════════════════════════════════
-function onUrlInput(){
-  serverUrl=document.getElementById('server-url').value.trim().replace(/\/$/,'');
+function onApiKey(){
+  apiToken=document.getElementById('api-key').value.trim();
+  const b=document.getElementById('api-badge');
+  if(apiToken.startsWith('r8_')&&apiToken.length>20){
+    b.className='api-badge ok';b.textContent='✓ Geçerli format';
+  } else if(apiToken.length>5){
+    b.className='api-badge ok';b.textContent='✓ Girildi';
+  } else {
+    b.className='api-badge idle';b.textContent='Bekleniyor';
+  }
   refreshUI();
 }
 
-async function testConnection(){
-  if(!serverUrl){setSt('⚠ URL girin','');return;}
-  setCdot('checking','🔌 Bağlantı test ediliyor…');
-  try{
-    const res=await fetch(serverUrl+'/health',{method:'GET',headers:{'ngrok-skip-browser-warning':'true'},signal:AbortSignal.timeout(8000)});
-    const data=await res.json();
-    if(data.status==='ok'){
-      isConnected=true;
-      setCdot('ok',`✅ Bağlı — ${data.model||'XTTS'} (${data.device||'cpu'})`);
-      setSt('✅ Sunucu bağlandı! Ses yükleyebilirsiniz','ok');
-      document.getElementById('step3').classList.add('done');
-      refreshUI();
-    } else {
-      throw new Error('Sunucu yanıtı beklenmedik');
-    }
-  }catch(err){
-    isConnected=false;
-    setCdot('err','❌ Bağlantı kurulamadı: '+err.message);
-    setSt('⚠ Sunucuya ulaşılamadı','');
-    refreshUI();
-  }
-}
-
-function setCdot(cls,msg){
-  document.getElementById('cdot').className='cdot '+cls;
-  document.getElementById('cstatus').textContent=msg;
-}
-
 // ═══════════════════════════════════
-// FILE HANDLING
+// FILE
 // ═══════════════════════════════════
-function onFileChosen(f){if(f)setRefFile(f);}
-function onDrop(e){e.preventDefault();document.getElementById('dz').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)setRefFile(f);}
-function setRefFile(f){
+function onFile(f){if(f)loadFile(f);}
+function onDrop(e){e.preventDefault();document.getElementById('dz').classList.remove('drag');const f=e.dataTransfer.files[0];if(f)loadFile(f);}
+function loadFile(f){
   refFile=f;
   document.getElementById('vl-name').textContent=f.name;
-  document.getElementById('vl-meta').textContent=`${(f.size/1024/1024).toFixed(2)} MB · ${f.type||'audio'}`;
-  setVlSt('pending','Yüklenmedi');
+  document.getElementById('vl-meta').textContent=`${(f.size/1024/1024).toFixed(2)} MB · ${f.type}`;
   document.getElementById('vl').classList.add('show');
+  // Convert to base64
+  const reader=new FileReader();
+  reader.onload=e=>{
+    refBase64=e.target.result; // data:audio/...;base64,...
+    setSt('✅ Ses yüklendi — metin yazıp Ctrl+Q ile oluşturun','ok');
+  };
+  reader.readAsDataURL(f);
   refreshUI();
 }
-function removeFile(){refFile=null;document.getElementById('vl').classList.remove('show');refreshUI();}
-function setVlSt(cls,txt){const el=document.getElementById('vl-st');el.className='vl-status '+cls;el.textContent=txt;}
+function removeFile(){refFile=null;refBase64='';document.getElementById('vl').classList.remove('show');refreshUI();}
 
 // ═══════════════════════════════════
-// UPLOAD VOICE TO XTTS SERVER
-// ═══════════════════════════════════
-async function uploadVoice(){
-  if(!isConnected){setSt('⚠ Önce sunucuya bağlanın','');return;}
-  if(!refFile){return;}
-  setVlSt('uploading','⏳ Yükleniyor…');
-  document.getElementById('clone-btn').disabled=true;
-  setSt('📤 Ses sunucuya yükleniyor…','loading');
-  try{
-    const voiceId='voice_'+Date.now();
-    const fd=new FormData();
-    fd.append('audio',refFile,refFile.name);
-    fd.append('voice_id',voiceId);
-    const res=await fetch(serverUrl+'/clone',{method:'POST',headers:{'ngrok-skip-browser-warning':'true'},body:fd});
-    const data=await res.json();
-    if(!res.ok)throw new Error(data.error||`HTTP ${res.status}`);
-    clonedVoices.push({id:voiceId,name:refFile.name.replace(/\.[^.]+$/,'')});
-    activeVoiceId=voiceId;
-    setVlSt('ready','✅ Yüklendi');
-    setSt('✅ Ses yüklendi! Metin yazıp Ctrl+Q ile oluşturun','ok');
-    document.getElementById('step4').classList.add('done');
-    renderCVList();
-    refreshUI();
-  }catch(err){
-    setVlSt('err','✕ '+err.message);
-    setSt('⚠ '+err.message,'');
-  }
-  document.getElementById('clone-btn').disabled=false;
-}
-
-function renderCVList(){
-  const el=document.getElementById('cv-list');
-  if(!clonedVoices.length){el.innerHTML='<span style="color:var(--muted);font-size:11px">Henüz ses yüklenmedi.</span>';return;}
-  el.innerHTML=clonedVoices.map(v=>`
-    <div class="cv-item${v.id===activeVoiceId?' active':''}" onclick="selectVoice('${v.id}')">
-      <span style="font-size:16px">🎙️</span>
-      <div class="cv-item-info">
-        <div class="cv-item-name" style="color:${v.id===activeVoiceId?'var(--purple)':'var(--txt)'}">${v.name}</div>
-      </div>
-      ${v.id===activeVoiceId?'<span style="font-size:9px;color:var(--purple);background:rgba(167,139,250,.12);padding:2px 6px;border-radius:4px">Aktif</span>':''}
-      <button class="cv-item-del" onclick="event.stopPropagation();deleteVoice('${v.id}')">✕</button>
-    </div>`).join('');
-}
-function selectVoice(id){activeVoiceId=id;renderCVList();refreshUI();}
-function deleteVoice(id){clonedVoices=clonedVoices.filter(v=>v.id!==id);if(activeVoiceId===id)activeVoiceId=clonedVoices[0]?.id||null;renderCVList();refreshUI();}
-
-// ═══════════════════════════════════
-// GENERATE — POST /tts → WAV buffer
+// GENERATE via Replicate XTTS v2
 // ═══════════════════════════════════
 async function generate(){
-  if(!isConnected||!activeVoiceId)return;
+  if(!apiToken||!refBase64){setSt('⚠ Token ve ses dosyası gerekli','err');return;}
   const text=document.getElementById('txt').value.trim();
-  if(!text){setSt('⚠ Metin girin','');return;}
+  if(!text){setSt('⚠ Metin girin','err');return;}
+
   stopPlay();
-  setSt('⏳ XTTS v2 ses oluşturuyor… (~10-30sn)','loading');
-  setGenBtn('loading');
-  showProg(true);
+  setSt('⏳ Replicate XTTS v2 çalışıyor… (~20-40sn)','loading');
+  setGenBtn('loading');showProg(true);
+
   try{
-    animProg(0,40,3000);
-    const lang=document.getElementById('lang-sel').value;
-    const res=await fetch(serverUrl+'/tts',{
+    animProg(0,30,3000);
+
+    const lang=document.getElementById('lang').value;
+    const speed=parseFloat(document.getElementById('speed').value);
+    const temperature=parseFloat(document.getElementById('temp').value);
+    const length_penalty=parseFloat(document.getElementById('sim').value);
+
+    // Start prediction
+    const startRes=await fetch('https://api.replicate.com/v1/predictions',{
       method:'POST',
-      headers:{'Content-Type':'application/json','ngrok-skip-browser-warning':'true'},
-      body:JSON.stringify({text,voice_id:activeVoiceId,language:lang})
+      headers:{
+        'Authorization':'Token '+apiToken,
+        'Content-Type':'application/json',
+      },
+      body:JSON.stringify({
+        version:'684bc3855b37866c0c65add2ff39c78f3dea3f4ff103a436465326e0f438d55e',
+        input:{
+          text: text,
+          speaker: refBase64,
+          language: lang,
+          speed: speed,
+          temperature: temperature,
+          length_penalty: length_penalty,
+          repetition_penalty: 5.0,
+          top_k: 50,
+          top_p: 0.85,
+        }
+      })
     });
-    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error||`HTTP ${res.status}`);}
-    animProg(40,85,1000);
-    const arrayBuf=await res.arrayBuffer();
+
+    if(!startRes.ok){
+      const err=await startRes.json().catch(()=>({}));
+      throw new Error(err.detail||err.title||`HTTP ${startRes.status}`);
+    }
+
+    const prediction=await startRes.json();
+    const predId=prediction.id;
+    animProg(30,60,5000);
+
+    // Poll until done
+    let audioUrl=null;
+    let attempts=0;
+    while(attempts<60){
+      await delay(3000);
+      attempts++;
+      const pollRes=await fetch(`https://api.replicate.com/v1/predictions/${predId}`,{
+        headers:{'Authorization':'Token '+apiToken}
+      });
+      const poll=await pollRes.json();
+      if(poll.status==='succeeded'){
+        audioUrl=poll.output;
+        break;
+      } else if(poll.status==='failed'||poll.status==='canceled'){
+        throw new Error('Replicate hatası: '+(poll.error||poll.status));
+      }
+      animProg(60,85,2000);
+    }
+
+    if(!audioUrl)throw new Error('Zaman aşımı — Replicate yanıt vermedi');
+
+    animProg(85,95,500);
+
+    // Fetch audio
+    const audioRes=await fetch(audioUrl);
+    const arrayBuf=await audioRes.arrayBuffer();
     lastBlob=new Blob([arrayBuf],{type:'audio/wav'});
+
     const ctx=AC();
     const decoded=await ctx.decodeAudioData(arrayBuf.slice(0));
     lastBuf=decoded;
-    animProg(85,100,300);
-    await delay(350);
+
+    animProg(95,100,200);
+    await delay(250);
     showProg(false);
+
     playBufWithFx(decoded);
+
   }catch(err){
     showProg(false);
     setGenBtn('idle');
-    setSt('⚠ '+err.message,'');
+    setSt('⚠ '+err.message,'err');
+    console.error(err);
   }
 }
 
@@ -649,57 +580,62 @@ function playBufWithFx(buf){
   let cur=entry;
   for(const fx of activeFx){const n=fx.create(ctx);cur.connect(n.input);cur=n.output;}
   const master=mkGn(ctx,1);
-  cur.connect(master);master.connect(ctx.destination);
-  destNode=ctx.createMediaStreamDestination();
-  master.connect(destNode);
-  if(isRecording)startMR(destNode.stream);
+  cur.connect(master);
+  master.connect(ctx.destination);
   sourceNode=ctx.createBufferSource();
   sourceNode.buffer=buf;
   sourceNode.playbackRate.value=pitchMult;
   sourceNode.connect(entry);
-  sourceNode.onended=()=>{isPlaying=false;stopViz();setGenBtn('idle');setSt('✅ Tamamlandı','ok');if(isRecording)finishRec();document.getElementById('btn-dl').disabled=!lastBlob;};
+  sourceNode.onended=()=>{
+    isPlaying=false;stopViz();setGenBtn('idle');
+    setSt('✅ Tamamlandı','ok');
+    document.getElementById('btn-dl').disabled=!lastBlob;
+  };
   sourceNode.start();
   isPlaying=true;startViz();setGenBtn('playing');
-  setSt('▶ XTTS v2 klonlanan ses oynatılıyor…','play');
+  setSt('▶ Klonlanan ses oynatılıyor…','play');
 }
-function stopPlay(){if(sourceNode){try{sourceNode.stop();}catch(e){}}sourceNode=null;isPlaying=false;isPaused=false;stopViz();setGenBtn('idle');document.getElementById('btn-pause').textContent='⏸';}
-function pausePlay(){if(!_ac)return;if(_ac.state==='running'&&isPlaying){_ac.suspend();isPaused=true;document.getElementById('btn-pause').textContent='▶';setSt('⏸ Duraklatıldı','');}else if(_ac.state==='suspended'){_ac.resume();isPaused=false;document.getElementById('btn-pause').textContent='⏸';setSt('▶ Devam…','play');}}
-function replayWithNewFx(){if(!lastBlob||isPlaying)return;lastBlob.arrayBuffer().then(ab=>AC().decodeAudioData(ab).then(buf=>{lastBuf=buf;playBufWithFx(buf);}));}
+
+function stopPlay(){
+  if(sourceNode){try{sourceNode.stop();}catch(e){}}
+  sourceNode=null;isPlaying=false;isPaused=false;
+  stopViz();setGenBtn('idle');
+  document.getElementById('btn-pause').textContent='⏸';
+}
+function pausePlay(){
+  if(!_ac)return;
+  if(_ac.state==='running'&&isPlaying){_ac.suspend();isPaused=true;document.getElementById('btn-pause').textContent='▶';setSt('⏸ Duraklatıldı','');}
+  else if(_ac.state==='suspended'){_ac.resume();isPaused=false;document.getElementById('btn-pause').textContent='⏸';setSt('▶ Devam…','play');}
+}
+function replayFx(){
+  if(!lastBlob||isPlaying)return;
+  lastBlob.arrayBuffer().then(ab=>AC().decodeAudioData(ab).then(buf=>{lastBuf=buf;playBufWithFx(buf);}));
+}
+function dlAudio(){
+  if(!lastBlob)return;
+  const url=URL.createObjectURL(lastBlob);
+  const a=document.createElement('a');a.href=url;a.download=`xtts-klonlanan-${Date.now()}.wav`;a.click();
+  URL.revokeObjectURL(url);
+}
 
 // ═══════════════════════════════════
-// RECORDING
-// ═══════════════════════════════════
-async function toggleRec(){
-  if(isRecording){finishRec();return;}
-  isRecording=true;recChunks=[];
-  document.getElementById('btn-rec').classList.add('active');
-  document.getElementById('btn-rec').textContent='⏹ Durdur';
-  document.getElementById('btn-dl').disabled=true;
-  if(isPlaying&&destNode)startMR(destNode.stream);
-  else setSt('⏺ Kayıt hazır — Ctrl+Q ile oluşturun','rec');
-}
-function startMR(stream){const mime=['audio/webm;codecs=opus','audio/webm','audio/ogg'].find(t=>MediaRecorder.isTypeSupported(t))||'audio/webm';mediaRec=new MediaRecorder(stream,{mimeType:mime});mediaRec.ondataavailable=e=>{if(e.data.size>0)recChunks.push(e.data);};mediaRec.start(100);setSt('⏺ Kaydediliyor…','rec');}
-function finishRec(){isRecording=false;document.getElementById('btn-rec').classList.remove('active');document.getElementById('btn-rec').textContent='⏺ Kayıt';if(mediaRec&&mediaRec.state!=='inactive')mediaRec.stop();setTimeout(()=>{if(recChunks.length){recBlob=new Blob(recChunks,{type:'audio/webm'});document.getElementById('btn-dl').disabled=false;setSt('✅ Kayıt hazır — İndir','ok');}},350);}
-function dlAudio(){const blob=recBlob||lastBlob;if(!blob)return;const ext=recBlob?'webm':'wav';const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`xtts-klonlanan-${Date.now()}.${ext}`;a.click();URL.revokeObjectURL(url);}
-
-// ═══════════════════════════════════
-// VISUALIZER
+// VIZ
 // ═══════════════════════════════════
 (()=>{const el=document.getElementById('viz');if(!el)return;for(let i=0;i<44;i++){const b=document.createElement('div');b.className='vbar';el.appendChild(b);}})();
 function startViz(){const el=document.getElementById('viz');if(!el||vizTimer.t)return;const bars=el.querySelectorAll('.vbar');vizTimer.t=setInterval(()=>{bars.forEach(b=>{b.style.height=(4+Math.random()*34)+'px';b.classList.add('on');});},85);}
 function stopViz(){clearInterval(vizTimer.t);vizTimer.t=null;document.querySelectorAll('#viz .vbar').forEach(b=>{b.style.height='5px';b.classList.remove('on');});}
 
 // ═══════════════════════════════════
-// PROGRESS & UTILS
+// UTILS
 // ═══════════════════════════════════
 let _pa=null;
 function showProg(s){document.getElementById('gen-prog').classList.toggle('show',s);if(!s){document.getElementById('gen-fill').style.width='0%';clearInterval(_pa);}}
 function animProg(from,to,ms){clearInterval(_pa);const fill=document.getElementById('gen-fill'),steps=20,step=(to-from)/steps,iv=ms/steps;let cur=from;fill.style.width=from+'%';_pa=setInterval(()=>{cur+=step;fill.style.width=Math.min(cur,to)+'%';if(cur>=to)clearInterval(_pa);},iv);}
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 function setSt(msg,state){document.getElementById('stxt').textContent=msg;document.getElementById('sdot').className='sdot'+(state?' '+state:'');}
-function setGenBtn(mode){const btn=document.getElementById('btn-gen');if(mode==='loading'){btn.disabled=true;btn.innerHTML='⏳ Oluşturuluyor…';}else if(mode==='playing'){btn.disabled=false;btn.innerHTML='■ Oynuyor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}else{btn.disabled=!(isConnected&&activeVoiceId&&document.getElementById('txt').value.trim());btn.innerHTML='▶ Oluştur&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}}
-function refreshUI(){document.getElementById('clone-btn').disabled=!(isConnected&&refFile);setGenBtn('idle');}
-function onTextInput(){document.getElementById('char-ct').textContent=document.getElementById('txt').value.length+' karakter';refreshUI();}
+function setGenBtn(mode){const btn=document.getElementById('btn-gen');if(mode==='loading'){btn.disabled=true;btn.innerHTML='⏳ Oluşturuluyor…';}else if(mode==='playing'){btn.disabled=false;btn.innerHTML='■ Oynuyor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}else{btn.disabled=!(apiToken&&refBase64&&document.getElementById('txt').value.trim());btn.innerHTML='▶ Oluştur&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';}}
+function refreshUI(){setGenBtn('idle');}
+function onText(){document.getElementById('char-ct').textContent=document.getElementById('txt').value.length+' karakter';refreshUI();}
 
 // ═══════════════════════════════════
 // EFFECTS UI
@@ -709,7 +645,7 @@ let activeCat='';
 function buildPills(){document.getElementById('cat-pills').innerHTML=CATS.map(c=>`<button class="cpill${c==='Tümü'?' on':''}" onclick="setCat('${c==='Tümü'?'':c}','${c}')">${c}</button>`).join('');}
 function setCat(cat,label){activeCat=cat;document.querySelectorAll('.cpill').forEach(p=>p.classList.toggle('on',p.textContent===label));renderFx();}
 function renderFx(){const q=document.getElementById('eff-search').value.toLowerCase();const list=EFFECTS.filter(e=>(!q||e.name.toLowerCase().includes(q)||e.cat.toLowerCase().includes(q))&&(!activeCat||e.cat===activeCat));const grid=document.getElementById('eff-grid');if(!list.length){grid.innerHTML='<div class="no-res">Sonuç bulunamadı 🔍</div>';return;}grid.innerHTML=list.map(e=>{const on=activeEffectIds.has(e.id);return`<div class="eff-card${on?' on':''}" onclick="toggleFx('${e.id}')"><span class="eff-cb"></span><span class="eff-emoji">${e.emoji}</span><span class="eff-name">${e.name}</span><span class="eff-cat">${e.cat}</span></div>`;}).join('');}
-function toggleFx(id){if(activeEffectIds.has(id))activeEffectIds.delete(id);else activeEffectIds.add(id);renderFx();document.getElementById('eff-count').textContent=activeEffectIds.size+' aktif';if(lastBlob&&!isPlaying)replayWithNewFx();}
+function toggleFx(id){if(activeEffectIds.has(id))activeEffectIds.delete(id);else activeEffectIds.add(id);renderFx();document.getElementById('eff-count').textContent=activeEffectIds.size+' aktif';if(lastBlob&&!isPlaying)replayFx();}
 function clearFx(){activeEffectIds.clear();renderFx();document.getElementById('eff-count').textContent='0 aktif';}
 buildPills();renderFx();
 
